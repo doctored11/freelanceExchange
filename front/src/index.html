@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>exchange</title>
+    
+    <link rel="stylesheet" href="./styles/normalize.css">
+    <link rel="stylesheet" href="./styles/style.css">
+  </head>
+  <body>
+     <header class="header ">
+        <div class="header__frame frame">
+         <div class="header__main-head">
+          <div class="header__nav-block">
+            <a href="#" class="header__logo logo">
+              <!-- логотип ( наверное svg) -->
+            </a>
+
+        <div class="header__interaction-block">
+            <div class="header__search-block search-block">
+              <form action="#" class="search-block__form">
+                <input
+                  type="text"
+                  class="search-block__input"
+                  placeholder="Поиск"
+                /><span class="search-block__input-line"></span>
+              </form>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                class="search-block__ico search-ico"
+              >
+                <path
+                  d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+                  stroke="#000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M21 21L16.65 16.65"
+                  stroke="#000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+       
+
+            <div class="header__antefication-block antefication-block">
+              <button class="antefication-block__btn btn entrance-btn">
+                Вход</button
+              ><button class="antefication-block__btn btn registration-btn">
+                Регистрация
+              </button>
+            </div>
+          </div>
+        </div>
+          <ul class="header__nav nav list">
+            <li class="nav__link txt">
+              <a href="#" class="nav__hyper-txt">секция навигации 1 </a>
+            </li>
+            <li class="nav__link txt">
+              <a href="#" class="nav__hyper-txt"> секция навигации </a>
+            </li>
+            <li class="nav__link txt">
+              <a href="#" class="nav__hyper-txt"> секция навигации </a>
+            </li>
+            <li class="nav__link txt">
+              <a href="#" class="nav__hyper-txt"> секция навигации </a>
+            </li>
+            <li class="nav__link txt">
+              <a href="#" class="nav__hyper-txt">секция навигации </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+        </header>
+      <main class="main">
+        <section class=" section  main__hero hero --test-static-background">
+            <div class="hero__frame frame">
+                <div class="hero__content">
+                    <h1 class="hero__title title">
+                      Нейминг
+                    </h1>
+                    <p class="hero__text txt txt--lite">
+                     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque assumenda sint reprehenderit cumque totam quidem quis non quaerat! Inventore recusandae delectus neque deserunt eveniet officia at ullam, voluptas distinctio eum!
+                    </p>
+                    <button class="hero__btn btn btn--solid">---</button>
+                  </div>
+                  <div class="main__backgroud-content-block --test-static-img">
+                    <!-- тут картинка  -->
+                  </div>
+                    
+                </div>
+              </section>
+            </div>
+        </section>
+        <section class=" section   main__category caregory">
+            <div class="category__frame frame">
+
+                <ul class="category__list list ">
+                    <!-- тут надо пдинамически заполнять  -->
+                    <!-- сейчас для примера -->
+
+                    <li class="category__card card  --test-get-img ">
+                        
+                        <div class="card__content-block card__content-block--category ">
+                            <h3 class="card__title title title--lite ">Lorem, ipsum.</h3>
+                            <p class="card__txt txt txt--lite ">Lorem ipsum dolor sit amet consectetur.</p>
+                            
+                        </div>
+
+                    </li>
+                    <li class="category__card card  --test-get-img ">
+                        
+                        <div class="card__content-block card__content-block--category ">
+                            <h3 class="card__title title title--lite ">Lorem, ipsum.</h3>
+                            <p class="card__txt txt txt--lite ">Lorem ipsum dolor sit amet consectetur.</p>
+                            
+                        </div>
+
+                    </li>
+                    <li class="category__card card  --test-get-img ">
+                        
+                        <div class="card__content-block card__content-block--category ">
+                            <h3 class="card__title title title--lite ">Lorem, ipsum.</h3>
+                            <p class="card__txt txt txt--lite ">Lorem ipsum dolor sit amet consectetur.</p>
+                            
+                        </div>
+
+                    </li>
+                    <li class="category__card card  --test-get-img ">
+                        
+                        <div class="card__content-block card__content-block--category ">
+                            <h3 class="card__title title title--lite ">Lorem, ipsum.</h3>
+                            <p class="card__txt txt txt--lite ">Lorem ipsum dolor sit amet consectetur.</p>
+                            
+                        </div>
+
+                    </li>
+                </ul>
+
+            </div>
+        </section>
+        <section class=" main__about about section">
+            <div class="about__frame frame">
+                <div class="about__content-block">
+                    <h2 class="about__title title">Lorem, ipsum dolor.</h2>
+                    <p class="about__description txt ">Lorem ipsum dolor sit amet.</p>
+                    <p class="about__description txt ">Lorem ipsum dolor sit amet.</p>
+                    <p class="about__description txt ">Lorem ipsum dolor sit amet.</p>
+                </div>
+                <div class="about__promo-block ">
+                    <!-- визуальный контент -->
+                </div>
+                <div class="about__reviews reviews">
+                    <!-- в дальгнейшем простой слайдер -->
+                    <ul class="reviws__list list">
+                        <!-- карточки динамические -->
+                        <li class="reviws__card card card-review">
+                            <img src="#" alt="карточка с сервера" class=" card__img    --test-get-img img" >
+                            <h3 class="card__title title title--small">Lorem, ipsum.</h3>
+                            <div class="card__description-block">
+                                <p class="card__description txt">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                            </div>
+
+                        </li>
+                        <li class="reviws__card card card-review">
+                            <img src="#" alt="карточка с сервера" class=" card__img    --test-get-img img" >
+                            <h3 class="card__title title title--small">Lorem, ipsum.</h3>
+                            <div class="card__description-block">
+                                <p class="card__description txt"> Lorem ipsum dolor, sit amet consectetur adipisicing.   </p>
+                            </div>
+
+                        </li>
+                        <li class="reviws__card card card-review">
+                            <img src="#" alt="карточка с сервера" class=" card__img    --test-get-img img" >
+                            <h3 class="card__title title title--small">Lorem, ipsum.</h3>
+                            <div class="card__description-block">
+                                <p class="card__description txt"> Lorem ipsum dolor, sit amet consectetur adipisicing.   </p>
+                            </div>
+
+                        </li>
+                        <li class="reviws__card card card-review">
+                            <img src="#" alt="карточка с сервера" class=" card__img    --test-get-img img" >
+                            <h3 class="card__title title title--small">Lorem, ipsum.</h3>
+                            <div class="card__description-block">
+                                <p class="card__description txt">Lorem ipsum dolor, sit amet consectetur adipisicing.</p>
+                            </div>
+
+                        </li>
+                        <li class="reviws__card card card-review">
+                            <img src="#" alt="карточка с сервера" class=" card__img    --test-get-img img" >
+                            <h3 class="card__title title title--small">Lorem, ipsum.</h3>
+                            <div class="card__description-block">
+                                <p class="card__description txt"> Lorem ipsum dolor, sit amet consectetur adipisicing.   </p>
+                            </div>
+
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <footer class="footer section">
+            <div class="frame footer__frame">
+              <div class="footer__logos logos">
+                <a href="#" class="footer__logo logo logo--light">
+                <!-- лого -->
+                </a>
+                <ul class="footer__socials social nav">
+                    <!-- свгщки на соц сети -->
+                </ul>
+                  
+                    
+              </div>
+              <ul class="footer__nav nav list">
+                <li class="nav__nav-link footer__nav-item">
+                  <p class="nav__txt txt txt--light footer__nav-txt">Lorem.</p>
+                </li>
+                <li class="nav__nav-link footer__nav-item">
+                  <p class="nav__txt txt txt--light footer__nav-txt">Lorem.</p>
+                </li>
+                <li class="nav__nav-link footer__nav-item">
+                  <p class="nav__txt txt txt--light footer__nav-txt">Lorem.</p>
+                </li>
+                <li class="nav__nav-link footer__nav-item">
+                  <p class="nav__txt txt txt--light footer__nav-txt">Lorem.</p>
+                </li>
+                <li class="nav__nav-link footer__nav-item">
+                  <p class="nav__txt txt txt--light footer__nav-txt">Lorem.</p>
+                </li>
+                <li class="nav__nav-link footer__nav-item">
+                  <p class="nav__txt txt txt--light footer__nav-txt">Lorem.</p>
+                </li>
+                <li class="nav__nav-link footer__nav-item">
+                  <p class="nav__txt txt txt--light footer__nav-txt">lorem1</p>
+                </li>
+                <li class="nav__nav-link footer__nav-item">
+                  <p class="nav__txt txt txt--light footer__nav-txt">Lorem.</p>
+                </li>
+                <li class="nav__nav-link footer__nav-item">
+                  <p class="nav__txt txt txt--light footer__nav-txt">Lorem.</p>
+                </li>
+              </ul>
+            </div>
+           
+          </footer>
+        </main>
+    </body>
+</html>
