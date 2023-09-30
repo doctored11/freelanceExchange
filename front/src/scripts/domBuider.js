@@ -93,6 +93,8 @@ export function createProfileCard(profileData, container) {
         </div>
     `
     container.insertAdjacentHTML('beforeend', cardItem);
+    const btn = container.querySelector(`[data-id="${id}"]`);
+    btn.addEventListener('click', () => clickToCart(id));
 }
 // 
 
@@ -154,5 +156,7 @@ export function renderTaskCard(data, container) {
                 </div>
             `
     container.insertAdjacentHTML('beforeend', cardItem);
+    const btn = container.querySelector(`.card__add`);
+    btn.addEventListener('click', () => clickToCart(id));
 
 }
