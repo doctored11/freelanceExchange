@@ -9,6 +9,10 @@ import{
     createCards
 } from './domBuider.js'
 
+import{
+    getServices
+
+} from './requests.js'
 
 const container = document.querySelector('.services__list');
 const btnShowCards = document.querySelector('.show-cards');
@@ -35,20 +39,7 @@ getServices('../data/base.json', usersData)
 btnShowCards.addEventListener('click', sliceArrCards);
 
 
-async function getServices(path) {
-    try {
-        const res = await fetch(path);
-        if (!res.ok) {
-            throw new Error(res.statusText);
-        }
-        const storage = await res.json();
-        // console.log(storage);
-        return storage; // Возвращаем данные из функции
-    } catch (err) {
-        console.log(err.message);
-        return [];
-    }
-}
+
 
 
 function renderStartPage(data) {
