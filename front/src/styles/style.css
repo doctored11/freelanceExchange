@@ -185,4 +185,7 @@
   flex: 5;
 }
 
-/* cards */
+.cart-card{
+  margin-bottom: 5rem;
+  padding: 0.5rem;
+}

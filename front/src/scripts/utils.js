@@ -11,9 +11,9 @@ export function getBasketLocalStorage() {
 
 // Запись id товаров в LS
 export function setBasketLocalStorage(basket) {
-    const basketCount = document.querySelector('.basket__count');
+
     localStorage.setItem('basket', JSON.stringify(basket));
-    basketCount.textContent = basket.length;
+    console.log(basket.length)
 }
 
 // Проверка, существует ли товар указанный в LS 
@@ -29,4 +29,14 @@ export function checkingRelevanceValueBasket(productsData) {
     });
 
     setBasketLocalStorage(basket);
+}
+
+export function removeFromBasket(id) {
+    const basket = getBasketLocalStorage();
+    const index = basket.indexOf(id);
+
+    if (index !== -1) {
+        basket.splice(index, 1);
+        setBasketLocalStorage(basket);
+    }
 }

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/normalize.css" />
+    <link rel="stylesheet" href="./styles/style.css" />
+</head>
+<body>
+    <header class="header">
+      
+        <div class="header__frame frame">
+          <div class="header__main-head">
+            <div class="header__nav-block">
+              <a href="#" class="header__logo logo">
+                <!-- логотип ( наверное svg) -->
+              </a>
+  
+              <div class="header__interaction-block">
+                <div class="header__search-block search-block">
+                  <form action="#" class="search-block__form">
+                    <input
+                      type="text"
+                      class="search-block__input"
+                      placeholder="Поиск"
+                    /><span class="search-block__input-line"></span>
+                  </form>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    class="search-block__ico search-ico"
+                  >
+                    <path
+                      d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+                      stroke="#000"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M21 21L16.65 16.65"
+                      stroke="#000"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+  
+                <div class="header__antefication-block antefication-block">
+                  <button class="antefication-block__btn btn entrance-btn">
+                    Вход</button
+                  ><button class="antefication-block__btn btn registration-btn">
+                    Регистрация
+                  </button>
+                </div>
+              </div>
+            </div>
+            <ul class="header__nav nav list">
+              <li class="nav__link txt">
+                <a href="#" class="nav__hyper-txt">секция навигации 1 </a>
+              </li>
+              <li class="nav__link txt">
+                <a href="#" class="nav__hyper-txt"> секция навигации </a>
+              </li>
+              <li class="nav__link txt">
+                <a href="#" class="nav__hyper-txt"> секция навигации </a>
+              </li>
+              <li class="nav__link txt">
+                <a href="#" class="nav__hyper-txt"> секция навигации </a>
+              </li>
+              <li class="nav__link txt">
+                <a href="#" class="nav__hyper-txt">секция навигации </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <main class="main">
+        <div class="frame main__frame">
+            <div class="card__container container"></div>
+            <div class="price-block">
+                <!-- тут наверное общую цену вывести и возможно кнопку пополнения денег -->
+            </div>
+        </div>
+      </main>
+      <script src="./scripts/cart.js" type="module"></script>
+</body>
+</html>
