@@ -1,6 +1,7 @@
 "use strict"
 //==========================================
 
+import{goDeleteTask} from './domBuider.js'
 
 
 // Получение id из LS
@@ -15,6 +16,20 @@ export function setBasketLocalStorage(basket) {
     localStorage.setItem('basket', JSON.stringify(basket));
     console.log(basket.length)
 }
+// 
+export function getLsbyKey(key) {
+    const cartDataJSON = localStorage.getItem(key);
+    return cartDataJSON ? JSON.parse(cartDataJSON) : [];
+}
+
+
+export function setLsbyKey(key, data) {
+
+    localStorage.setItem(key, JSON.stringify(data));
+    console.log(data.length)
+}
+
+
 
 
 
@@ -45,5 +60,19 @@ export function removeFromBasket(id) {
     if (index !== -1) {
         basket.splice(index, 1);
         setBasketLocalStorage(basket);
+    }
+}
+export function removeFromLs(id, key) {
+  
+    const list = getLsbyKey(key)
+    const index = list.indexOf(id);
+    console.log(id)
+    console.log(list)
+    console.log(index)
+   
+    if (index !== -1) {
+        list.splice(index, 1);
+        
+        setLsbyKey(key, list)
     }
 }

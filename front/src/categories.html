@@ -53,6 +53,7 @@
               </div>
 
               <div class="header__antefication-block antefication-block">
+                <p class="moneyNow"></p>
                 <button class="antefication-block__btn btn entrance-btn">
                   Вход</button
                 ><button class="antefication-block__btn btn registration-btn">
@@ -79,21 +80,29 @@
             </li>
           </ul>
         </div>
+        <div class="test-links" style="display: flex">
+          <a href="categories.html" class="test">переход в категории 🤡</a>
+          <a href="cart.html" class="test">переход в корзину 🤡</a>
+          <a href="taskEditor.html" class="test">переход в TaskEditor 🤡</a>
+          <a href="payment.html" class="test">переход в Пополнение 🤑</a>
+          <a href="registration.html" class="test">переход в регистратуру 🦍</a>
+          <a href="userPage.html" class="test">переход в профиль 🐖</a>
+        </div>
       </div>
     </header>
     <main class="main">
-        <div class="main__frame frame">
-            <div class="filters">
-                <!-- блок фильтров для сортировок -->
-            </div>
-            <div class="services">
-                <div class="services__list">
-
-                </div>
-                <button class="services__btb btn show-cards ">Показать еще</button>
-            </div>
+      <div class="main__frame frame">
+        <div class="filters">
+          <!-- блок фильтров для сортировок -->
         </div>
+        <div class="services">
+          <div class="services__list"></div>
+          <button class="services__btb btn show-cards">Показать еще</button>
+        </div>
+      </div>
     </main>
     <script src="./scripts/main.js" type="module"></script>
+    <script src="./scripts/balanceChecker.js" type="module"></script>
+
   </body>
 </html>

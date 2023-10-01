@@ -63,3 +63,7 @@
 .case-container{
   margin-right: 2rem;
 }
+.order{
+  outline:  5px solid  #056208;
+  outline-offset: 3px;
+}

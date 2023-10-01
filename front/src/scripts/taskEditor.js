@@ -5,11 +5,15 @@ import {
     renderTaskCard
 } from './domBuider.js'
 
+import { User } from './User.js';
+
+
+
+let user = User.load();
 import {
     getBasketLocalStorage,
-    setBasketLocalStorage,
-    checkingRelevanceValueBasket,
-    removeFromBasket
+    setLsbyKey,
+    getLsbyKey
 
 } from './utils.js'
 
@@ -24,42 +28,71 @@ const container = document.querySelector('.card__container')
 const taskForm = document.getElementById("task-form");
 taskForm.classList.add("none")
 
+
+//пока без бд
+usersData = getLsbyKey("users")
+productsData = getLsbyKey("services")
+
 getServices('../data/base.json', usersData)
     .then(updatedUsersData => {
-        usersData = updatedUsersData;
+        if (usersData.length < 1)
+            usersData = updatedUsersData;
+        setLsbyKey('users', productsData)
         return getServices('../data/products.json');
     })
     .then(updatedProductsData => {
-        productsData = updatedProductsData;
+        if (productsData.length < 1)
+            productsData = updatedProductsData;
         console.log(productsData);
         console.log(usersData);
+        setLsbyKey('services', productsData)
         taskForm.classList.remove("none")
 
     });
 
-    let cart = getBasketLocalStorage();
+let cart = getBasketLocalStorage();
 
 
-  
-    taskForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-  
-      const formData = new FormData(taskForm);
-      const taskData = {};
-  
-      formData.forEach((value, key) => {
+
+taskForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    user = User.load();
+
+    const formData = new FormData(taskForm);
+    const taskData = {};
+
+    formData.forEach((value, key) => {
         taskData[key] = value;
-      });
-  
-      
-      taskData.id = productsData.length; 
-      taskData.owner = null; 
-      taskData.img = null; 
-      taskData.descr = ""; 
-  
-      // Теперь объект taskData содержит данные из формы в нужном формате
-      console.log("надо думать как это отправить");
-      console.log(JSON.stringify(taskData, null, 2));
     });
 
-  
+    const allTasks = getLsbyKey('services');
+    taskData.id = allTasks.length + 1;
+    taskData.owner = user.bio;
+    taskData.ownerId = user.id;
+    taskData.img = null;
+    // пока так
+    taskData.type = user.client ? 'order' : 'service';
+
+   
+    console.log("надо думать как это отправить");
+
+   
+    allTasks.unshift(taskData);
+
+    const updatedTasksObj = allTasks
+    setLsbyKey('services', updatedTasksObj);
+
+
+    
+
+    if (user.client) {
+       user.listOfOrders.push(taskData.id)
+
+    } else {
+        user.listOfServices(taskData.id)
+    }
+    user.save();
+    console.log(updatedTasksObj);
+});
+

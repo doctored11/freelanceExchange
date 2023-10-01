@@ -1,20 +1,21 @@
 
 import { User } from './User.js';
+import { updateMoneyNowText } from './balanceChecker.js'
 
 
-const user  = new User(999,'Ваня Иванов',"12.12.12",500,1,null,"мое описание", true, false,[],[]);
-console.log( user.balance.getBalanceInfo());
 
-
+let user = User.load();
+console.log(user.balance.getBalanceInfo());
 document.getElementById('myForm').addEventListener('submit', function (e) {
-  e.preventDefault(); 
+  e.preventDefault();
 
-  
+  user = User.load();
   const numberValue = document.getElementById('numberInput').value;
-  const nowBalance =   user.balance.getActiveBalance()
+  const nowBalance = user.balance.getActiveBalance()
   user.balance.activeBalance = nowBalance + parseInt(numberValue)
-  console.log( user.balance.getBalanceInfo());
+  console.log(user.balance.getBalanceInfo());
   user.save();
-  const loadedUser = User.load(999);
+  const loadedUser = User.load();
+  updateMoneyNowText()
   console.log(loadedUser)
 });

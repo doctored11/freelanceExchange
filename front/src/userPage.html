@@ -1,17 +1,15 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-
     <link rel="stylesheet" href="./styles/normalize.css" />
     <link rel="stylesheet" href="./styles/style.css" />
-    <link rel="stylesheet" href="./styles/serviceStyles.css" />
+    <link rel="stylesheet" href="./styles/profile.css" />
   </head>
   <body>
     <header class="header">
-      <div class="header__frame frame">
+      <div class="header__frame frame ">
         <div class="header__main-head">
           <div class="header__nav-block">
             <a href="#" class="header__logo logo">
@@ -91,15 +89,32 @@
       </div>
     </header>
     <main class="main">
-      <div class="main__frame frame">
-        <div class="profile profile-container"></div>
-        <div class="case-container">
-          <!-- построение из js -->
+      <section class="section">
+        <div class="frame frame--person">
+          <div class="personal-block">
+            <div class="personal-block__img">
+              <img src="#" alt="" class="img person-img --test-get-img" />
+            </div>
+            <div class="personal-block__container container container--person">
+              <!-- карточка человека из js -->
+            </div>
+          </div>
+          <div class="info">
+            <div class="info__active-tasks container--tasks">
+              <!-- карточки заказов -->
+            </div>
+            <div class="info__history history">
+              <div class="history__balance container container--balanceHistory">
+                <!-- истории js -->
+              </div>
+              <div class="history__tasks container container--tasksHistory">
+                <!-- истории js -->
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
     </main>
-    <script src="./scripts/service.js" type="module"></script>
-    <script src="./scripts/balanceChecker.js" type="module"></script>
-
+    <script src="./scripts/profile.js" type="module"></script>
   </body>
 </html>

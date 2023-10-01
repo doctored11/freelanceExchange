@@ -53,6 +53,7 @@
               </div>
 
               <div class="header__antefication-block antefication-block">
+                <p class="moneyNow"></p>
                 <button class="antefication-block__btn btn entrance-btn">
                   Вход</button
                 ><button class="antefication-block__btn btn registration-btn">
@@ -79,6 +80,14 @@
             </li>
           </ul>
         </div>
+        <div class="test-links" style="display: flex">
+          <a href="categories.html" class="test">переход в категории 🤡</a>
+          <a href="cart.html" class="test">переход в корзину 🤡</a>
+          <a href="taskEditor.html" class="test">переход в TaskEditor 🤡</a>
+          <a href="payment.html" class="test">переход в Пополнение 🤑</a>
+          <a href="registration.html" class="test">переход в регистратуру 🦍</a>
+          <a href="userPage.html" class="test">переход в профиль 🐖</a>
+        </div>
       </div>
     </header>
     <main class="main">
@@ -86,12 +95,14 @@
         <div class="card-zone" id="card-zone">
           <form id="myForm">
             <label for="numberInput">Введите число:</label>
-            <input type="number" id="numberInput" name="numberInput" required>
+            <input type="number" id="numberInput" name="numberInput" required />
             <button type="submit">Отправить</button>
-        </form>
+          </form>
         </div>
       </div>
     </main>
     <script src="./scripts/payment.js" type="module"></script>
+    <script src="./scripts/balanceChecker.js" type="module"></script>
+
   </body>
 </html>

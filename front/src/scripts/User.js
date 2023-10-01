@@ -17,18 +17,18 @@ export class User {
     save() {
         console.log('баланс сохранен')
       
-        localStorage.setItem(`user_${this.id}`, JSON.stringify(this));
+        localStorage.setItem(`user`, JSON.stringify(this));
         // Сохраняем баланс пользователя
         this.balance.save(this.id);
     }
 
     // Статический метод для загрузки пользователя из localStorage по ID
-    static load(userId) {
-        const userData = localStorage.getItem(`user_${userId}`);
+    static load() {
+        const userData = localStorage.getItem(`user`);
         if (userData) {
             const user = JSON.parse(userData);
             // Загружаем баланс пользователя
-            const money = Balance.load(userId);
+            const money = Balance.load();
             
             user.balance = money;
 

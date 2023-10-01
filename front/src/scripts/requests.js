@@ -8,6 +8,7 @@ export async function getServices(path) {
         }
         const storage = await res.json();
         // console.log(storage);
+        
         return storage; // Возвращаем данные из функции
     } catch (err) {
         console.log(err.message);

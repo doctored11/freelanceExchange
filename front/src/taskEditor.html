@@ -51,6 +51,7 @@
               </div>
 
               <div class="header__antefication-block antefication-block">
+                <p class="moneyNow"></p>
                 <button class="antefication-block__btn btn entrance-btn">
                   Вход</button
                 ><button class="antefication-block__btn btn registration-btn">
@@ -77,6 +78,14 @@
             </li>
           </ul>
         </div>
+        <div class="test-links" style="display: flex">
+          <a href="categories.html" class="test">переход в категории 🤡</a>
+          <a href="cart.html" class="test">переход в корзину 🤡</a>
+          <a href="taskEditor.html" class="test">переход в TaskEditor 🤡</a>
+          <a href="payment.html" class="test">переход в Пополнение 🤑</a>
+          <a href="registration.html" class="test">переход в регистратуру 🦍</a>
+          <a href="userPage.html" class="test">переход в профиль 🐖</a>
+        </div>
       </div>
     </header>
     <main class="main">
@@ -90,13 +99,8 @@
               <input type="text" id="title" name="title" required />
             </div>
             <div class="form-group">
-              <label for="content">Содержание:</label>
-              <textarea
-                id="content"
-                name="content"
-                rows="4"
-                required
-              ></textarea>
+              <label for="descr">Содержание:</label>
+              <textarea id="descr" name="descr" rows="4" required></textarea>
             </div>
             <div class="form-group">
               <label for="theme">Тема:</label>
@@ -120,5 +124,7 @@
       </div>
     </main>
     <script src="./scripts/taskEditor.js" type="module"></script>
+    <script src="./scripts/balanceChecker.js" type="module"></script>
+
   </body>
 </html>

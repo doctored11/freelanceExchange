@@ -2,14 +2,18 @@
 import {
     createCards,
     renderPeopleCard,
-    renderTaskCard
+    renderTaskCard,
+    createCartCards
 } from './domBuider.js'
 
 import {
     getBasketLocalStorage,
     setBasketLocalStorage,
     checkingRelevanceValueBasket,
-    removeFromBasket
+    removeFromBasket,
+    setLsbyKey,
+    getLsbyKey,
+    removeFromLs
 
 } from './utils.js'
 
@@ -22,68 +26,44 @@ let usersData = [];
 
 const container = document.querySelector('.card__container')
 
+//пока без бд
+usersData = getLsbyKey("users")
+productsData = getLsbyKey("services")
+
+let cart = getBasketLocalStorage();
 getServices('../data/base.json', usersData)
     .then(updatedUsersData => {
-        usersData = updatedUsersData;
+        if (usersData.length < 1)
+            usersData = updatedUsersData;
         return getServices('../data/products.json');
     })
     .then(updatedProductsData => {
-        productsData = updatedProductsData;
+        if (productsData.length < 1)
+            productsData = updatedProductsData;
         console.log(productsData);
         console.log(usersData);
-        cartRender(container);
+        cart = getBasketLocalStorage();
+        if (container)
+            cardRender(container, cart);
     });
 
-let cart = getBasketLocalStorage();
 
 
 
-function cartRender(container) {
-    console.log('cartRender')
+
+function cardRender(container, data) {
+    console.log('cardRender')
     container.innerHTML = ' '
-    console.log(cart);
-    const selectPositions = productsData.filter(item => cart.includes(item.id));
+    console.log(data);
+    if(data.length<1) return
+    const selectPositions = productsData.filter(item => data.includes(item.id));
+    
 
     selectPositions.forEach(pos => { createCartCards(container, pos) });
 
 }
 
-export function createCartCards(container, data) {
-
-    console.log(data.id)
-    const { id, img, title, price, descr, timing, owner } = data;
-
-    const cardItem =
-        `
-                <div class="card cart-card" data-product-id="${id}">
-                    <div class="card__top cart-card_top">
-                        <a href="/servicePage.html?id=serviceCase${id}" class="card__image cart-card__image --test-get-img">
-                            <img class=" img"
-                                src="${img}"
-                                alt="${title}"
-                            />
-                        </a>
-                        <div class="card__label cart-card__label">-${timing}</div>
-                    </div>
-                    <div class="card__bottom cart-card__bottom">
-                        <div class="card__info ">
-                            <div class="card__people heading cart-card__heading">${title}</div>
-                            <div class="card__price card__price--common">${price}</div>
-                        </div>
-                        <a href="/servicePage.html?id=serviceCase${id}" class="card__title cart-card__title">${title}</a>
-                        <button class="card__add" data-id="${id}">удалить</button>
-                    </div>
-                </div>
-            `
-
-
-    container.insertAdjacentHTML('beforeend', cardItem);
-
-    const btn = container.querySelector(`[data-id="${id}"]`);
-    btn.addEventListener('click', () => deleteFromCart(id));
-
-}
-function deleteFromCart(id) {
+export function deleteFromCart(id) {
 
     cart = getBasketLocalStorage();
     console.log(cart)
@@ -95,6 +75,50 @@ function deleteFromCart(id) {
     };
 
     cart = getBasketLocalStorage();
-    cartRender(container);
+    cardRender(container, cart);
 
 }
+export function deleteCard(id, key, container, modifier = "") {
+
+    let list = getLsbyKey(key)
+    console.log(list[modifier])
+
+    try {
+        if (list.includes(id)) {
+            console.log(id, key)
+            removeFromLs(id, key)
+
+            list = getLsbyKey(key)
+        };
+    } catch { }
+    try {
+        if (typeof (list[modifier])) {
+
+            deleteNestedList(id, key, modifier, list[modifier])
+            list = getLsbyKey(key)
+            list = list[modifier]
+
+        }
+    } catch { }
+
+    
+    
+    cardRender(container, list);
+
+}
+function deleteNestedList(id, key, mod, data) {
+
+    if (data.includes(id)) {
+
+        const list = getLsbyKey(key)
+        const index = list[mod].indexOf(id);
+
+
+        if (index !== -1) {
+            list[mod].splice(index, 1);
+
+            setLsbyKey(key, list)
+        }
+    };
+}
+

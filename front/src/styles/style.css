@@ -24,6 +24,9 @@
     border: solid 2px var(--color-test-yellow);
     background-size: 100%;
   }
+  .moneyNow::after{
+    content: '🍃';
+  }
   
 /*  */
 * {
