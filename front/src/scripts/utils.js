@@ -9,15 +9,22 @@ export function getBasketLocalStorage() {
     return cartDataJSON ? JSON.parse(cartDataJSON) : [];
 }
 
-// Запись id товаров в LS
+
 export function setBasketLocalStorage(basket) {
 
     localStorage.setItem('basket', JSON.stringify(basket));
     console.log(basket.length)
 }
 
+
+
+
+// 
+// 
+// 
+
 // Проверка, существует ли товар указанный в LS 
-//(если например пару дней не заходил юзер, а товар, который у него в корзине, уже не существует)
+//пока non use
 export function checkingRelevanceValueBasket(productsData) {
     const basket = getBasketLocalStorage();
 

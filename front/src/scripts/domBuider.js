@@ -5,6 +5,7 @@ import {
     removeFromBasket
 
 } from './utils.js'
+import { User } from './User.js';
 
 // карточки для секции всех тасков
 export function createCards(container, data, usersData) {
@@ -64,8 +65,31 @@ function clickToCart(id) {
 
     basket.push(id);
     setBasketLocalStorage(basket);
-  
+
 }
+//todo пернести из dombuild
+function goBuy(container, price) {
+
+    const user = User.load(999);
+    
+    user.balance.freeze(price);
+    
+    user.save();
+  
+   
+
+    const cardItem =
+        `
+    <div>
+        <p> Заказано</p>
+        <p> Ожидаем подтверждения исполнителя</p>
+        <p> замороженно ${price}</p>
+    </div>
+`
+    container.insertAdjacentHTML('beforeend', cardItem);
+
+}
+
 //
 export function createProfileCard(profileData, container) {
 
@@ -151,12 +175,15 @@ export function renderTaskCard(data, container) {
                            
                         </div>
                         
-                        <button class="card__add">В корзину</button>
+                        <button class="card__add btn">В Избранное</button>
+                        <button class="buy-btn btn">заказать</button>
                     </div>
                 </div>
             `
     container.insertAdjacentHTML('beforeend', cardItem);
     const btn = container.querySelector(`.card__add`);
     btn.addEventListener('click', () => clickToCart(id));
+    const buy = container.querySelector(`.buy-btn`);
+    buy.addEventListener('click', () => goBuy(container, price));
 
 }

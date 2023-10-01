@@ -2,7 +2,7 @@
     {
       "id": 1,
       "title": "Разработка веб-приложения",
-      "price": "1200 USD",
+      "price": "1200  ",
       "timing": "3 недели",
       "owner": 1,
       "img": "https://example.com/service1.jpg",
@@ -11,7 +11,7 @@
     {
       "id": 2,
       "title": "Настройка и обслуживание сервера",
-      "price": "800 USD",
+      "price": "800  ",
       "timing": "2 недели",
       "owner": 2,
       "img": "https://example.com/service2.jpg",
@@ -20,7 +20,7 @@
     {
       "id": 3,
       "title": "Разработка мобильного приложения для iOS",
-      "price": "1500 USD",
+      "price": "1500  ",
       "timing": "4 недели",
       "owner": 3,
       "img": "https://example.com/service3.jpg",
@@ -29,7 +29,7 @@
     {
       "id": 4,
       "title": "Системное администрирование и обслуживание",
-      "price": "1000 USD",
+      "price": "1000  ",
       "timing": "3 недели",
       "owner": 4,
       "img": "https://example.com/service4.jpg",
@@ -38,7 +38,7 @@
     {
       "id": 5,
       "title": "Разработка интернет-магазина",
-      "price": "1400 USD",
+      "price": "1400  ",
       "timing": "4 недели",
       "owner": 5,
       "img": "https://example.com/service5.jpg",
@@ -47,7 +47,7 @@
     {
       "id": 6,
       "title": "Консультации по безопасности сети",
-      "price": "500 USD",
+      "price": "500  ",
       "timing": "1 неделя",
       "owner": 6,
       "img": "https://example.com/service6.jpg",
@@ -56,7 +56,7 @@
     {
       "id": 7,
       "title": "Разработка приложения для Android",
-      "price": "1300 USD",
+      "price": "1300  ",
       "timing": "3 недели",
       "owner": 1,
       "img": "https://example.com/service7.jpg",
@@ -65,7 +65,7 @@
     {
       "id": 8,
       "title": "Установка и настройка CMS",
-      "price": "600 USD",
+      "price": "600  ",
       "timing": "2 недели",
       "owner": 2,
       "img": "https://example.com/service8.jpg",
@@ -74,7 +74,7 @@
     {
       "id": 9,
       "title": "Разработка CRM-системы",
-      "price": "1600 USD",
+      "price": "1600  ",
       "timing": "4 недели",
       "owner": 3,
       "img": "https://example.com/service9.jpg",
@@ -83,7 +83,7 @@
     {
       "id": 10,
       "title": "Оптимизация базы данных",
-      "price": "900 USD",
+      "price": "900  ",
       "timing": "2 недели",
       "owner": 4,
       "img": "https://example.com/service10.jpg",
@@ -92,7 +92,7 @@
     {
       "id": 11,
       "title": "Разработка адаптивного дизайна",
-      "price": "800 USD",
+      "price": "800  ",
       "timing": "2 недели",
       "owner": 5,
       "img": "https://example.com/service11.jpg",
@@ -101,7 +101,7 @@
     {
       "id": 12,
       "title": "Тестирование и отладка приложений",
-      "price": "1100 USD",
+      "price": "1100  ",
       "timing": "3 недели",
       "owner": 6,
       "img": "https://example.com/service12.jpg",
@@ -110,7 +110,7 @@
     {
       "id": 13,
       "title": "Разработка и настройка API",
-      "price": "1200 USD",
+      "price": "1200  ",
       "timing": "3 недели",
       "owner": 1,
       "img": "https://example.com/service13.jpg",
@@ -119,7 +119,7 @@
     {
       "id": 14,
       "title": "Обучение и консультации по программированию",
-      "price": "600 USD",
+      "price": "600  ",
       "timing": "1 неделя",
       "owner": 2,
       "img": "https://example.com/service14.jpg",
@@ -128,7 +128,7 @@
     {
       "id": 15,
       "title": "Разработка игрового приложения",
-      "price": "1400 USD",
+      "price": "1400  ",
       "timing": "4 недели",
       "owner": 3,
       "img": "https://example.com/service15.jpg",
@@ -137,7 +137,7 @@
     {
       "id": 16,
       "title": "Администрирование сети и серверов",
-      "price": "1000 USD",
+      "price": "1000  ",
       "timing": "3 недели",
       "owner": 4,
       "img": "https://example.com/service16.jpg",
@@ -146,7 +146,7 @@
     {
       "id": 17,
       "title": "Разработка прототипа интерфейса",
-      "price": "700 USD",
+      "price": "700  ",
       "timing": "2 недели",
       "owner": 5,
       "img": "https://example.com/service17.jpg",
@@ -155,7 +155,7 @@
     {
       "id": 18,
       "title": "Оптимизация SEO для сайта",
-      "price": "800 USD",
+      "price": "800  ",
       "timing": "2 недели",
       "owner": 6,
       "img": "https://example.com/service18.jpg",
@@ -164,7 +164,7 @@
     {
       "id": 19,
       "title": "Разработка алгоритмов и скриптов",
-      "price": "1100 USD",
+      "price": "1100  ",
       "timing": "3 недели",
       "owner": 1,
       "img": "https://example.com/service19.jpg",
@@ -173,7 +173,7 @@
     {
       "id": 20,
       "title": "Разработка приложения для Windows",
-      "price": "1200 USD",
+      "price": "1200  ",
       "timing": "3 недели",
       "owner": 2,
       "img": "https://example.com/service20.jpg",
@@ -182,7 +182,7 @@
     {
       "id": 21,
       "title": "Аудит и безопасность веб-приложений",
-      "price": "900 USD",
+      "price": "900  ",
       "timing": "2 недели",
       "owner": 3,
       "img": "https://example.com/service21.jpg",
@@ -191,7 +191,7 @@
     {
       "id": 22,
       "title": "Разработка интеграций и плагинов",
-      "price": "1000 USD",
+      "price": "1000  ",
       "timing": "3 недели",
       "owner": 4,
       "img": "https://example.com/service22.jpg",
@@ -200,7 +200,7 @@
     {
       "id": 23,
       "title": "Разработка дизайна для приложений",
-      "price": "800 USD",
+      "price": "800  ",
       "timing": "2 недели",
       "owner": 5,
       "img": "https://example.com/service23.jpg",
@@ -209,7 +209,7 @@
     {
       "id": 24,
       "title": "Анализ данных и отчетность",
-      "price": "1100 USD",
+      "price": "1100  ",
       "timing": "3 недели",
       "owner": 6,
       "img": "https://example.com/service24.jpg",
@@ -218,7 +218,7 @@
     {
       "id": 25,
       "title": "Разработка ботов и автоматизация",
-      "price": "1200 USD",
+      "price": "1200  ",
       "timing": "3 недели",
       "owner": 1,
       "img": "https://example.com/service25.jpg",
@@ -227,7 +227,7 @@
     {
       "id": 26,
       "title": "Обучение и консультации по IT",
-      "price": "600 USD",
+      "price": "600  ",
       "timing": "1 неделя",
       "owner": 2,
       "img": "https://example.com/service26.jpg",
@@ -236,7 +236,7 @@
     {
       "id": 27,
       "title": "Разработка игр для консолей",
-      "price": "1400 USD",
+      "price": "1400  ",
       "timing": "4 недели",
       "owner": 3,
       "img": "https://example.com/service27.jpg",
@@ -245,7 +245,7 @@
     {
       "id": 28,
       "title": "Управление проектами и планирование",
-      "price": "1000 USD",
+      "price": "1000  ",
       "timing": "3 недели",
       "owner": 4,
       "img": "https://example.com/service28.jpg",
@@ -254,7 +254,7 @@
     {
       "id": 29,
       "title": "Разработка источников данных",
-      "price": "1200 USD",
+      "price": "1200  ",
       "timing": "3 недели",
       "owner": 5,
       "img": "https://example.com/service29.jpg",
@@ -263,7 +263,7 @@
     {
       "id": 30,
       "title": "Разработка приложений для macOS",
-      "price": "1300 USD",
+      "price": "1300  ",
       "timing": "3 недели",
       "owner": 6,
       "img": "https://example.com/service30.jpg",
@@ -272,7 +272,7 @@
     {
       "id": 31,
       "title": "Тестирование безопасности сети",
-      "price": "800 USD",
+      "price": "800  ",
       "timing": "2 недели",
       "owner": 1,
       "img": "https://example.com/service31.jpg",
@@ -281,7 +281,7 @@
     {
       "id": 32,
       "title": "Разработка интерфейса пользователя",
-      "price": "900 USD",
+      "price": "900  ",
       "timing": "2 недели",
       "owner": 2,
       "img": "https://example.com/service32.jpg",
@@ -290,7 +290,7 @@
     {
       "id": 33,
       "title": "Разработка виртуальной реальности",
-      "price": "1400 USD",
+      "price": "1400  ",
       "timing": "4 недели",
       "owner": 3,
       "img": "https://example.com/service33.jpg",
@@ -299,7 +299,7 @@
     {
       "id": 34,
       "title": "Архитектура информационных систем",
-      "price": "1200 USD",
+      "price": "1200  ",
       "timing": "3 недели",
       "owner": 4,
       "img": "https://example.com/service34.jpg",
@@ -308,7 +308,7 @@
     {
       "id": 35,
       "title": "Разработка аналитических приложений",
-      "price": "1100 USD",
+      "price": "1100  ",
       "timing": "3 недели",
       "owner": 5,
       "img": "https://example.com/service35.jpg",
@@ -317,7 +317,7 @@
     {
       "id": 36,
       "title": "Разработка приложений для смартфонов",
-      "price": "1300 USD",
+      "price": "1300  ",
       "timing": "3 недели",
       "owner": 6,
       "img": "https://example.com/service36.jpg",
@@ -326,7 +326,7 @@
     {
       "id": 37,
       "title": "Разработка электронных коммерческих платформ",
-      "price": "1500 USD",
+      "price": "1500  ",
       "timing": "4 недели",
       "owner": 1,
       "img": "https://example.com/service37.jpg",
@@ -335,7 +335,7 @@
     {
       "id": 38,
       "title": "Разработка алгоритмов машинного обучения",
-      "price": "1600 USD",
+      "price": "1600  ",
       "timing": "4 недели",
       "owner": 2,
       "img": "https://example.com/service38.jpg",
@@ -344,7 +344,7 @@
     {
       "id": 39,
       "title": "Разработка сетевых приложений",
-      "price": "1100 USD",
+      "price": "1100  ",
       "timing": "3 недели",
       "owner": 3,
       "img": "https://example.com/service39.jpg",
@@ -353,7 +353,7 @@
     {
       "id": 40,
       "title": "Разработка приложений для управления задачами",
-      "price": "800 USD",
+      "price": "800  ",
       "timing": "2 недели",
       "owner": 4,
       "img": "https://example.com/service40.jpg",
@@ -362,7 +362,7 @@
     {
       "id": 41,
       "title": "Разработка геолокационных приложений",
-      "price": "1300 USD",
+      "price": "1300  ",
       "timing": "3 недели",
       "owner": 5,
       "img": "https://example.com/service41.jpg",
@@ -371,7 +371,7 @@
     {
       "id": 42,
       "title": "Разработка бизнес-аналитики",
-      "price": "1200 USD",
+      "price": "1200  ",
       "timing": "3 недели",
       "owner": 6,
       "img": "https://example.com/service42.jpg",
@@ -380,7 +380,7 @@
     {
       "id": 43,
       "title": "Разработка мобильных приложений для Windows",
-      "price": "1400 USD",
+      "price": "1400  ",
       "timing": "4 недели",
       "owner": 1,
       "img": "https://example.com/service43.jpg",
@@ -389,7 +389,7 @@
     {
       "id": 44,
       "title": "Разработка систем электронного документооборота",
-      "price": "1500 USD",
+      "price": "1500  ",
       "timing": "4 недели",
       "owner": 2,
       "img": "https://example.com/service44.jpg",
@@ -398,7 +398,7 @@
     {
       "id": 45,
       "title": "Разработка интеллектуальных приложений",
-      "price": "1600 USD",
+      "price": "1600  ",
       "timing": "4 недели",
       "owner": 3,
       "img": "https://example.com/service45.jpg",
@@ -407,7 +407,7 @@
     {
       "id": 46,
       "title": "Разработка платформ для обучения",
-      "price": "1100 USD",
+      "price": "1100  ",
       "timing": "3 недели",
       "owner": 4,
       "img": "https://example.com/service46.jpg",
@@ -416,7 +416,7 @@
     {
       "id": 47,
       "title": "Разработка приложений для управления финансами",
-      "price": "1000 USD",
+      "price": "1000  ",
       "timing": "3 недели",
       "owner": 5,
       "img": "https://example.com/service47.jpg",
@@ -425,7 +425,7 @@
     {
       "id": 48,
       "title": "Разработка приложений для управления проектами",
-      "price": "1300 USD",
+      "price": "1300  ",
       "timing": "3 недели",
       "owner": 6,
       "img": "https://example.com/service48.jpg",
@@ -434,7 +434,7 @@
     {
       "id": 49,
       "title": "Разработка приложений для управления клиентами",
-      "price": "1200 USD",
+      "price": "1200  ",
       "timing": "3 недели",
       "owner": 1,
       "img": "https://example.com/service49.jpg",
@@ -443,7 +443,7 @@
     {
       "id": 50,
       "title": "Разработка робототехнических систем",
-      "price": "1400 USD",
+      "price": "1400  ",
       "timing": "4 недели",
       "owner": 2,
       "img": "https://example.com/service50.jpg",
@@ -452,7 +452,7 @@
     {
       "id": 51,
       "title": "Разработка VR-приложений для образования",
-      "price": "1500 USD",
+      "price": "1500  ",
       "timing": "4 недели",
       "owner": 3,
       "img": "https://example.com/service51.jpg",
@@ -461,7 +461,7 @@
     {
       "id": 52,
       "title": "Разработка приложений для IoT",
-      "price": "1600 USD",
+      "price": "1600  ",
       "timing": "4 недели",
       "owner": 4,
       "img": "https://example.com/service52.jpg",
@@ -470,7 +470,7 @@
     {
       "id": 53,
       "title": "Разработка приложений для управления складом",
-      "price": "1100 USD",
+      "price": "1100  ",
       "timing": "3 недели",
       "owner": 5,
       "img": "https://example.com/service53.jpg",
@@ -479,7 +479,7 @@
     {
       "id": 54,
       "title": "Разработка архитектуры и дизайна баз данных",
-      "price": "1200 USD",
+      "price": "1200  ",
       "timing": "3 недели",
       "owner": 6,
       "img": "https://example.com/service54.jpg",
@@ -488,7 +488,7 @@
     {
       "id": 55,
       "title": "Разработка приложений для медицинской сферы !последняя",
-      "price": "1300 USD",
+      "price": "1300  ",
       "timing": "3 недели",
       "owner": 1,
       "img": "https://example.com/service55.jpg",
