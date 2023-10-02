@@ -22,6 +22,7 @@ const userContainer = document.querySelector('.container--person');
 const tasksContainer = document.querySelector('.container--tasks');
 const historyBalanceContainer = document.querySelector('.container--balanceHistory')
 const historyTasksContainer = document.querySelector('.container--tasksHistory')
+const pendingContainer = document.querySelector('.container--pending')
 
 const personImg = document.querySelector('.person-img')
 
@@ -55,7 +56,7 @@ personImg.src = user.img;
 function tasksListRender(container, user) {
 
     let list;
-   
+
     let mod;
 
     if (user.client) {
@@ -98,12 +99,14 @@ function choicePageRender() {
     if (id == 0 || id == user.id) {
         // страница активного юзера
         tasksListRender(tasksContainer, user) //нужен список активных тасков
-        renderBalanceHistory(historyBalanceContainer)
-        createPersonalProfileCard(user, userContainer)
+        renderBalanceHistory(historyBalanceContainer);
+        createPersonalProfileCard(user, userContainer);
+        renderPendingCards(pendingContainer, user);
+
 
         return
     }
-
+    //страница другого пользователя
 
 
     const target = usersData.find(el => el.id == id);
@@ -130,4 +133,14 @@ function getQueryParameters() {
     });
 
     return params;
+}
+
+function renderPendingCards(container, user) {
+
+    let list;
+    let mod = "pendingTasks"
+    list = user.pendingTasks;
+    container.innerHTML = ' '
+    const selectPositions = productsData.filter(item => list.includes(item.id));
+    selectPositions.forEach(pos => { createCartCards(container, pos, "user", mod) });
 }
