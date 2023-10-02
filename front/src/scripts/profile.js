@@ -7,7 +7,8 @@ import {
 } from './domBuider.js'
 import {
     setLsbyKey,
-    getLsbyKey
+    getLsbyKey,
+    forcePushToField
 
 } from './utils.js'
 import {
@@ -41,21 +42,20 @@ getServices('../data/base.json', usersData)
     .then(updatedProductsData => {
         if (productsData.length < 1)
             productsData = updatedProductsData;
-        tasksListRender(tasksContainer) //нужен список активных тасков
-        renderBalanceHistory(historyBalanceContainer)
+        choicePageRender()
 
 
     });
 
 
 personImg.src = user.img;
-createPersonalProfileCard(user, userContainer)
 
 
-function tasksListRender(container) {
+
+function tasksListRender(container, user) {
 
     let list;
-    user = User.load();
+   
     let mod;
 
     if (user.client) {
@@ -88,4 +88,46 @@ function renderBalanceHistory(container) {
     console.log(list)
 
 
+}
+
+
+function choicePageRender() {
+    const queryParams = getQueryParameters();
+    const id = queryParams.id;
+    user = User.load();
+    if (id == 0 || id == user.id) {
+        // страница активного юзера
+        tasksListRender(tasksContainer, user) //нужен список активных тасков
+        renderBalanceHistory(historyBalanceContainer)
+        createPersonalProfileCard(user, userContainer)
+
+        return
+    }
+
+
+
+    const target = usersData.find(el => el.id == id);
+    console.log(id)
+    console.log(target)
+    const taskList = target.client ? target.listOfOrders : target.listOfServices;
+
+    // todo
+    //в taskList номера ативных карточек - надо их запросить с сервера и потом отрисовать в контейнере tasksContainer
+    createPersonalProfileCard(target, userContainer)
+
+}
+
+
+function getQueryParameters() {
+    const queryString = window.location.search;
+    const params = {};
+
+    const keyValuePairs = queryString.slice(1).split('&');
+
+    keyValuePairs.forEach(keyValue => {
+        const [key, value] = keyValue.split('=');
+        params[key] = decodeURIComponent(value);
+    });
+
+    return params;
 }

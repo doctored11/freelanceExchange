@@ -1,7 +1,7 @@
 "use strict"
 //==========================================
 
-import{goDeleteTask} from './domBuider.js'
+import { goDeleteTask } from './domBuider.js'
 
 
 // Получение id из LS
@@ -63,16 +63,75 @@ export function removeFromBasket(id) {
     }
 }
 export function removeFromLs(id, key) {
-  
+
     const list = getLsbyKey(key)
     const index = list.indexOf(id);
     console.log(id)
     console.log(list)
     console.log(index)
-   
+
     if (index !== -1) {
         list.splice(index, 1);
-        
+
         setLsbyKey(key, list)
+    }
+}
+
+export function forcePushToField(key, field, newElements, add = true, id = null) {
+    try {
+        const data = getLsbyKey(key);
+
+        if (!data) {
+            throw new Error(` ключ "${key}" не найден `);
+        }
+        let item = data;
+        if (id)
+            item = data.find((item) => item.id === id);
+
+        if (!item) {
+            throw new Error(`айтем ${id} не найден по ключу ${key}.`);
+        }
+
+        if (!item[field]) {
+            item[field] = [];
+        }
+
+        if (add) {
+            item[field].push(...newElements);
+        } else {
+            item[field] = newElements;
+        }
+
+        setLsbyKey(key, data);
+    } catch (error) {
+        console.error(error);
+    }
+}
+export  function forceRemoveFromField(key, field, elementsToRemove, id = null) {
+    try {
+        const data = getLsbyKey(key);
+
+        if (!data) {
+            throw new Error(`Ключ "${key}" не найден`);
+        }
+
+        let item = data;
+        if (id) {
+            item = data.find((item) => item.id === id);
+            if (!item) {
+                throw new Error(`Элемент с id ${id} не найден по ключу ${key}`);
+            }
+        }
+
+        if (!item[field] || !Array.isArray(item[field])) {
+            console.error(`Поле "${field}" не является массивом`);
+            return;
+        }
+
+        item[field] = item[field].filter((item) => !elementsToRemove.includes(item));
+
+        setLsbyKey(key, data);
+    } catch (error) {
+        console.error(error);
     }
 }

@@ -19,3 +19,27 @@ document.getElementById('myForm').addEventListener('submit', function (e) {
   updateMoneyNowText()
   console.log(loadedUser)
 });
+
+
+
+const withdrawalForm = document.getElementById('withdrawalForm');
+
+
+withdrawalForm.addEventListener('submit', function (event) {
+
+  event.preventDefault();
+
+  const numberInput = withdrawalForm.querySelector('#numberInput');
+  const number = parseFloat(numberInput.value);
+  if (number <= 0) return
+
+  user = User.load();
+  const nowBalance = user.balance.getActiveBalance()
+  if (nowBalance < number) return;
+  user.balance.activeBalance = nowBalance - parseInt(number)
+  user.save();
+  const loadedUser = User.load();
+  updateMoneyNowText()
+  console.log(loadedUser)
+
+});

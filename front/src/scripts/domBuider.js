@@ -3,7 +3,8 @@ import {
     setBasketLocalStorage,
     checkingRelevanceValueBasket,
     removeFromBasket, setLsbyKey,
-    getLsbyKey, removeFromLs
+    getLsbyKey, removeFromLs,
+    forcePushToField,forceRemoveFromField
 
 } from './utils.js'
 import { updateMoneyNowText } from './balanceChecker.js'
@@ -74,7 +75,7 @@ function clickToCart(id) {
 
 }
 //todo пернести из dombuild
-function goBuy(container, price) {
+function goBuy(container, price, id) {
 
     const user = User.load();
 
@@ -82,6 +83,12 @@ function goBuy(container, price) {
 
     user.save();
     updateMoneyNowText();
+    forcePushToField("user", "pendingTasks", [id], true);
+    forcePushToField("users", "pendingTasks", [id], true, user.id); //вместо это отдавать эту информацию серверу. 
+    //todo
+    //отправить запрос на сервер о том что откликнулся на заказ, 
+    //  и отправить другой стороне что с его карточкй происходит действие
+
 
 
 
@@ -96,8 +103,8 @@ function goBuy(container, price) {
     container.insertAdjacentHTML('beforeend', cardItem);
 
 }
-function goDoing(container) {
-
+function goDoing(container,id) {
+    const user = User.load();
     const cardItem =
         `
     <div>
@@ -107,8 +114,11 @@ function goDoing(container) {
     </div>
     `
     container.insertAdjacentHTML('beforeend', cardItem);
+    forcePushToField("user", "pendingTasks", [id], true);
+    forcePushToField("users", "pendingTasks", [id], true, user.id);//вместо это отдавать эту информацию серверу. 
 }
 export function goDeleteTask(container, id) {
+    const user = User.load();
     container.innerHTML = " ";
     const tasksArray = getLsbyKey("services");
     // console.log(tasksArray)
@@ -122,6 +132,7 @@ export function goDeleteTask(container, id) {
     console.log(indexToRemove);
     console.log(tasksArray);
     setLsbyKey('services', tasksArray)
+    
 
 }
 //
@@ -188,6 +199,8 @@ export function createCartCards(container, data, key = "basket", modifier = "non
     container.insertAdjacentHTML('beforeend', cardItem);
 
     const btn = container.querySelector(`[data-id="${id}"]`);
+
+    if (key == null) return
     btn.addEventListener('click', () => {
         deleteCard(id, key, container, modifier);
 
@@ -197,7 +210,7 @@ export function createCartCards(container, data, key = "basket", modifier = "non
         if (indexToRemove !== -1) {
             tasksArray.splice(indexToRemove, 1);
         }
-        setLsbyKey("services",tasksArray)
+        setLsbyKey("services", tasksArray)
 
     });
 
@@ -232,10 +245,11 @@ export function renderPeopleCard(data, container) {
     const { id, img, date, bio, descr, listOfServices } = data;
 
     const cardItem =
+        // ссылку поменял! - мб логический баг
         `
                 <div class="card profile-card" data-product-id="${id}">
                     <div class="card__top profile-card_top">
-                        <a href="/servicePage.html?id=serviceCase${id}" class="card__image profile-card__image ">
+                        <a href="/userPage.html?id=${id}" class="card__image profile-card__image "> 
                             <img class=" img card__img --test-get-img"
                                 src="${img}"
                                 alt="${bio}"
@@ -311,7 +325,7 @@ export function renderTaskCard(data, container) {
         evBtn.addEventListener('click', () => goDoing(container));
     }
     else if (type != 'order') {
-        evBtn.addEventListener('click', () => goBuy(container, price));
+        evBtn.addEventListener('click', () => goBuy(container, price, id));
     } if (user.id == ownerId) {
         evBtn.addEventListener('click', () => goDeleteTask(container, id));
 

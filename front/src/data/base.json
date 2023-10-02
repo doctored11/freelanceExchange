@@ -1,114 +1,122 @@
 [
-    
-    {
-      "id": 1,
-      "bio": "Иван Иванов",
-      "date": "2023-09-30",
-      "img": "https://example.com/service1.jpg",
-      "descr": "Создание виртуальной реальности для образовательных целей.",
-      "client": false,
-      "implementer": true,
-      "listOfOrders": [],
-      "listOfServices": [0, 1, 2]
-    },
-    {
-      "id": 2,
-      "bio": "Анна Смирнова",
-      "date": "2023-09-30",
-      "img": "https://example.com/service2.jpg",
-      "descr": "Разработка мобильных приложений для Android и iOS.",
-      "client": true,
-      "implementer": false,
-      "listOfOrders": [],
-      "listOfServices": [3, 4]
-    },
-    {
-      "id": 3,
-      "bio": "Петр Петров",
-      "date": "2023-09-30",
-      "img": "https://example.com/service3.jpg",
-      "descr": "Графический дизайн и иллюстрации.",
-      "client": false,
-      "implementer": true,
-      "listOfOrders": [],
-      "listOfServices": [5, 6, 7]
-    },
-    {
-      "id": 4,
-      "bio": "Елена Козлова",
-      "date": "2023-09-30",
-      "img": "https://example.com/service4.jpg",
-      "descr": "Разработка веб-сайтов и веб-приложений.",
-      "client": true,
-      "implementer": false,
-      "listOfOrders": [],
-      "listOfServices": [8, 9]
-    },
-    {
-      "id": 5,
-      "bio": "Дмитрий Сергеев",
-      "date": "2023-09-30",
-      "img": "https://example.com/service5.jpg",
-      "descr": "Контент-маркетинг и SEO-оптимизация.",
-      "client": false,
-      "implementer": true,
-      "listOfOrders": [],
-      "listOfServices": [10]
-    },
-    {
-      "id": 6,
-      "bio": "Мария Кузнецова",
-      "date": "2023-09-30",
-      "img": "https://example.com/service6.jpg",
-      "descr": "Разработка игр для мобильных устройств.",
-      "client": true,
-      "implementer": false,
-      "listOfOrders": [],
-      "listOfServices": [11, 12, 13]
-    },
-    {
-      "id": 7,
-      "bio": "Александр Игнатов",
-      "date": "2023-09-30",
-      "img": "https://example.com/service7.jpg",
-      "descr": "Анализ данных и машинное обучение.",
-      "client": false,
-      "implementer": true,
-      "listOfOrders": [],
-      "listOfServices": [14, 15]
-    },
-    {
-      "id": 8,
-      "bio": "Ольга Новикова",
-      "date": "2023-09-30",
-      "img": "https://example.com/service8.jpg",
-      "descr": "Видеомонтаж и анимация.",
-      "client": true,
-      "implementer": false,
-      "listOfOrders": [],
-      "listOfServices": [16, 17, 18, 19]
-    },
-    {
-      "id": 9,
-      "bio": "Андрей Петров",
-      "date": "2023-09-30",
-      "img": "https://example.com/service9.jpg",
-      "descr": "Разработка программного обеспечения.",
-      "client": false,
-      "implementer": true,
-      "listOfOrders": [],
-      "listOfServices": [20, 21, 22]
-    },
-    {
-      "id": 10,
-      "bio": "Евгения Сидорова",
-      "date": "2023-09-30",
-      "img": "https://example.com/service10.jpg",
-      "descr": "Дизайн интерфейсов и пользовательских опытов.",
-      "client": true,
-      "implementer": false,
-      "listOfOrders": [],
-      "listOfServices": [23]
-    }
-  ]
-  
+  {
+    "id": 1,
+    "bio": "Иван Иванов",
+    "date": "2023-09-30",
+    "img": "https://example.com/service1.jpg",
+    "descr": "Создание виртуальной реальности для образовательных целей.",
+    "client": false,
+    "implementer": true,
+    "listOfOrders": [],
+    "rate": 5,
+    "listOfServices": [0, 1, 2]
+  },
+  {
+    "id": 2,
+    "bio": "Анна Смирнова",
+    "date": "2023-09-30",
+    "img": "https://example.com/service2.jpg",
+    "descr": "Разработка мобильных приложений для Android и iOS.",
+    "client": true,
+    "implementer": false,
+    "listOfOrders": [],
+    "rate": 5,
+    "listOfServices": [3, 4]
+  },
+  {
+    "id": 3,
+    "bio": "Петр Петров",
+    "date": "2023-09-30",
+    "img": "https://example.com/service3.jpg",
+    "descr": "Графический дизайн и иллюстрации.",
+    "client": false,
+    "implementer": true,
+    "listOfOrders": [],
+    "rate": 5,
+    "listOfServices": [5, 6, 7]
+  },
+  {
+    "id": 4,
+    "bio": "Елена Козлова",
+    "date": "2023-09-30",
+    "img": "https://example.com/service4.jpg",
+    "descr": "Разработка веб-сайтов и веб-приложений.",
+    "client": true,
+    "implementer": false,
+    "listOfOrders": [],
+    "rate": 5,
+    "listOfServices": [8, 9]
+  },
+  {
+    "id": 5,
+    "bio": "Дмитрий Сергеев",
+    "date": "2023-09-30",
+    "img": "https://example.com/service5.jpg",
+    "descr": "Контент-маркетинг и SEO-оптимизация.",
+    "client": false,
+    "implementer": true,
+    "listOfOrders": [],
+    "rate": 4,
+    "listOfServices": [10]
+  },
+  {
+    "id": 6,
+    "bio": "Мария Кузнецова",
+    "date": "2023-09-30",
+    "img": "https://example.com/service6.jpg",
+    "descr": "Разработка игр для мобильных устройств.",
+    "client": true,
+    "implementer": false,
+    "listOfOrders": [],
+    "rate": 5,
+    "listOfServices": [11, 12, 13]
+  },
+  {
+    "id": 7,
+    "bio": "Александр Игнатов",
+    "date": "2023-09-30",
+    "img": "https://example.com/service7.jpg",
+    "descr": "Анализ данных и машинное обучение.",
+    "client": false,
+    "implementer": true,
+    "listOfOrders": [],
+    "rate": 5,
+    "listOfServices": [14, 15]
+  },
+  {
+    "id": 8,
+    "bio": "Ольга Новикова",
+    "date": "2023-09-30",
+    "img": "https://example.com/service8.jpg",
+    "descr": "Видеомонтаж и анимация.",
+    "client": true,
+    "implementer": false,
+    "listOfOrders": [],
+    "rate": 5,
+    "listOfServices": [16, 17, 18, 19]
+  },
+  {
+    "id": 9,
+    "bio": "Андрей Петров",
+    "date": "2023-09-30",
+    "img": "https://example.com/service9.jpg",
+    "descr": "Разработка программного обеспечения.",
+    "client": false,
+    "implementer": true,
+    "listOfOrders": [],
+    "rate": 5,
+    "listOfServices": [20, 21, 22]
+  },
+  {
+    "id": 10,
+    "bio": "Евгения Сидорова",
+    "date": "2023-09-30",
+    "img": "https://example.com/service10.jpg",
+    "descr": "Дизайн интерфейсов и пользовательских опытов.",
+    "client": true,
+    "implementer": false,
+    "listOfOrders": [],
+    "rate": 3,
+    "listOfServices": [23]
+  }
+]
