@@ -4,7 +4,7 @@ import {
     checkingRelevanceValueBasket,
     removeFromBasket, setLsbyKey,
     getLsbyKey, removeFromLs,
-    forcePushToField,forceRemoveFromField
+    forcePushToField, forceRemoveFromField
 
 } from './utils.js'
 import { updateMoneyNowText } from './balanceChecker.js'
@@ -76,7 +76,7 @@ function clickToCart(id) {
 }
 //todo пернести из dombuild
 function goBuy(container, price, id) {
-
+    console.log("buy")
     const user = User.load();
 
     user.balance.freeze(price);
@@ -103,8 +103,9 @@ function goBuy(container, price, id) {
     container.insertAdjacentHTML('beforeend', cardItem);
 
 }
-function goDoing(container,id) {
+function goDoing(container, id) {
     const user = User.load();
+    console.log("do")
     const cardItem =
         `
     <div>
@@ -121,7 +122,7 @@ export function goDeleteTask(container, id) {
     const user = User.load();
     container.innerHTML = " ";
     const tasksArray = getLsbyKey("services");
-    // console.log(tasksArray)
+    console.log("del")
 
     const indexToRemove = tasksArray.findIndex(item => item.id == id);
     console.log(id)
@@ -131,8 +132,13 @@ export function goDeleteTask(container, id) {
     }
     console.log(indexToRemove);
     console.log(tasksArray);
+
+    // написал в бреду ( удаление из списка у user ) - вроде норм 
+    //todo -проверить со стороны логики ( этот и аналогичные методы)
     setLsbyKey('services', tasksArray)
-    
+    const field = user.client ? "listOfOrders" : "listOfServices";
+    forceRemoveFromField("user", field, [id]);
+
 
 }
 //
@@ -320,14 +326,14 @@ export function renderTaskCard(data, container) {
 
 
     const evBtn = container.querySelector(`.buy-btn`);
-
-    if (type == 'order') {
-        evBtn.addEventListener('click', () => goDoing(container));
-    }
-    else if (type != 'order') {
-        evBtn.addEventListener('click', () => goBuy(container, price, id));
-    } if (user.id == ownerId) {
+    if (user.id == ownerId) {
         evBtn.addEventListener('click', () => goDeleteTask(container, id));
 
-    }
+    } else
+        if (type == 'order') {
+            evBtn.addEventListener('click', () => goDoing(container));
+        }
+        else if (type != 'order') {
+            evBtn.addEventListener('click', () => goBuy(container, price, id));
+        }
 }
