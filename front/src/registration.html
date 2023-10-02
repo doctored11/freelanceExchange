@@ -1,154 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="./styles/normalize.css" />
-    <link rel="stylesheet" href="./styles/style.css" />
-  </head>
-  <body>
-    <header class="header">
-      <div class="header__frame frame">
-        <div class="header__main-head">
-          <div class="header__nav-block">
-            <a href="#" class="header__logo logo">
-              <!-- логотип ( наверное svg) -->
-            </a>
 
-            <div class="header__interaction-block">
-              <div class="header__search-block search-block">
-                <form action="#" class="search-block__form">
-                  <input
-                    type="text"
-                    class="search-block__input"
-                    placeholder="Поиск"
-                  /><span class="search-block__input-line"></span>
-                </form>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  class="search-block__ico search-ico"
-                >
-                  <path
-                    d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
-                    stroke="#000"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M21 21L16.65 16.65"
-                    stroke="#000"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="./styles/normalize.css" />
+  <link rel="stylesheet" href="./styles/style.css" />
+  <link rel="stylesheet" href="styles/registration-form.css">
+  <script src="./scripts/reg.js" type="module" defer></script>
+</head>
 
-              <div class="header__antefication-block antefication-block">
-                <p class="moneyNow"></p>
-                <button class="antefication-block__btn btn entrance-btn">
-                  Вход</button
-                ><button class="antefication-block__btn btn registration-btn">
-                  Регистрация
-                </button>
-              </div>
-            </div>
-          </div>
-          <ul class="header__nav nav list">
-            <li class="nav__link txt">
-              <a href="#" class="nav__hyper-txt">секция навигации 1 </a>
-            </li>
-            <li class="nav__link txt">
-              <a href="#" class="nav__hyper-txt"> секция навигации </a>
-            </li>
-            <li class="nav__link txt">
-              <a href="#" class="nav__hyper-txt"> секция навигации </a>
-            </li>
-            <li class="nav__link txt">
-              <a href="#" class="nav__hyper-txt"> секция навигации </a>
-            </li>
-            <li class="nav__link txt">
-              <a href="#" class="nav__hyper-txt">секция навигации </a>
-            </li>
-          </ul>
-        </div>
-        <div class="test-links" style="display: flex">
-          <a href="categories.html" class="test">переход в категории 🤡</a>
-          <a href="cart.html" class="test">переход в корзину 🤡</a>
-          <a href="taskEditor.html" class="test">переход в TaskEditor 🤡</a>
-          <a href="payment.html" class="test">переход в Пополнение 🤑</a>
-          <a href="registration.html" class="test">переход в регистратуру 🦍</a>
-          <a href="userPage.html?id=0" class="test">переход в профиль 🐖</a>
-        </div>
+<body>
+
+  <form id="registration-form" class="registration-form__form">
+    <p class="form__label">Авторизация</p>
+
+    <div class="form__switch">
+      <div class="form-switch__btn signin-btn active">Вход</div>
+      <div class="form-switch__btn signup-btn">Регистрация</div>
+    </div>
+    <div class="form__switch">
+      <div class="form-switch__btn seller-btn active">Заказчик</div>
+      <div class="form-switch__btn coder-btn">Фрилансер</div>
+    </div>
+
+    <div class="registration-form__form-group">
+      <label for="name" class="registration-form__label txt">Имя</label>
+      <input type="text" id="name" name="name" class="registration-form__input" placeholder=" " required />
+    </div>
+    <div class="registration-form__form-group">
+      <label for="lastname" class="registration-form__label txt">Фамилия</label>
+      <input type="name" id="lastname" name="lastname" class="registration-form__input" placeholder=" " required />
+    </div>
+    <div class="registration-form__form-group">
+      <label for="email" class="registration-form__label txt">Email</label>
+      <input type="email" id="email" name="email" class="registration-form__input" placeholder=" " required />
+    </div>
+    <div class="registration-form__form-group">
+      <label for="password" class="registration-form__label txt">Пароль</label>
+      <input type="password" id="password" name="password" class="registration-form__input" placeholder=" " required />
+    </div>
+
+
+    <!-- <div class="registration-form__form-group">
+      <label class="registration-form__label">Выберите роль:</label>
+      <div class="registration-form__role-checkboxes">
+        <label class="registration-form__role-label txt">
+          <input type="checkbox" name="role" value="client" class="registration-form__role-checkbox" />
+          Заказчик
+        </label>
+        <label class="registration-form__role-label txt">
+          <input type="checkbox" name="role" value="implementer" class="registration-form__role-checkbox" />
+          Исполнитель
+        </label>
       </div>
-    </header>
-    <main class="main">
-      <div class="frame">
-        <div class="registration-form">
-          <h2 class="registration-form__title">Регистрация</h2>
-          <form id="registration-form" class="registration-form__form">
-            <div class="registration-form__form-group">
-              <label for="name" class="registration-form__label txt"
-                >Имя:</label
-              >
-              <input
-                type="text"
-                id="name"
-                name="name"
-                class="registration-form__input"
-                required
-              />
-            </div>
-            <div class="registration-form__form-group">
-              <label for="email" class="registration-form__label txt"
-                >Email:</label
-              >
-              <input
-                type="email"
-                id="email"
-                name="email"
-                class="registration-form__input"
-                required
-              />
-            </div>
-            <div class="registration-form__form-group">
-              <label class="registration-form__label">Выберите роль:</label>
-              <div class="registration-form__role-checkboxes">
-                <label class="registration-form__role-label txt">
-                  <input
-                    type="checkbox"
-                    name="role"
-                    value="client"
-                    class="registration-form__role-checkbox"
-                  />
-                  Заказчик
-                </label>
-                <label class="registration-form__role-label txt">
-                  <input
-                    type="checkbox"
-                    name="role"
-                    value="implementer"
-                    class="registration-form__role-checkbox"
-                  />
-                  Исполнитель
-                </label>
-              </div>
-            </div>
-            <button type="submit" class="registration-form__submit-button btn">
-              Зарегистрироваться
-            </button>
-          </form>
-        </div>
-      </div>
-      <script src="./scripts/reg.js" type="module"></script>
-      <script src="./scripts/balanceChecker.js" type="module"></script>
+    </div> -->
 
-    </main>
-  </body>
+
+    <div class="form__submit">
+      <button class="registration-form__submit-button btn" disabled>Отправить</button>
+      <a class="registration-form__cancel-button btn" href="index.html">Отменить</a>
+    </div>
+    <!-- Текст об ощибке(в самом конце reg.js) надо обработать -->
+    <p id="registration-form__error"></p>
+  </form>
+
+  <!-- <script src="./scripts/balanceChecker.js" type="module"></script> -->
+</body>
+
 </html>
