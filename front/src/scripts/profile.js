@@ -101,6 +101,8 @@ function choicePageRender() {
         tasksListRender(tasksContainer, user) //нужен список активных тасков
         renderBalanceHistory(historyBalanceContainer);
         createPersonalProfileCard(user, userContainer);
+
+        document.querySelector('.info-text').innerHTML+= "<p class ='txt txt--profile'>не подтвержденные карточки ⬇</p>" //костылек
         renderPendingCards(pendingContainer, user);
 
 

@@ -15,7 +15,6 @@ let productsData = [];
 let usersData = [];
 
 
-
 getServices('../data/base.json', usersData)
     .then(updatedUsersData => {
         usersData = updatedUsersData;
