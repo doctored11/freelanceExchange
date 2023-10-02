@@ -30,6 +30,7 @@ getServices('../data/base.json', usersData)
 
 
 // желательно кнопку блокировать пока usersData не получен todo
+let email;
 function handleFormSubmit(event) {
     if (sendBtn.disabled) {
         document.querySelector('#registration-form__error').value = 'fatal error'

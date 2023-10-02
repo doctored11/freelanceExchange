@@ -90,7 +90,7 @@ taskForm.addEventListener("submit", function (e) {
        user.listOfOrders.push(taskData.id)
 
     } else {
-        user.listOfServices(taskData.id)
+        user.listOfServices.push(taskData.id)
     }
     user.save();
     console.log(updatedTasksObj);

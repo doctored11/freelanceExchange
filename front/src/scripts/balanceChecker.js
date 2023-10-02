@@ -8,6 +8,7 @@ import {
 export function updateMoneyNowText() {
     console.log("деньги")
     const moneyNowElement = document.querySelector('.moneyNow');
+    if(!moneyNowElement) return
     const moneyValue = getLsbyKey('balance');
     if (!moneyValue.activeBalance) return
     moneyNowElement.textContent = `Текущий баланс: ${moneyValue.activeBalance}`;
