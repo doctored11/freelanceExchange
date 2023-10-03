@@ -17,29 +17,31 @@ let productsData = [];
 let usersData = [];
 
 
-getServices('../data/base.json', usersData)
-    .then(updatedUsersData => {
-        usersData = updatedUsersData;
-        return getServices('../data/products.json');
-    })
-    .then(updatedProductsData => {
-        productsData = updatedProductsData;
-        console.log(productsData);
-        console.log(usersData);
+// getServices('../data/base.json', usersData)
+//     .then(updatedUsersData => {
+//         usersData = updatedUsersData;
+//         return getServices('../data/products.json');
+//     })
+//     .then(updatedProductsData => {
+//         productsData = updatedProductsData;
+//         console.log(productsData);
+//         console.log(usersData);
 
-    });
+//     });
 
 
 
 // желательно кнопку блокировать пока usersData не получен todo
 let email;
- async function handleFormSubmit(event) {
+async function handleFormSubmit(event) {
     if (sendBtn.disabled) {
         document.querySelector('#registration-form__error').value = 'fatal error'
         // document.querySelector('#registration-form__error').classList.add('registration-form__error'); //Текст об ошибке
         return false //Если кнопка выключена(не введены все данные), то выходим из события
     }
     event.preventDefault();
+
+
 
 
     personName = inputName.value;
@@ -52,30 +54,50 @@ let email;
     // 
     // const id = usersData.length + 1; // когда будет Бд
 
- 
-    const id = await DataManager.getUsersCount() + 1;
-    console.log(id)
-    const today = new Date();
-    const day = String(today.getDate()).padStart(2, '0');
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const year = today.getFullYear();
-    const formattedDate = `${day}.${month}.${year}`;
 
 
-    let user = new User(id, personName, formattedDate, 0, 0, null, '🤡', client, implementer, [], [])
+    //логика входа
+    //в разработке
+
+
+    //todo
+    // -----!Пока для входа нужно просто ввести id в строку имени
+    if (flagLog) {
+
+        let user = await DataManager.getUserById(personName)
+
+        user = User.createUserFromObject(user)
+        user.save();
+
+    } else {
+
+        //логика регистрации
+        const id = await DataManager.getMaxUserId() + 1;
+        console.log(id)
+        const today = new Date();
+        const day = String(today.getDate()).padStart(2, '0');
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const year = today.getFullYear();
+        const formattedDate = `${day}.${month}.${year}`;
+
+
+        const user = new User(id, personName, formattedDate, 0, 0, null, '🤡', client, implementer, [], [])
+
+        //сохранение
+        DataManager.addUser(user);
+        user.save();
+        user = User.load();
+
+    }
 
 
 
 
-    //сохранение
-    user.save();
-    user = User.load();
-    DataManager.addUser(user);
 
 
     setLsbyKey('balanceHistory', []);
     setLsbyKey('basket', []);
-  
+
 
 
 

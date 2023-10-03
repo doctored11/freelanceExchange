@@ -73,7 +73,8 @@ taskForm.addEventListener("submit", async function (e) {
     });
 
     // const allTasks = getLsbyKey('services');
-    const tasksCount = await DataManager.getTasksCount();
+    const tasksCount = await DataManager.getMaxServiceId() + 1;
+
     taskData.id = tasksCount;
     taskData.owner = user.bio;
     taskData.ownerId = user.id;
@@ -92,7 +93,7 @@ taskForm.addEventListener("submit", async function (e) {
     // setLsbyKey('services', updatedTasksObj);
 
 
-    
+
     console.log(user)
 
     if (user.client) {
@@ -104,6 +105,6 @@ taskForm.addEventListener("submit", async function (e) {
     user.save();
     user = User.load();
     DataManager.updateUserById(user.id, user);
-    
+
 });
 

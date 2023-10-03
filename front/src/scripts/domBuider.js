@@ -15,6 +15,7 @@ import { deleteFromCart, deleteCard, } from './cart.js'
 export function createCards(container, serviceData) {
 
     serviceData.forEach(async (card) => {
+        console.log(card)
 
         const { id, img, title, price, descr, timing, owner, ownerId, type } = card;
         let userName
@@ -85,10 +86,20 @@ async function goBuy(container, price, id) {
     user.save()
 
     user.pendingTasks.push(id)
-    user.balance.freeze(price);
+    if (!user.balance.freeze(price)) return;
 
     user.save();
     updateMoneyNowText();
+
+    let task = await DataManager.getServiceById(id);
+
+    task.status = "pending";
+
+
+    let owner = await DataManager.getUserById(task.ownerId);
+    owner = User.createUserFromObject(owner);
+    owner.pendingTasks.push(id);
+    DataManager.updateUserById(owner.id, owner);
 
 
 
@@ -112,8 +123,12 @@ async function goBuy(container, price, id) {
     container.insertAdjacentHTML('beforeend', cardItem);
 
 }
-function goDoing(container, id) {
-    const user = User.load();
+async function goDoing(container, id) {
+    let user = User.load();
+    user = await DataManager.getUserById(user.id)
+    user = User.createUserFromObject(user);
+    user.save()
+
     console.log("do")
     const cardItem =
         `
@@ -125,7 +140,21 @@ function goDoing(container, id) {
     `
     container.insertAdjacentHTML('beforeend', cardItem);
     forcePushToField("user", "pendingTasks", [id], true);
-    forcePushToField("users", "pendingTasks", [id], true, user.id);//вместо это отдавать эту информацию серверу. 
+
+    let task = await DataManager.getServiceById(id);
+
+    task.status = "pending";
+
+
+    DataManager.updateServiceById(id, task)
+    user = User.load();
+    user.save();
+
+    let owner = await DataManager.getUserById(task.ownerId);
+    owner = User.createUserFromObject(owner);
+    owner.pendingTasks.push(id);
+    DataManager.updateUserById(owner.id, owner);
+
 }
 export async function goDeleteTask(container, id) {
     let user = User.load();
@@ -345,7 +374,7 @@ export function renderTaskCard(data, container) {
 
     } else
         if (type == 'order') {
-            evBtn.addEventListener('click', () => goDoing(container));
+            evBtn.addEventListener('click', () => goDoing(container, id));
         }
         else if (type != 'order') {
             evBtn.addEventListener('click', () => goBuy(container, price, id));

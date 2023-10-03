@@ -51,8 +51,10 @@ let usersData = [];
 //         // -------------
 //         renderStartPage(productsData, usersData);
 //     });
-productsData= await DataManager.getServicesInRange(0,1); //подумать тут)
+productsData= await DataManager.getServicesInRange(0,2); //подумать тут)
+console.log(productsData)
 renderStartPage( productsData);
+
 btnShowCards.addEventListener('click', sliceArrCards);
 
 
@@ -66,7 +68,7 @@ function renderStartPage( serviceData) {
     };
 
    
-    console.log(serviceData)
+   
     createCards(container, serviceData);
 
 }

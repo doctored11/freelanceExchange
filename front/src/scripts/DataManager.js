@@ -55,8 +55,8 @@ export class DataManager {
             servData = {};
         }
         console.log(task.id)
-        const newId = task.id ==null || TrackEvent.id<0 ?Date.now():task.id ;
-      
+        const newId = task.id == null || TrackEvent.id < 0 ? Date.now() : task.id;
+
 
         servData[newId] = task;
         return fetch(`${src}services.json`, {
@@ -130,7 +130,7 @@ export class DataManager {
 
         return Promise.all(promises)
             .then(data => {
-                console.log( data);
+                console.log(data);
                 return data;
             })
             .catch(error => {
@@ -142,14 +142,16 @@ export class DataManager {
         return fetch(`${src}services.json`)
             .then(response => response.json())
             .then(data => {
-              
-                const servicesArray = Array.isArray(data) ? data : Object.values(data);
-    
+
+                let servicesArray = Array.isArray(data) ? data : Object.values(data);
+                servicesArray = servicesArray.filter(service => service !== null);
+
+
                 if (min < 0) min = 0;
                 if (max >= servicesArray.length) max = servicesArray.length - 1;
 
                 const servicesInRange = servicesArray.slice(min, max + 1);
-    
+
                 console.log(servicesInRange);
                 return servicesInRange;
             })
@@ -158,7 +160,7 @@ export class DataManager {
                 throw error;
             });
     }
-    
+
     static async getUsersCount() {
         try {
             const response = await fetch(`${src}users.json`);
@@ -175,6 +177,24 @@ export class DataManager {
             return 0;
         }
     }
+    static async getMaxUserId() {
+        try {
+            const response = await fetch(`${src}users.json`);
+            const usersData = await response.json();
+
+            if (usersData) {
+                const userIds = Object.keys(usersData).map(id => parseInt(id, 10));
+                const maxId = Math.max(...userIds);
+                return maxId;
+            } else {
+                return 0;
+            }
+        } catch (error) {
+            console.error('ошибка максUser');
+            return 0;
+        }
+    }
+
     static async getTasksCount() {
         try {
             const response = await fetch(`${src}services.json`);
@@ -191,6 +211,24 @@ export class DataManager {
             return 0;
         }
     }
+    static async getMaxServiceId() {
+        try {
+            const response = await fetch(`${src}services.json`);
+            const servicesData = await response.json();
+
+            if (servicesData) {
+                const serviceIds = Object.keys(servicesData).map(id => parseInt(id, 10));
+                const maxId = Math.max(...serviceIds);
+                return maxId;
+            } else {
+                return 0;
+            }
+        } catch (error) {
+            console.error('Ошибка при получении максимального ID задачи (услуги)', error);
+            return 0;
+        }
+    }
+
     static async updateUserById(id, user) {
         const userData = {
             ...user,
@@ -227,7 +265,7 @@ export class DataManager {
             const response = await fetch(`${src}services/${serviceId}.json`, {
                 method: 'DELETE'
             });
-    
+
             if (response.ok) {
                 console.log(`карточка ${serviceId}  удалена`);
                 return true;
@@ -240,6 +278,29 @@ export class DataManager {
             return false;
         }
     }
-    
+    static async updateServiceById(serviceId, service) {
+        try {
+            const response = await fetch(`${src}services/${serviceId}.json`, {
+                method: 'PUT',
+                body: JSON.stringify(service),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                console.log(`Услуга ID ${serviceId} обновлена`);
+                return true;
+            } else {
+                console.error(`ошибка  ID ${serviceId}`);
+                return false;
+            }
+        } catch (error) {
+            console.error('ошибка  запроса (обновление услуг) ');
+            return false;
+        }
+    }
+
+
 
 }
