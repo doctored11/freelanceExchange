@@ -10,6 +10,8 @@ import {
 
 } from './utils.js'
 
+import { DataManager } from './DataManager.js'
+
 
 let productsData = [];
 let usersData = [];
@@ -31,7 +33,7 @@ getServices('../data/base.json', usersData)
 
 // желательно кнопку блокировать пока usersData не получен todo
 let email;
-function handleFormSubmit(event) {
+ async function handleFormSubmit(event) {
     if (sendBtn.disabled) {
         document.querySelector('#registration-form__error').value = 'fatal error'
         // document.querySelector('#registration-form__error').classList.add('registration-form__error'); //Текст об ошибке
@@ -47,10 +49,12 @@ function handleFormSubmit(event) {
     const client = flagClient;
     const implementer = !flagClient;
 
-    // Ваши данные теперь доступны в переменных name, email и roles
+    // 
     // const id = usersData.length + 1; // когда будет Бд
 
-    const id = usersData.length + Math.floor(Math.random() * 100); //пока так, т.к не добавляю пока в бд пользователя
+ 
+    const id = await DataManager.getUsersCount() + 1;
+    console.log(id)
     const today = new Date();
     const day = String(today.getDate()).padStart(2, '0');
     const month = String(today.getMonth() + 1).padStart(2, '0');
@@ -58,15 +62,32 @@ function handleFormSubmit(event) {
     const formattedDate = `${day}.${month}.${year}`;
 
 
-    const user = new User(id, personName, formattedDate, 0, 0, null, '🤡', client, implementer, [], [])
+    let user = new User(id, personName, formattedDate, 0, 0, null, '🤡', client, implementer, [], [])
+
+
+
+
+    //сохранение
     user.save();
+    user = User.load();
+    DataManager.addUser(user);
+
+
     setLsbyKey('balanceHistory', []);
     setLsbyKey('basket', []);
-    //    отдавать на сервер пользователя
+  
 
 
 
 }
+
+
+
+
+//todo 
+//Визуал⬇ ? если возможно в отдельный скрипт
+
+
 //Полетели обрабатывать
 
 const signInBtn = document.querySelector('.signin-btn');

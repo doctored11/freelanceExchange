@@ -4,7 +4,9 @@ import {
   getLsbyKey
 
 } from './utils.js'
-// пока не смотрите особо - заготовка
+
+import { DataManager } from './DataManager.js';
+
 export class Balance {
   #activeBalance = 0;
   #frozenBalance = 0;
@@ -36,7 +38,8 @@ export class Balance {
       count: amountToFreeze,
       type: 'freeze'
     }
-   Balance. addHistory(balanceStep);
+    Balance.addHistory(balanceStep);
+   
 
     return true;
   }
@@ -56,7 +59,7 @@ export class Balance {
       count: amountToUnfreeze,
       type: 'unFreeze'
     }
-   Balance. addHistory(balanceStep);
+    Balance.addHistory(balanceStep);
 
     return true;
   }
@@ -76,7 +79,8 @@ export class Balance {
       count: amountToSpend,
       type: 'spend'
     }
-   Balance. addHistory(balanceStep);
+    Balance.addHistory(balanceStep);
+  
     return true;
   }
 
@@ -94,7 +98,7 @@ export class Balance {
       count: amountToSpendFrozen,
       type: 'expense'
     }
-   Balance. addHistory(balanceStep);
+    Balance.addHistory(balanceStep);
     return true;
   }
 
@@ -122,7 +126,7 @@ export class Balance {
         count: value,
         type: 'update'
       }
-     Balance. addHistory(balanceStep);
+      Balance.addHistory(balanceStep);
     } else {
       console.error('bal >-1');
     }
@@ -137,6 +141,7 @@ export class Balance {
       activeBalance: this.#activeBalance,
       frozenBalance: this.#frozenBalance,
     }));
+   
 
   }
 
@@ -160,7 +165,7 @@ export class Balance {
     const history = getLsbyKey('balanceHistory') || {};
     history.push(operation);
     setLsbyKey('balanceHistory', history)
-
+   
   }
 
 

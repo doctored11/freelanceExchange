@@ -15,8 +15,12 @@ import {
     getServices
 
 } from './requests.js'
+import { DataManager } from './DataManager.js'
 
 let user = User.load();
+
+
+
 
 const userContainer = document.querySelector('.container--person');
 const tasksContainer = document.querySelector('.container--tasks');
@@ -28,32 +32,38 @@ const personImg = document.querySelector('.person-img')
 
 
 
-let productsData = [];
-let usersData = [];
+// let productsData = [];
+// let usersData = [];
 //пока без бд
-usersData = getLsbyKey("users")
-productsData = getLsbyKey("services")
+// usersData = DataManager.get
+const userCount = DataManager.getUsersCount();
+// productsData = getLsbyKey("services")
 
-getServices('../data/base.json', usersData)
-    .then(updatedUsersData => {
-        if (usersData.length < 1)
-            usersData = updatedUsersData;
-        return getServices('../data/products.json');
-    })
-    .then(updatedProductsData => {
-        if (productsData.length < 1)
-            productsData = updatedProductsData;
-        choicePageRender()
+// getServices('../data/base.json', usersData)
+//     .then(updatedUsersData => {
+//         if (userCount < 1)
+//             usersData = updatedUsersData;
+//         return getServices('../data/products.json');
+//     })
+//     .then(updatedProductsData => {
+//         if (productsData.length < 1)
+//             productsData = updatedProductsData;
+//         choicePageRender()
 
 
-    });
+//     });
 
+
+//--- с расчетом на бек уже
+
+ choicePageRender()
+//--
 
 personImg.src = user.img;
 
 
 
-function tasksListRender(container, user) {
+async function tasksListRender(container, user) {
 
     let list;
 
@@ -69,7 +79,9 @@ function tasksListRender(container, user) {
     }
 
     container.innerHTML = ' '
-    const selectPositions = productsData.filter(item => list.includes(item.id));
+    // const selectPositions = productsData.filter(item => list.includes(item.id));
+    const selectPositions = await DataManager.getListOfServicesByids(list);
+
     selectPositions.forEach(pos => { createCartCards(container, pos, "user", mod) });
 }
 
@@ -102,7 +114,7 @@ function choicePageRender() {
         renderBalanceHistory(historyBalanceContainer);
         createPersonalProfileCard(user, userContainer);
 
-        document.querySelector('.info-text').innerHTML+= "<p class ='txt txt--profile'>не подтвержденные карточки ⬇</p>" //костылек
+        document.querySelector('.info-text').innerHTML += "<p class ='txt txt--profile'>не подтвержденные карточки ⬇</p>" //костылек
         renderPendingCards(pendingContainer, user);
 
 
@@ -111,7 +123,9 @@ function choicePageRender() {
     //страница другого пользователя
 
 
-    const target = usersData.find(el => el.id == id);
+    // const target = usersData.find(el => el.id == id);
+    const target = DataManager.getUserById(id)
+
     console.log(id)
     console.log(target)
     const taskList = target.client ? target.listOfOrders : target.listOfServices;
@@ -137,12 +151,13 @@ function getQueryParameters() {
     return params;
 }
 
-function renderPendingCards(container, user) {
+async function renderPendingCards(container, user) {
 
     let list;
     let mod = "pendingTasks"
     list = user.pendingTasks;
     container.innerHTML = ' '
-    const selectPositions = productsData.filter(item => list.includes(item.id));
+    // const selectPositions = productsData.filter(item => list.includes(item.id));
+    const selectPositions = await DataManager.getListOfServicesByids(list);
     selectPositions.forEach(pos => { createCartCards(container, pos, "user", mod) });
 }

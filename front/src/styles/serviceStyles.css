@@ -1,10 +1,14 @@
 .services__list {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 
   align-content: center;
   justify-content: space-between;
   align-items: stretch;
+}
+.services{
+  width: 100%;
 }
 .service-card {
   width: 30%;

@@ -6,7 +6,7 @@ import {
 } from './domBuider.js'
 
 import { User } from './User.js';
-
+import { DataManager } from './DataManager.js'
 
 
 let user = User.load();
@@ -30,34 +30,40 @@ taskForm.classList.add("none")
 
 
 //пока без бд
-usersData = getLsbyKey("users")
-productsData = getLsbyKey("services")
+// usersData = getLsbyKey("users")
+// productsData = getLsbyKey("services")
+const userCount = DataManager.getUsersCount();
 
-getServices('../data/base.json', usersData)
-    .then(updatedUsersData => {
-        if (usersData.length < 1)
-            usersData = updatedUsersData;
-        setLsbyKey('users', productsData)
-        return getServices('../data/products.json');
-    })
-    .then(updatedProductsData => {
-        if (productsData.length < 1)
-            productsData = updatedProductsData;
-        console.log(productsData);
-        console.log(usersData);
-        setLsbyKey('services', productsData)
-        taskForm.classList.remove("none")
+// getServices('../data/base.json', usersData)
+//     .then(updatedUsersData => {
+//         if (usersData.length < 1)
+//             usersData = updatedUsersData;
+//         setLsbyKey('users', productsData)
+//         return getServices('../data/products.json');
+//     })
+//     .then(updatedProductsData => {
+//         if (productsData.length < 1)
+//             productsData = updatedProductsData;
+//         console.log(productsData);
+//         console.log(usersData);
+//         setLsbyKey('services', productsData)
+//         taskForm.classList.remove("none")
 
-    });
+//     });
+
+//--bd
+taskForm.classList.remove("none")
+//
 
 let cart = getBasketLocalStorage();
 
 
 
-taskForm.addEventListener("submit", function (e) {
+taskForm.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     user = User.load();
+
 
     const formData = new FormData(taskForm);
     const taskData = {};
@@ -66,33 +72,38 @@ taskForm.addEventListener("submit", function (e) {
         taskData[key] = value;
     });
 
-    const allTasks = getLsbyKey('services');
-    taskData.id = allTasks.length + 1;
+    // const allTasks = getLsbyKey('services');
+    const tasksCount = await DataManager.getTasksCount();
+    taskData.id = tasksCount;
     taskData.owner = user.bio;
     taskData.ownerId = user.id;
     taskData.img = null;
     // пока так
     taskData.type = user.client ? 'order' : 'service';
 
-   
+
     console.log("надо думать как это отправить");
 
-   
-    allTasks.unshift(taskData);
 
-    const updatedTasksObj = allTasks
-    setLsbyKey('services', updatedTasksObj);
+    // allTasks.unshift(taskData);
+    DataManager.addService(taskData);
+
+    // const updatedTasksObj = allTasks
+    // setLsbyKey('services', updatedTasksObj);
 
 
     
+    console.log(user)
 
     if (user.client) {
-       user.listOfOrders.push(taskData.id)
+        user.listOfOrders.push(taskData.id)
 
     } else {
         user.listOfServices.push(taskData.id)
     }
     user.save();
-    console.log(updatedTasksObj);
+    user = User.load();
+    DataManager.updateUserById(user.id, user);
+    
 });
 

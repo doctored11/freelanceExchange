@@ -21,42 +21,44 @@ import {
     getServices
 
 } from './requests.js'
+import { DataManager } from './DataManager.js';
 let productsData = [];
 let usersData = [];
 
 const container = document.querySelector('.card__container')
 
 //пока без бд
-usersData = getLsbyKey("users")
-productsData = getLsbyKey("services")
+// usersData = getLsbyKey("users")
+// productsData = getLsbyKey("services")
 
 let cart = getBasketLocalStorage();
-getServices('../data/base.json', usersData)
-    .then(updatedUsersData => {
-        if (usersData.length < 1)
-            usersData = updatedUsersData;
-        return getServices('../data/products.json');
-    })
-    .then(updatedProductsData => {
-        if (productsData.length < 1)
-            productsData = updatedProductsData;
-        console.log(productsData);
-        console.log(usersData);
-        cart = getBasketLocalStorage();
-        if (container)
-            cardRender(container, cart);
-    });
+// getServices('../data/base.json', usersData)
+//     .then(updatedUsersData => {
+//         if (usersData.length < 1)
+//             usersData = updatedUsersData;
+//         return getServices('../data/products.json');
+//     })
+//     .then(updatedProductsData => {
+//         if (productsData.length < 1)
+//             productsData = updatedProductsData;
+//         console.log(productsData);
+//         console.log(usersData);
+//         cart = getBasketLocalStorage();
+//         if (container)
+//             cardRender(container, cart);
+//     });
+
+cardRender(container, cart);
 
 
 
-
-
-function cardRender(container, data) {
+async function cardRender(container, data) {
     console.log('cardRender')
     container.innerHTML = ' '
     console.log(data);
     if(data.length<1) return
-    const selectPositions = productsData.filter(item => data.includes(item.id));
+    // const selectPositions = productsData.filter(item => data.includes(item.id));
+    const selectPositions = await DataManager.getListOfServicesByids(data)
     
 
     selectPositions.forEach(pos => { createCartCards(container, pos) });

@@ -7,17 +7,19 @@ import {
     forcePushToField, forceRemoveFromField
 
 } from './utils.js'
+import { DataManager } from './DataManager.js';
 import { updateMoneyNowText } from './balanceChecker.js'
 import { User } from './User.js';
 import { deleteFromCart, deleteCard, } from './cart.js'
 // карточки для секции всех тасков
-export function createCards(container, data, usersData) {
+export function createCards(container, serviceData) {
 
-    data.forEach(card => {
+    serviceData.forEach(async (card) => {
+
         const { id, img, title, price, descr, timing, owner, ownerId, type } = card;
         let userName
-
-        const user = usersData.find(userData => userData.id === ownerId);
+        let user = await DataManager.getUserById(ownerId);
+        console.log(ownerId, user)
         console.log(card)
         if (user) {
             userName = user.bio;
@@ -75,16 +77,23 @@ function clickToCart(id) {
 
 }
 //todo пернести из dombuild
-function goBuy(container, price, id) {
+async function goBuy(container, price, id) {
     console.log("buy")
-    const user = User.load();
+    let user = User.load();
+    user = await DataManager.getUserById(user.id)
+    user = User.createUserFromObject(user);
+    user.save()
 
+    user.pendingTasks.push(id)
     user.balance.freeze(price);
 
     user.save();
     updateMoneyNowText();
-    forcePushToField("user", "pendingTasks", [id], true);
-    forcePushToField("users", "pendingTasks", [id], true, user.id); //вместо это отдавать эту информацию серверу. 
+
+
+
+    // forcePushToField("user", "pendingTasks", [id], true);
+    //forcePushToField("users", "pendingTasks", [id], true, user.id); //вместо это отдавать эту информацию серверу. 
     //todo
     //отправить запрос на сервер о том что откликнулся на заказ, 
     //  и отправить другой стороне что с его карточкй происходит действие
@@ -118,26 +127,31 @@ function goDoing(container, id) {
     forcePushToField("user", "pendingTasks", [id], true);
     forcePushToField("users", "pendingTasks", [id], true, user.id);//вместо это отдавать эту информацию серверу. 
 }
-export function goDeleteTask(container, id) {
-    const user = User.load();
+export async function goDeleteTask(container, id) {
+    let user = User.load();
+    user = await DataManager.getUserById(user.id)
+    user = User.createUserFromObject(user);
+    user.save()
+
     container.innerHTML = " ";
-    const tasksArray = getLsbyKey("services");
+    // const tasksArray = getLsbyKey("services");
     console.log("del")
 
-    const indexToRemove = tasksArray.findIndex(item => item.id == id);
+    // const indexToRemove = tasksArray.findIndex(item => item.id == id);
+    const task = await DataManager.getServiceById(id);
+    const indexToRemove = task.id;
+
     console.log(id)
 
-    if (indexToRemove !== -1) {
-        tasksArray.splice(indexToRemove, 1);
-    }
-    console.log(indexToRemove);
-    console.log(tasksArray);
 
-    // написал в бреду ( удаление из списка у user ) - вроде норм 
-    //todo -проверить со стороны логики ( этот и аналогичные методы)
-    setLsbyKey('services', tasksArray)
+    DataManager.deleteService(indexToRemove);
+
+    console.log(indexToRemove);
+
     const field = user.client ? "listOfOrders" : "listOfServices";
     forceRemoveFromField("user", field, [id]);
+    user = User.load();
+    user.save();
 
 
 }

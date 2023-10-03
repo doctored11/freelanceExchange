@@ -5,11 +5,13 @@ import {
     NO_PRODUCTS_IN_THIS_CATEGORY
 } from './constants.js';
 
+import { DataManager } from './DataManager.js';
 import {
     setLsbyKey,
     getLsbyKey
 
 } from './utils.js'
+
 import {
     createCards
 } from './domBuider.js'
@@ -29,43 +31,43 @@ let usersData = [];
 
 
 //получаем времеенно ид json фалйа
-getServices('../data/base.json', usersData)
-    .then(updatedUsersData => {
-        usersData = updatedUsersData;
-        setLsbyKey('users', usersData)
-        return getServices('../data/products.json');
-    })
-    .then(updatedProductsData => {
-        productsData = updatedProductsData;
-        console.log(productsData);
-        console.log(usersData);
+// getServices('../data/base.json', usersData)
+//     .then(updatedUsersData => {
+//         usersData = updatedUsersData;
+//         setLsbyKey('users', usersData)
+//         return getServices('../data/products.json');
+//     })
+//     .then(updatedProductsData => {
+//         productsData = updatedProductsData;
+//         console.log(productsData);
+//         console.log(usersData);
 
-        // Временно пока нет данных ( отрисовка из LS) !!!
-        let buffer = getLsbyKey('services');
-        console.log(buffer)
-        if (productsData.length > buffer.length) { setLsbyKey('services', productsData) } else {
-            productsData = buffer;
-        }
-        // -------------
-        renderStartPage(productsData, usersData);
-    });
-
-
+//         // Временно пока нет данных ( отрисовка из LS) !!!
+//         let buffer = getLsbyKey('services');
+//         console.log(buffer)
+//         if (productsData.length > buffer.length) { setLsbyKey('services', productsData) } else {
+//             productsData = buffer;
+//         }
+//         // -------------
+//         renderStartPage(productsData, usersData);
+//     });
+productsData= await DataManager.getServicesInRange(0,1); //подумать тут)
+renderStartPage( productsData);
 btnShowCards.addEventListener('click', sliceArrCards);
 
 
 
 
 
-function renderStartPage(data,usersData) {
-    if (!data || !data.length) {
+function renderStartPage( serviceData) {
+    if (!serviceData || !serviceData.length) {
         console.log('пусто ')
         return
     };
 
-    const arrCards = data.slice(0, COUNT_SHOW_CARDS_CLICK);
-    console.log(arrCards)
-    createCards(container, arrCards, usersData);
+   
+    console.log(serviceData)
+    createCards(container, serviceData);
 
 }
 
