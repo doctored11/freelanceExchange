@@ -138,13 +138,16 @@ export class DataManager {
                 throw error;
             });
     }
-    static getServicesInRange(min, max) {
+    static getServicesInRange(min, max, isDone = false) {
         return fetch(`${src}services.json`)
             .then(response => response.json())
             .then(data => {
 
                 let servicesArray = Array.isArray(data) ? data : Object.values(data);
                 servicesArray = servicesArray.filter(service => service !== null);
+
+                if (!isDone)
+                    servicesArray = servicesArray.filter(service => service.status != "inWork");
 
 
                 if (min < 0) min = 0;
@@ -230,11 +233,15 @@ export class DataManager {
     }
 
     static async updateUserById(id, user) {
+
+
+        const active = user.balance.activeBalance || 0;
+        const frozen = user.balance.frozenBalance || 0;
         const userData = {
             ...user,
             balance: {
-                activeBalance: user.balance.activeBalance,
-                frozenBalance: user.balance.frozenBalance
+                activeBalance: active,
+                frozenBalance: frozen
             }
         }
         try {
@@ -300,6 +307,71 @@ export class DataManager {
             return false;
         }
     }
+    static async getUsersWithPendingTaskIds(taskId) {
+        const usersWithPendingTasks = [];
+
+        try {
+            // Получите список всех пользователей
+            const response = await fetch(`${src}users.json`);
+            const allUsers = await response.json();
+
+
+            console.log(allUsers)
+            if (allUsers) {
+                // Переберите всех пользователей
+                Object.keys(allUsers).forEach((userId) => {
+
+                    const user = allUsers[userId];
+                    if (user == null) return
+                    console.log(user)
+                    if (user.pendingTasks && user.pendingTasks.includes(taskId)) {
+
+                        usersWithPendingTasks.push(userId);
+                    }
+                });
+            }
+
+            return usersWithPendingTasks;
+        } catch (error) {
+            console.error('ошибка при получении пользователей ');
+            return [];
+        }
+    }
+
+    static async getUsersWithActiveTaskIds(taskId) {
+        //вот что делает спешка
+        const usersWithActiveTasks = [];
+    
+        try {
+          
+            const response = await fetch(`${src}users.json`);
+            const allUsers = await response.json();
+    
+            console.log(allUsers)
+            if (allUsers) {
+        
+                Object.keys(allUsers).forEach((userId) => {
+                    const user = allUsers[userId];
+                    if (user == null) return;
+                    console.log(user)
+                    if (user.activeTasks && user.activeTasks.includes(taskId)) {
+                        usersWithActiveTasks.push(userId);
+                    }
+                });
+            }
+    
+            return usersWithActiveTasks;
+        } catch (error) {
+            console.error('ошибка при получении пользователей ');
+            return [];
+        }
+    }
+    
+
+
+
+
+
 
 
 

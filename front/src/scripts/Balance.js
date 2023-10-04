@@ -38,7 +38,7 @@ export class Balance {
       count: amountToFreeze,
       type: 'freeze'
     }
-    Balance.addHistory(balanceStep);
+    // Balance.addHistory(balanceStep);
    
 
     return true;
@@ -59,7 +59,7 @@ export class Balance {
       count: amountToUnfreeze,
       type: 'unFreeze'
     }
-    Balance.addHistory(balanceStep);
+    // Balance.addHistory(balanceStep);
 
     return true;
   }
@@ -79,7 +79,7 @@ export class Balance {
       count: amountToSpend,
       type: 'spend'
     }
-    Balance.addHistory(balanceStep);
+    // Balance.addHistory(balanceStep);
   
     return true;
   }
@@ -98,7 +98,7 @@ export class Balance {
       count: amountToSpendFrozen,
       type: 'expense'
     }
-    Balance.addHistory(balanceStep);
+    // Balance.addHistory(balanceStep);
     return true;
   }
 
@@ -126,7 +126,7 @@ export class Balance {
         count: value,
         type: 'update'
       }
-      Balance.addHistory(balanceStep);
+      // Balance.addHistory(balanceStep);
     } else {
       console.error('bal >-1');
     }

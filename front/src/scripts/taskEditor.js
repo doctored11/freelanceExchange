@@ -67,6 +67,7 @@ taskForm.addEventListener("submit", async function (e) {
 
     const formData = new FormData(taskForm);
     const taskData = {};
+    taskData.pendingUsersId =[]
 
     formData.forEach((value, key) => {
         taskData[key] = value;

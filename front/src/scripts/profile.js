@@ -27,6 +27,7 @@ const tasksContainer = document.querySelector('.container--tasks');
 const historyBalanceContainer = document.querySelector('.container--balanceHistory')
 const historyTasksContainer = document.querySelector('.container--tasksHistory')
 const pendingContainer = document.querySelector('.container--pending')
+const activeContainer = document.querySelector('.container--active')
 
 const personImg = document.querySelector('.person-img')
 
@@ -116,6 +117,7 @@ function choicePageRender() {
 
         document.querySelector('.info-text').innerHTML += "<p class ='txt txt--profile'>не подтвержденные карточки ⬇</p>" //костылек
         renderPendingCards(pendingContainer, user);
+        renderActiveCards(activeContainer, user);
 
 
         return
@@ -157,7 +159,20 @@ async function renderPendingCards(container, user) {
     let mod = "pendingTasks"
     list = user.pendingTasks;
     container.innerHTML = ' '
-    // const selectPositions = productsData.filter(item => list.includes(item.id));
+    
+    const selectPositions = await DataManager.getListOfServicesByids(list);
+    selectPositions.forEach(pos => { createCartCards(container, pos, "user", mod) });
+}
+
+async function renderActiveCards(container, user) {
+
+    let list;
+    let mod = "activeTasks"
+    list = user.activeTasks;
+    container.innerHTML = ' '
+
+    list = [...new Set(list)];
+    
     const selectPositions = await DataManager.getListOfServicesByids(list);
     selectPositions.forEach(pos => { createCartCards(container, pos, "user", mod) });
 }
