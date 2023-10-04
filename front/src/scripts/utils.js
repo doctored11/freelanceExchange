@@ -14,7 +14,7 @@ export function getBasketLocalStorage() {
 export function setBasketLocalStorage(basket) {
 
     localStorage.setItem('basket', JSON.stringify(basket));
-    console.log(basket.length)
+
 }
 // 
 export function getLsbyKey(key) {
@@ -26,7 +26,7 @@ export function getLsbyKey(key) {
 export function setLsbyKey(key, data) {
 
     localStorage.setItem(key, JSON.stringify(data));
-    console.log(data.length)
+  
 }
 
 
@@ -66,9 +66,7 @@ export function removeFromLs(id, key) {
 
     const list = getLsbyKey(key)
     const index = list.indexOf(id);
-    console.log(id)
-    console.log(list)
-    console.log(index)
+   
 
     if (index !== -1) {
         list.splice(index, 1);

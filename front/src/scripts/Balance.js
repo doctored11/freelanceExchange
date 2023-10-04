@@ -7,6 +7,8 @@ import {
 
 import { DataManager } from './DataManager.js';
 
+import { User } from './User.js';
+
 export class Balance {
   #activeBalance = 0;
   #frozenBalance = 0;
@@ -16,8 +18,8 @@ export class Balance {
     this.#frozenBalance = initialfrozen;
   }
 
-  // заморозка части баланса
-  freeze(amountToFreeze) {
+
+  async freeze(amountToFreeze, userId) {
     console.log("---");
     console.log(amountToFreeze);
     console.log(this.#activeBalance);
@@ -34,38 +36,62 @@ export class Balance {
     console.log(`акстивныйбаланс = ${this.#activeBalance} `);
 
     const balanceStep = {
-      data: new Date(),
+      data: new Date() + " ",
       count: amountToFreeze,
       type: 'freeze'
     }
-    // Balance.addHistory(balanceStep);
-   
+
+    // const history = await Balance.addHistory(balanceStep, userId);
+
+
+
+    // let us = await DataManager.getUserById(userId);
+    // us.balanceHistory = history;
+    // console.log(us);
+    // console.log(history)
+    // us = User.createUserFromObject(us);
+    // DataManager.updateUserById(userId, us)
+    // console.log(us)
+
+
+
+
 
     return true;
   }
 
-  unfreeze(amountToUnfreeze) {
+  async unfreeze(amountToUnfreeze, userId) {
     if (amountToUnfreeze > this.#frozenBalance) {
       console.error('Недостаточно замороженных средств.');
       return false;
     }
 
-    this.#activeBalance += amountToUnfreeze;
-    this.#frozenBalance -= amountToUnfreeze;
+    this.#activeBalance = parseFloat(this.#activeBalance) + parseFloat(amountToUnfreeze);
+    this.#frozenBalance = parseFloat(this.#frozenBalance) - parseFloat(amountToUnfreeze);
     console.log(`Разморожено ${amountToUnfreeze} на балансе.`);
 
-    const balanceStep = {
-      data: new Date(),
-      count: amountToUnfreeze,
-      type: 'unFreeze'
-    }
-    // Balance.addHistory(balanceStep);
+    // const balanceStep = {
+    //   data: new Date(),
+    //   count: amountToUnfreeze,
+    //   type: 'unFreeze'
+    // }
+
+
+    // const history = await Balance.addHistory(balanceStep, userId);
+
+    // let us = await DataManager.getUserById(userId);
+    // us.balanceHistory = history;
+    // console.log(us);
+    // console.log(history)
+    // us = User.createUserFromObject(us);
+    // DataManager.updateUserById(userId, us)
+    // console.log(us)
 
     return true;
   }
 
   //расход с активного баланс
-  spend(amountToSpend) {
+  spend(amountToSpend, userId) {
     if (amountToSpend > this.#activeBalance) {
       console.error('Недостаточно средств на активном балансе.');
       return false;
@@ -74,18 +100,18 @@ export class Balance {
     this.#activeBalance -= amountToSpend;
     console.log(`Списано ${amountToSpend} с активного баланса.`);
 
-    const balanceStep = {
-      data: new Date(),
-      count: amountToSpend,
-      type: 'spend'
-    }
-    // Balance.addHistory(balanceStep);
-  
+    // const balanceStep = {
+    //   data: new Date(),
+    //   count: amountToSpend,
+    //   type: 'spend'
+    // }
+    //await  Balance.addHistory(balanceStep);
+
     return true;
   }
 
   //  проведение транзакции (расход с заморожного баланса)
-  spendFrozen(amountToSpendFrozen) {
+  spendFrozen(amountToSpendFrozen, userId) {
     if (amountToSpendFrozen > this.#frozenBalance) {
       console.error('Недостаточно замороженных средств.');
       return false;
@@ -98,7 +124,7 @@ export class Balance {
       count: amountToSpendFrozen,
       type: 'expense'
     }
-    // Balance.addHistory(balanceStep);
+    //await  Balance.addHistory(balanceStep);
     return true;
   }
 
@@ -119,29 +145,65 @@ export class Balance {
 
   // Setter для активного баланса
   set activeBalance(value) {
+
+
     if (value >= 0) {
       this.#activeBalance = value;
-      const balanceStep = {
-        data: new Date(),
-        count: value,
-        type: 'update'
-      }
-      // Balance.addHistory(balanceStep);
+
+
     } else {
       console.error('bal >-1');
     }
   }
 
-  // Getter для активного баланса
+  // Getter для активного балансаaddHistor
   get activeBalance() {
     return this.#activeBalance;
   }
-  save() {
-    localStorage.setItem(`balance`, JSON.stringify({
+  async save(userId) {
+    const prevBalanceData = getLsbyKey("balance") || { activeBalance: 0, frozenBalance: 0 };
+
+
+    let balanceStep = {}
+    let history = []
+
+
+
+    if (parseInt(this.#activeBalance) + parseInt(this.#frozenBalance) != parseInt(prevBalanceData.activeBalance) + parseInt(prevBalanceData.frozenBalance)
+    ) {
+      balanceStep = {
+        data: new Date(),
+        count: this.#activeBalance,
+        type: 'update'
+      };
+      history = await Balance.addHistory(balanceStep, userId);
+    }
+    else if (parseInt(this.#activeBalance) > parseInt(prevBalanceData.activeBalance)) {
+      balanceStep = {
+        data: new Date(),
+        count: parseInt(this.#activeBalance) - parseInt(prevBalanceData.activeBalance),
+        type: 'unfreeze'
+      };
+      history = await Balance.addHistory(balanceStep, userId);
+    }
+    else if (parseInt(this.#frozenBalance) > parseInt(prevBalanceData.frozenBalance)) {
+      balanceStep = {
+        data: new Date(),
+        count: parseInt(this.#frozenBalance) - parseInt(prevBalanceData.frozenBalance),
+        type: 'freeze'
+      };
+      history = await Balance.addHistory(balanceStep, userId);
+    }
+
+    localStorage.setItem('balance', JSON.stringify({
       activeBalance: this.#activeBalance,
       frozenBalance: this.#frozenBalance,
     }));
-   
+
+
+
+    return history
+    //
 
   }
 
@@ -155,17 +217,31 @@ export class Balance {
       const balance = new Balance();
       balance.#activeBalance = activeBalance;
       balance.#frozenBalance = frozenBalance;
-      console.log(balance)
+
       return balance;
     }
     return null;
   }
 
-  static addHistory(operation) {
-    const history = getLsbyKey('balanceHistory') || {};
-    history.push(operation);
-    setLsbyKey('balanceHistory', history)
-   
+  static async addHistory(operation, userId) {
+
+
+    let user = await DataManager.getUserById(userId);
+
+    // user = User.createUserFromObject(user);
+    console.log(user.balanceHistory)
+
+
+
+    let history = user.balanceHistory ? [...user.balanceHistory] : [];
+    console.log(history)
+
+    history = [...history, operation];
+
+
+    setLsbyKey('balanceHistory', history);
+
+    return history
   }
 
 

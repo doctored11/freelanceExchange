@@ -233,10 +233,10 @@ export class DataManager {
     }
 
     static async updateUserById(id, user) {
+        console.log(user)
 
-
-        const active = user.balance.activeBalance || 0;
-        const frozen = user.balance.frozenBalance || 0;
+        const active = user.balance.getActiveBalance() || user.balance.activeBalance || 0;
+        const frozen = user.balance.getFrozenBalance() || user.balance.frozen || 0;
         const userData = {
             ...user,
             balance: {
@@ -341,15 +341,15 @@ export class DataManager {
     static async getUsersWithActiveTaskIds(taskId) {
         //вот что делает спешка
         const usersWithActiveTasks = [];
-    
+
         try {
-          
+
             const response = await fetch(`${src}users.json`);
             const allUsers = await response.json();
-    
+
             console.log(allUsers)
             if (allUsers) {
-        
+
                 Object.keys(allUsers).forEach((userId) => {
                     const user = allUsers[userId];
                     if (user == null) return;
@@ -359,14 +359,14 @@ export class DataManager {
                     }
                 });
             }
-    
+
             return usersWithActiveTasks;
         } catch (error) {
             console.error('ошибка при получении пользователей ');
             return [];
         }
     }
-    
+
 
 
 

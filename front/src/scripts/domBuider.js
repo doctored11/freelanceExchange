@@ -80,10 +80,15 @@ function clickToCart(id) {
 //todo пернести из dombuild
 async function goBuy(container, price, id) {
     console.log("buy")
+    console.log('________________')
     let user = User.load();
     user = await DataManager.getUserById(user.id)
+
     user = User.createUserFromObject(user);
+    console.log(user.balance)
     user.save()
+    console.log(user)
+
 
     user.pendingTasks.push(id)
     if (!user.balance.freeze(price)) return;
@@ -165,7 +170,7 @@ async function goDoing(container, id) {
     let user = User.load();
     user = await DataManager.getUserById(user.id)
     user = User.createUserFromObject(user);
-    user.save()
+    console.log('doing')
 
     console.log("do")
     const cardItem =
@@ -177,7 +182,14 @@ async function goDoing(container, id) {
     </div>
     `
     container.insertAdjacentHTML('beforeend', cardItem);
-    forcePushToField("user", "pendingTasks", [id], true);
+    // forcePushToField("user", "pendingTasks", [id], true);
+
+
+    //todo
+    //да теперь не добавляем а перезаписываем, желательно оптимизировать
+    let pend = user.pendingTasks;
+    pend = [...pend, id]
+    user.pendingTasks = pend;
 
     let task = await DataManager.getServiceById(id);
 
@@ -186,13 +198,15 @@ async function goDoing(container, id) {
 
 
     DataManager.updateServiceById(id, task)
-    user = User.load();
+    console.log(user)
     user.save();
 
     let owner = await DataManager.getUserById(task.ownerId);
     owner = User.createUserFromObject(owner);
     owner.pendingTasks.push(id);
-    DataManager.updateUserById(owner.id, owner);
+    console.log(owner)
+    owner.saveToServer()
+    // DataManager.updateUserById(owner.id, owner);
 
 }
 
@@ -240,21 +254,22 @@ async function finalTranzaction(user, count) {
         user.balance.activeBalance = parseInt(nowBalance) + parseInt(count);
         console.log(user)
 
-        await   DataManager.updateUserById(user.id, user);
+        await DataManager.updateUserById(user.id, user);
         return
     }
 
     if (!user.balance.spendFrozen(count)) {
         if (!user.balance.spend(count)) console.log("!как так, за это банить надо. Таск выполнен а платить нечем")
     }
-    DataManager.updateUserById(user.id, user)
+
+    // DataManager.updateUserById(user.id, user)
+    user.saveToServer();
 
 }
 export async function goDeleteTask(container, id) {
     let user = User.load();
     user = await DataManager.getUserById(user.id)
     user = User.createUserFromObject(user);
-    user.save()
 
     container.innerHTML = " ";
     // const tasksArray = getLsbyKey("services");
@@ -267,13 +282,20 @@ export async function goDeleteTask(container, id) {
     console.log(id)
 
 
-    DataManager.deleteService(indexToRemove);
+    if (user.client) {
+        const isUnFreeze = await user.balance.unfreeze(task.price, user.id);
+        user.balanceHistory = isUnFreeze
+        if (!isUnFreeze) console.log('ну что то с деньгами не так, обратитесь в тех поддержку')
+    }
+
+
+    await DataManager.deleteService(indexToRemove);
 
     console.log(indexToRemove);
 
     const field = user.client ? "listOfOrders" : "listOfServices";
     forceRemoveFromField("user", field, [id]);
-    user = User.load();
+    // user = User.load();
     user.save();
 
 

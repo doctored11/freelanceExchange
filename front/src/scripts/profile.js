@@ -99,7 +99,7 @@ function renderBalanceHistory(container) {
         `
         container.innerHTML += domEl;
     })
-    console.log(list)
+
 
 
 }
@@ -128,8 +128,7 @@ function choicePageRender() {
     // const target = usersData.find(el => el.id == id);
     const target = DataManager.getUserById(id)
 
-    console.log(id)
-    console.log(target)
+
     const taskList = target.client ? target.listOfOrders : target.listOfServices;
 
     // todo

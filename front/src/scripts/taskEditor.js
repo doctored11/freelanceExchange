@@ -63,11 +63,15 @@ taskForm.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     user = User.load();
-
+    console.log(user)
+    user = await DataManager.getUserById(user.id);
+    console.log(user)
+    user = User.createUserFromObject(user);
+    console.log(user)
 
     const formData = new FormData(taskForm);
     const taskData = {};
-    taskData.pendingUsersId =[]
+    taskData.pendingUsersId = [];
 
     formData.forEach((value, key) => {
         taskData[key] = value;
@@ -88,7 +92,8 @@ taskForm.addEventListener("submit", async function (e) {
 
 
     // allTasks.unshift(taskData);
-    DataManager.addService(taskData);
+
+
 
     // const updatedTasksObj = allTasks
     // setLsbyKey('services', updatedTasksObj);
@@ -98,14 +103,27 @@ taskForm.addEventListener("submit", async function (e) {
     console.log(user)
 
     if (user.client) {
+
+        const isFreeze = await user.balance.freeze(taskData.price, user.id);
+        user.balanceHistory = isFreeze
+        console.log(user)
+
+        if (!isFreeze) {
+            console.log('клиент не может создать заказ без активного баланса');
+            return
+        }
+
         user.listOfOrders.push(taskData.id)
 
     } else {
         user.listOfServices.push(taskData.id)
     }
+    console.log(user)
     user.save();
     user = User.load();
+    console.log(user)
     DataManager.updateUserById(user.id, user);
+    DataManager.addService(taskData);
 
 });
 

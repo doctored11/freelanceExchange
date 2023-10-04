@@ -1,7 +1,7 @@
 import { Balance } from './Balance.js';
 import { DataManager } from './DataManager.js';
 export class User {
-    constructor(id, bio, date, balance = 0, frozen = 0, img = null, descr = "Стандартный чебурек", client = true, implementer = false, listOfOrders, listOfServices, pendingTasks, activeTasks,finishtasks) {
+    constructor(id, bio, date, balance = 0, frozen = 0, img = null, descr = "Стандартный чебурек", client = true, implementer = false, listOfOrders, listOfServices, pendingTasks, activeTasks, finishtasks, balanceHistory) {
         this.id = id;
         this.bio = bio;
         this.date = date;
@@ -9,21 +9,38 @@ export class User {
         this.descr = descr;
         this.client = client;
         this.implementer = implementer;
+
         this.listOfOrders = listOfOrders || [];
         this.listOfServices = listOfServices || [];
         this.pendingTasks = pendingTasks || [];
         this.activeTasks = activeTasks || [];
         this.finishtasks = finishtasks || [];
+        this.balanceHistory = balanceHistory || [];
+
 
         this.balance = new Balance(balance, frozen)
     }
 
-    save() {
+    async save() {
         console.log('баланс сохранен')
 
         localStorage.setItem(`user`, JSON.stringify(this));
         // Сохраняем баланс пользователя
-        this.balance.save(this.id);
+        const history = await this.balance.save(this.id);
+        // 
+        // const history = await this.balance.save(this.id);
+        // console.log(history)
+        // const us = await DataManager.getUserById(this.id);
+        // us.balanceHistory = history;
+        this.balanceHistory = history
+        this.saveToServer()
+        // DataManager.updateUserById(this.id, this);
+
+
+
+        // DataManager.updateUserById(this.id, this);
+    }
+    async saveToServer(){
         DataManager.updateUserById(this.id, this);
     }
 
@@ -33,14 +50,14 @@ export class User {
         if (userData) {
             const user = JSON.parse(userData);
 
-            const money = Balance.load();
+            const money = Balance.load() || {};
 
             user.balance = money;
 
 
-            // console.log(user)
+            console.log(user)
             const { id, bio, date, balance, img, descr, client, implementer, listOfOrders, listOfServices, pendingTasks, activeTasks, finishtasks } = user;
-            return new User(id, bio, date, balance.activeBalance, balance.frozenBalance, img, descr, client, implementer, listOfOrders, listOfServices, pendingTasks, activeTasks, finishtasks); 
+            return new User(id, bio, date, balance.activeBalance, balance.frozenBalance, img, descr, client, implementer, listOfOrders, listOfServices, pendingTasks, activeTasks, finishtasks);
         }
         return null;
     }
@@ -49,12 +66,23 @@ export class User {
         if (typeof (userData) != "object") return userData
 
         let active, frozen = 0
-        let { id, bio, date, balance, img, descr, client, implementer, listOfOrders, listOfServices, pendingTasks, activeTasks } = userData;
+        let { id, bio, date, balance, img, descr, client, implementer, listOfOrders, listOfServices, pendingTasks, activeTasks, finishtasks, balanceHistory } = userData;
         if (balance) {
             active = balance.activeBalance
             frozen = balance.frozenBalance
         }
-        return new User(id, bio, date, active, frozen, img, descr, client, implementer, listOfOrders, listOfServices, pendingTasks, activeTasks);
+        if (balanceHistory && Array.isArray(balanceHistory)) {
+            balanceHistory = balanceHistory.map(historyItem => {
+                return {
+                    count: historyItem.count,
+                    data: historyItem.data,
+                    type: historyItem.type
+                };
+            });
+        }
+
+
+        return new User(id, bio, date, active, frozen, img, descr, client, implementer, listOfOrders, listOfServices, pendingTasks, activeTasks, finishtasks, balanceHistory);
     }
 
 

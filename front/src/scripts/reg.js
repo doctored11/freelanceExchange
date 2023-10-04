@@ -63,7 +63,8 @@ async function handleFormSubmit(event) {
     //todo
     // -----!Пока для входа нужно просто ввести id в строку имени
     if (flagLog) {
-
+        localStorage.clear();
+        
         let user = await DataManager.getUserById(personName)
 
         user = User.createUserFromObject(user)
@@ -82,6 +83,8 @@ async function handleFormSubmit(event) {
 
 
         const user = new User(id, personName, formattedDate, 0, 0, null, '🤡', client, implementer, [], [])
+
+        localStorage.clear();
 
         //сохранение
         DataManager.addUser(user);
