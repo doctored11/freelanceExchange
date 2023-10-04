@@ -8,6 +8,7 @@
 
   <link rel="stylesheet" href="./styles/normalize.css" />
   <link rel="stylesheet" href="./styles/style.css" />
+  <link rel="stylesheet" href="./styles/index.css">
 </head>
 
 <body>
@@ -17,19 +18,19 @@
       <!-- логотип ( наверное svg) -->
     </a>
     <div class="header__link">
-      <a href="categories.html">Категории</a>
+      <a href="./index.html">Главная</a>
       <div class="header__link__after"></div>
     </div>
     <div class="header__link">
-      <a href="cart.html">Корзина</a>
+      <a href="./cart.html">Мои заказы</a>
       <div class="header__link__after"></div>
     </div>
-    <div class="header__link">
-      <a href="payment.html">Пополнение</a>
+    <!-- <div class="header__link">
+      <a href="./payment.html">Пополнение</a>
       <div class="header__link__after"></div>
-    </div>
+    </div> -->
     <div class="header__link">
-      <a href="registration.html">Авторизация</a>
+      <a href="./registration.html">Авторизация</a>
       <div class="header__link__after"></div>
     </div>
     <div class="header__link header-profile" style="position: relative;">
@@ -47,13 +48,13 @@
     <section class="section main__hero hero">
       <div class="hero__frame frame">
         <div class="hero__content">
-          <p class="hero__title">О бирже</p>
-          <p class="hero__text txt txt--lite">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque
-            assumenda sint reprehenderit cumque totam quidem quis non quaerat!
-            Inventore recusandae delectus neque deserunt eveniet officia at
-            ullam, voluptas distinctio eum!
-          </p>
+          <p class="hero__title">Найти то что вам нужно</p>
+          <form id="search-form" class="search-form__form">
+            <div class="search-form__img"></div>
+            <input type="text" id="search" name="search" class="form__input" placeholder="Создать сайт" required />
+            <button class="btn search-form__btn ">Найти</button>
+            <!-- <label for="search" class="form__label"></label> -->
+          </form>
           <!-- <button class="hero__btn btn btn--solid">---</button> -->
         </div>
         <div class="main__backgroud-content-block ">
@@ -64,7 +65,7 @@
 
 
     <section class="section main__category caregory">
-      <p class="title">Заказы</p>
+      <p class="title">Все предложения</p>
       <div class="category__frame frame">
         <div class="category__list list">
           <!-- тут надо пдинамически заполнять  -->
@@ -107,7 +108,7 @@
 
 
     <section class="main__about about section">
-      <p class="about__title title">Lorem, ipsum dolor.</p>
+      <p class="about__title title">Немного о нас</p>
       <div class="about__frame frame">
         <div class="about__content-block">
           <p class="about__description txt">Lorem ipsum dolor sit amet.</p>
