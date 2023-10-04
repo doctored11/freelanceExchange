@@ -1,0 +1,18 @@
+<svg width="485" height="207" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with SVG Editor - http://github.com/mzalive/SVG Editor/ -->
+
+ <g>
+  <title>background</title>
+  <rect fill="#fff" id="canvas_background" height="209" width="487" y="-1" x="-1"/>
+  <g display="none" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="6.965304" x="2" height="768" width="1024" id="svg_2"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <text style="cursor: move;" font-weight="bold" font-style="italic" stroke="#000" transform="rotate(0.05941802263259888 90.6660079956075,84.79333496094597) matrix(2.493093683311111,0,0,3.0380221762265704,144.97594291586068,112.17507490407465) " xml:space="preserve" text-anchor="start" font-family="'Palatino Linotype', 'Book Antiqua', Palatino, serif" font-size="48" id="svg_1" y="8.97941" x="-57.06336" stroke-width="0" fill="#0077d3">My</text>
+  <rect id="svg_3" height="0" width="2" y="207.418429" x="345.5" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000"/>
+  <rect id="svg_4" height="1" width="0" y="203.418429" x="372.5" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000"/>
+  <text font-style="italic" stroke="#55f943" transform="matrix(2.936553798316883,0,0,4.407327970980326,-407.20798876602214,-446.2688759535774) " font-weight="bold" xml:space="preserve" text-anchor="start" font-family="'Palatino Linotype', 'Book Antiqua', Palatino, serif" font-size="48" id="svg_6" y="134.602089" x="197.672094" stroke-width="0" fill="#00b715">Logo</text>
+ </g>
+</svg>
