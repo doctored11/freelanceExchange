@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>exchange</title>
+
+  <link rel="stylesheet" href="./styles/normalize.css" />
+  <link rel="stylesheet" href="./styles/style.css" />
+  <link rel="stylesheet" href="./styles/index.css">
+</head>
+
+<body>
+  <header class="header">
+    <a href="#" class="header__logo logo">
+      <img src="./files/logo.svg" alt="">
+      <!-- логотип ( наверное svg) -->
+    </a>
+    <div class="header__link">
+      <a href="./index.html">Главная</a>
+      <div class="header__link__after"></div>
+    </div>
+    <div class="header__link">
+      <a href="./cart.html">Избранное</a>
+      <div class="header__link__after"></div>
+    </div>
+    <!-- <div class="header__link">
+      <a href="./payment.html">Пополнение</a>
+      <div class="header__link__after"></div>
+    </div> -->
+    <div class="header__link">
+      <a href="./registration.html">Авторизация</a>
+      <div class="header__link__after"></div>
+    </div>
+    <div class="header__link header-profile" style="position: relative;">
+      <a href="userPage.html?id=0">Профиль</a>
+      <div class="header-profile__info">
+        <p id="name">Имя</p>
+        <p if="lastname">Фамилия</p>
+        <p id="money" style="color: #32CD32;">Баланс</p>
+        <p id="clientType">Заказчик</p>
+      </div>
+      <div class="header__link__after"></div>
+    </div>
+  </header>
+  <main class="main">
+    <section class="section main__hero hero">
+      <div class="hero__frame frame">
+        <div class="hero__content">
+          <p class="hero__title">Найти то что вам нужно</p>
+          <form id="search-form" class="search-form__form">
+            <div class="search-form__img img"></div>
+            <input type="text" id="search" name="search" class="form__input" placeholder="Создать фриланс биржу" />
+            <button class="btn search-form__btn ">Поиск</button>
+            <!-- <label for="search" class="form__label"></label> -->
+          </form>
+          <!-- <button class="hero__btn btn btn--solid">---</button> -->
+        </div>
+        <div class="main__backgroud-content-block ">
+        </div>
+      </div>
+    </section>
+
+
+
+    <section class="section main__category caregory">
+      <p class="title">Категории</p>
+      <div class="category__frame frame">
+        <div class="category__list list">
+          <!-- тут надо пдинамически заполнять  -->
+          <!-- сейчас для примера -->
+          <a href='' class="category__card card">
+            <img src="./files/office.jpeg" class='img' alt="" height="400px">
+            <p class="card__title">Разработка и IT</p>
+          </a>
+          <a href='' class="category__card card">
+            <img src="./files/office.jpeg" class='img' alt="" height="400px">
+            <p class="card__title">Дизайн</p>
+          </a>
+          <!-- <a class="order__card card">
+            <img src="./files/logo.png" alt="" class="img" height="200px">
+            <div class="card__content-block card__content-block--category">
+              <h3 class="card__title">Здесь протсо название задания</h3>
+              <p class="card__txt txt txt--lite">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, in eos ducimus mollitia, maiores
+                aperiam, earum sequi cum excepturi praesentium quibusdam. Corrupti quos alias harum at velit illum
+                voluptas iste!
+              </p>
+              <div class="card__info">
+                <div class="card__Author">Алекксей Константинович</div>
+                <div>
+                  <span class="authorRating">5.0</span>
+                  <span>✨</span>
+                </div>
+              </div>
+            </div>
+          </a> -->
+        </div>
+      </div>
+    </section>
+
+    <section class="main__about about">
+      <p class="about__title title">Немного о нас</p>
+      <div class="frame about__frame">
+        <div class="about__list">
+          <ol class="about__list_c">
+            <li>
+              <strong>Большой выбор проектов</strong>
+              <p>Наша биржа предлагает множество проектов различной тематики. Вы можете выбрать проекты,
+                которые соответствуют вашим интересам</p>
+            </li>
+            <li>
+              <strong>Безопасность:</strong>
+              <p>Наша биржа обеспечивает безопасность для всех пользователей</p>
+            </li>
+            <li>
+              <strong>Простота использования</strong>
+              <p>Наша биржа имеет простой и интуитивно понятный интерфейс, который позволяет легко находить проекты и
+                связываться с заказчиками</p>
+            </li>
+            <li>
+              <strong>Гибкий график работы</strong>
+              <p>Вы можете работать на нашей бирже в любое время, когда у вас есть свободное время. Вы сами выбираете
+                проекты и график работы</p>
+            </li>
+          </ol>
+        </div>
+        <div class="about__list">
+          <ol class="about__list_c" start="5">
+            <li>
+              <strong>Разнообразие проектов</strong>
+              <p>На бирже публикуются проекты различной сложности, что позволяет нашим фрилансерам выбирать
+                проекты, которые соответствуют их навыкам</p>
+            </li>
+            <li>
+              <strong>Большое сообщество</strong>
+              <p>Наша биржа имеет большое сообщество фрилансеров и заказчиков, что позволяет нашим пользователям
+                находить
+                новых партнеров и расширять свой круг общения</p>
+            </li>
+            <li>
+              <strong>Отзывы и рейтинги</strong>
+              <p>Наша биржа предоставляет возможность ставить рейтинги заказчикам и фрилансерам. Это
+                помогает пользователям выбирать надежных партнеров для работы</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+    <footer class="footer section">
+      <div class="frame footer__frame">
+        <div>Команда IT-19 &lt;3</div>
+        <div>*This проект for хакатон IT трек Opportunity Cup 2023</div>
+      </div>
+    </footer>
+  </main>
+  <script src="./scripts/balanceChecker.js" type="module"></script>
+</body>
+
+</html>
