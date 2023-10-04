@@ -39,7 +39,12 @@ function handleFormSubmit(event) {
     }
     event.preventDefault();
 
-
+    if (flagLog) { //если логинимся то то
+        //email + pass
+    }
+    else {// если регистрируемся то то
+        //все поля
+    }
     personName = inputName.value;
     lastName = inputLastName.value;
     pass = inputPass.value;
@@ -90,6 +95,8 @@ signUnBtn.addEventListener("click", f => {
     if (flagLog) {
         signUnBtn.classList.add('active');
         signInBtn.classList.remove('active');
+        let regLabels = document.querySelectorAll('.reg-group')
+        regLabels.forEach((element) => element.style.display = 'block');
         flagLog = false;
     }
 })
@@ -98,6 +105,8 @@ signInBtn.addEventListener("click", f => {
     if (!flagLog) {
         signUnBtn.classList.remove('active');
         signInBtn.classList.add('active');
+        let regLabels = document.querySelectorAll('.reg-group')
+        regLabels.forEach((element) => element.style.display = 'none');
         flagLog = true;
     }
 })

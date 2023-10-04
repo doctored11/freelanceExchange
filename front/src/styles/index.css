@@ -1,0 +1,10 @@
+:root {
+    --base-color-CornflowerBlue: 100, 149, 237;
+    --font-size: 16px;
+    --font-family: sans-serif;
+}
+
+body {
+    text-decoration: none;
+
+}
