@@ -18,8 +18,15 @@ export function createCards(container, serviceData) {
         console.log(card)
 
         const { id, img, title, price, descr, timing, owner, ownerId, type } = card;
-        let userName
         let user = await DataManager.getUserById(ownerId);
+        const rate = user.rate
+        let userName
+        if (!rate) rate = 0;
+        let rateTxt = "🔹"
+        if (rate > 4.7) rateTxt = "🔥"
+        if (rate > 3.6) rateTxt = "💥"
+        if (rate > 2) rateTxt = "✨"
+
         console.log(ownerId, user)
         console.log(card)
         if (user) {
@@ -33,23 +40,33 @@ export function createCards(container, serviceData) {
 
         const cardItem =
             `
-                <div class="card service-card ${type}" data-product-id="${id}">
-                    <div class="card__top service-card_top">
-                        <a href="/servicePage.html?id=serviceCase${id}" class="card__image service-card__image --test-get-img">
-                            <img class=" img"
-                                src="${img}"
-                                alt="${title}"
-                            />
-                        </a>
-                        <div class="card__label service-card__label">-${timing}</div>
-                    </div>
+                <div class=" card service-card card-${type}" data-product-id="${id}">
+                <button class="card__add card__star " data-id="${id}">
+                <img class=" img card__star card__star-${id}"
+                src="./files/unStar.svg"
+                alt="${title}"
+                    />
+                </button>
+                <a href="/servicePage.html?id=serviceCase${id}" class="card__image service-card__image --test-get-img">
+                <img class=" img"
+                    src="${img}"
+                    alt="${title}"
+                />
+             </a>
+             <div class="card__label service-card__label">-${timing}</div>
+
+                  
                     <div class="card__bottom service-card__bottom">
                         <div class="card__info ">
-                            <div class="card__people heading service-card__heading">${userName}</div>
+                            <div class="card__people heading service-card__heading card__Author">${userName}</div>
+                            <div class="rate-block">
+                            <span class = "authorRating txt" >${rate}</span>
+                            <span>${rateTxt}</span>
+                            <div>
                             <div class="card__price card__price--common">${price}</div>
                         </div>
                         <a href="/servicePage.html?id=serviceCase${id}" class="card__title service-card__title">${title}</a>
-                        <button class="card__add" data-id="${id}">В корзину</button>
+                        
                     </div>
                 </div>
             `
@@ -288,9 +305,9 @@ async function sendDone(container, taskid, comment) {
     console.log(taskid);
 
     // task.closeComment = Array.isArray(task.closeComment) ? task.closeComment.push(comment) : [comment];
-    
-    task.closeComment = task.closeComment || [];  
-    task.closeComment.push(comment); 
+
+    task.closeComment = task.closeComment || [];
+    task.closeComment.push(comment);
 
     let usersId = await DataManager.getUsersWithActiveTaskIds(taskid);
 
@@ -464,8 +481,8 @@ async function confirmReject(txt, taskId) {
 
     console.log(txt)
 
-    task.closeComment = task.closeComment || []; 
-    task.closeComment.push(txt);  
+    task.closeComment = task.closeComment || [];
+    task.closeComment.push(txt);
 
     console.log(task)
     console.log(task.closeComment)
@@ -957,7 +974,7 @@ export async function renderPrivateComment(container, cardId) {
             return `<div class="card card--comment card--close-comment even">
             <img class="card__image" src="${autor.img}" alt="прекрасное лицо">
             <div class="card__content card">
-              <h2 class="card__title title">${autor.bio}</h2>
+              <h2 class="card__title title title--litle">${autor.bio}</h2>
               <p class="card__text txt">${com}</p>
             </div>
           </div>`;
@@ -979,7 +996,7 @@ export async function renderPrivateComment(container, cardId) {
             return `<div class="card card--comment card--close-comment odd card--client-com">
             <img class="card__image" src="${autor.img}" alt="прекрасное лицо">
             <div class="card__content card">
-              <h2 class="card__title title">${autor.bio}</h2>
+              <h2 class="card__title title title--litle">${autor.bio}</h2>
               <p class="card__text txt">${com}</p>
             </div>
           </div>`;
@@ -987,6 +1004,35 @@ export async function renderPrivateComment(container, cardId) {
     }));
 
     cardBlock = cardBlocks.join('');
+
+    console.log(cardBlock)
+    container.innerHTML += cardBlock;
+    console.log(container)
+
+
+}
+
+export async function renderGlobalComment(container, normalId) {
+    console.log(normalId)
+
+
+    console.log("renderCloseComments!");
+
+
+    const task = await DataManager.getServiceById(normalId);
+    if (!task.globalComment) return;
+    const com = task.globalComment;
+
+    const cardBlock =
+        `<div class="card card--comment card--global-comment even">
+            <div class="card__content card">
+              <h2 class="card__title title title--litle">Реальный отзыв клиента:</h2>
+              <p class="card__text txt">${com}</p>
+            </div>
+          </div>`;
+
+
+
 
     console.log(cardBlock)
     container.innerHTML += cardBlock;
