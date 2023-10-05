@@ -245,10 +245,53 @@ async function goReject(taskId, userId) {
 
 }
 
-async function goDone(taskid, container) {
+
+
+async function goDone(taskId, container) {
+    console.log('done')
+
+    const formContainer = document.createElement("div");
+    formContainer.classList.add("done-form");
+
+
+    const textarea = document.createElement("textarea");
+    textarea.classList.add("done-form__textarea");
+    textarea.placeholder = "Введите комментарий";
+
+    const submitButton = document.createElement("button");
+    submitButton.textContent = "Сдать работу";
+    submitButton.classList.add("done-form__submit-button");
+
+    submitButton.addEventListener("click", () => {
+        const comment = textarea.value;
+        //todo await
+        sendDone(container, taskId, comment);
+
+        textarea.value = "";
+    });
+
+    formContainer.appendChild(textarea);
+    formContainer.appendChild(submitButton);
+
+
+    container.appendChild(formContainer);
+
+
+}
+
+
+
+async function sendDone(container, taskid, comment) {
     console.log('done')
 
     const task = await DataManager.getServiceById(taskid);
+    console.log(taskid);
+
+    // task.closeComment = Array.isArray(task.closeComment) ? task.closeComment.push(comment) : [comment];
+    
+    task.closeComment = task.closeComment || [];  
+    task.closeComment.push(comment); 
+
     let usersId = await DataManager.getUsersWithActiveTaskIds(taskid);
 
     console.log(taskid)
@@ -408,25 +451,26 @@ function createRejectForm(container, taskId) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 async function confirmReject(txt, taskId) {
     console.log('reject')
+    console.log(txt)
 
     const task = await DataManager.getServiceById(taskId);
+    console.log(task)
+    console.log(txt)
     task.closeComment = task.closeComment || [];
-    task.closeComment.push(txt);
+    console.log(task)
+    console.log(Array.isArray(task.closeComment));
 
-    DataManager.updateServiceById(taskId, task);
+    console.log(txt)
+
+    task.closeComment = task.closeComment || []; 
+    task.closeComment.push(txt);  
+
+    console.log(task)
+    console.log(task.closeComment)
+
+    DataManager.updateServiceById(task.id, task);
 
 }
 
@@ -557,6 +601,7 @@ async function finalTranzaction(user, count, rate) {
     user.saveToServer();
 
 }
+
 export async function goDeleteTask(container, id) {
     let user = User.load();
     user = await DataManager.getUserById(user.id)
@@ -647,9 +692,10 @@ export function createCartCards(container, data, key = "basket", modifier = "non
                     <div class="card__bottom cart-card__bottom">
                         <div class="card__info ">
                             <div class="card__people heading cart-card__heading">${title}</div>
+                            <div class="card__people txt cart-card__descr">${descr}</div>
                             <div class="card__price card__price--common">${price}</div>
                         </div>
-                        <a href="/servicePage.html?id=serviceCase${id}" class="card__title cart-card__title">${title}</a>
+                        <a href="/servicePage.html?id=serviceCase${id}" class="card__title cart-card__title">перейти</a>
                         <button class="card__add" data-id="${id}">удалить</button>
                     </div>
                 </div>
@@ -880,7 +926,7 @@ export async function renderPrivateComment(container, cardId) {
     console.log(card)
 
     if (!card.closeComment) return
-    const cardCom = card.closeComment;
+    let cardCom = card.closeComment;
 
     let cardBlock = "";
 
@@ -891,27 +937,58 @@ export async function renderPrivateComment(container, cardId) {
 
     //Из логики что автор коммента на отказ всегда клиент 
     let autor
+    //на самом деле новая логика, нечетные - исполнитель четные клиент
+    console.log(cardCom)
+    cardCom = Array.isArray(cardCom) ? cardCom : [cardCom]
+    console.log(cardCom)
 
-    if (user.id != card.ownerId) {
-        autor = await DataManager.getUserById(card.ownerId)
-    }
-    else {
-        autor = user
-    }
     console.log(autor)
-    cardCom.forEach((com) => {
-        cardBlock += `<div class="card card--comment card--close-comment">
-    <img class="card__image" src="${autor.img}" alt="прекрасное лицо">
-    <div class="card__content card">
-        <h2 class="card__title title">${autor.bio}</h2>
-         <p class="card__text txt ">${com}</p>
-    </div>
-    </div>
-     `
-    })
+
+    const cardBlocks = await Promise.all(cardCom.map(async (com, index) => {
+        const isEven = (index + 1) % 2 === 0; // Четный - клиент, нечетный исполнитель
+        console.log(isEven);
+
+        if (isEven) {
+            if (user.client) {
+                autor = await DataManager.getUserById(card.ownerId);
+            } else {
+                autor = user;
+            }
+            return `<div class="card card--comment card--close-comment even">
+            <img class="card__image" src="${autor.img}" alt="прекрасное лицо">
+            <div class="card__content card">
+              <h2 class="card__title title">${autor.bio}</h2>
+              <p class="card__text txt">${com}</p>
+            </div>
+          </div>`;
+        } else {
+            if (!user.client) {
+                autor = user;
+            } else {
+                // static async getUsersWithActiveTaskIds(taskId) {
+                let autors = await DataManager.getUsersWithActiveTaskIds(card.id);
+                console.log(autors)
+                autors = autors.filter((autor) => {
+                    return autor != user.id;
+                });
+                let autorId = autors[0]
 
 
+                autor = await DataManager.getUserById(autorId)
+            }
+            return `<div class="card card--comment card--close-comment odd card--client-com">
+            <img class="card__image" src="${autor.img}" alt="прекрасное лицо">
+            <div class="card__content card">
+              <h2 class="card__title title">${autor.bio}</h2>
+              <p class="card__text txt">${com}</p>
+            </div>
+          </div>`;
+        }
+    }));
 
+    cardBlock = cardBlocks.join('');
+
+    console.log(cardBlock)
     container.innerHTML += cardBlock;
     console.log(container)
 
@@ -965,11 +1042,17 @@ function cardCreate(userData, container, relativeTaskId, isCreator = false) {
             console.log(`Подтверждено: ${userData.bio}`);
             goInWork(userData.id, relativeTaskId);
         });
-        cancelButton.addEventListener("click", () => {
+        cancelButton.addEventListener("click", async () => {
 
             console.log(`Отменено: ${userData.bio}`);
             //todo
             // goReject(userData.id);
+            let us = await DataManager.getUserById(userData.id);
+            us.pendingTasks = us.pendingTasks.filter(taskId => parseInt(taskId) != parseInt(relativeTaskId));
+            us = User.createUserFromObject(us);
+
+            DataManager.updateUserById(userData.id, us)
+
         });
 
 

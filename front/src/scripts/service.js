@@ -100,7 +100,7 @@ const task = await DataManager.getServiceById(normalId)
 console.log(task)
 renderTaskCard(task, caseContainer);
 
-renderPrivateComment(commentContainer, normalId);
+await  renderPrivateComment(commentContainer, normalId);
 updateMoneyNowText()
 
 if (user.client && task.status && task.status == "inСonfirm")
