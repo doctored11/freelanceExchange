@@ -15,7 +15,7 @@ import {
 import {
     createCards
 } from './domBuider.js'
-
+import{updateMoneyNowText} from './balanceChecker.js'
 import {
     getServices
 
@@ -54,6 +54,7 @@ let usersData = [];
 productsData= await DataManager.getServicesInRange(0,2); //подумать тут)
 console.log(productsData)
 renderStartPage( productsData);
+updateMoneyNowText()
 
 btnShowCards.addEventListener('click', sliceArrCards);
 

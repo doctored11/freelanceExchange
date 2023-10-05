@@ -346,6 +346,7 @@ export class DataManager {
 
             const response = await fetch(`${src}users.json`);
             const allUsers = await response.json();
+            console.log(allUsers)
 
             console.log(allUsers)
             if (allUsers) {
@@ -354,11 +355,12 @@ export class DataManager {
                     const user = allUsers[userId];
                     if (user == null) return;
                     console.log(user)
-                    if (user.activeTasks && user.activeTasks.includes(taskId)) {
+                    if (user.activeTasks && user.activeTasks.includes(parseInt(taskId))) {
                         usersWithActiveTasks.push(userId);
                     }
                 });
             }
+            console.log(usersWithActiveTasks)
 
             return usersWithActiveTasks;
         } catch (error) {

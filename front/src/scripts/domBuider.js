@@ -135,8 +135,11 @@ async function goBuy(container, price, id) {
 async function goInWork(partnerId, taskId) {
     let partner = await DataManager.getUserById(partnerId);
     let user = User.load();
+    user = await DataManager.getUserById(user.id);
     let task = await DataManager.getServiceById(taskId)
 
+
+    console.log(user)
     partner.pendingTasks = partner.pendingTasks.filter(t => t != taskId);
     user.pendingTasks = user.pendingTasks.filter(t => t != taskId);
 
@@ -158,8 +161,11 @@ async function goInWork(partnerId, taskId) {
 
     console.log(partnerId)
 
-    DataManager.updateUserById(partnerId, partner);
-    DataManager.updateUserById(user.id, user);
+
+    partner.saveToServer();
+    user.saveToServer();
+    // DataManager.updateUserById(partnerId, partner);
+    // DataManager.updateUserById(user.id, user);
     DataManager.updateServiceById(taskId, task);
 
     user.save();
@@ -199,7 +205,7 @@ async function goDoing(container, id) {
 
     DataManager.updateServiceById(id, task)
     console.log(user)
-    user.save();
+    user.saveToServer();
 
     let owner = await DataManager.getUserById(task.ownerId);
     owner = User.createUserFromObject(owner);
@@ -210,7 +216,24 @@ async function goDoing(container, id) {
 
 }
 
-async function goDone(taskid) {
+async function goReject(taskId, userId) {
+    let user = await DataManager.getUserById(userId);
+    user = User.createUserFromObject(user);
+
+
+    user.pendingTasks = user.pendingTasks.filter(task => task != taskId);
+    console.log(user)
+
+    //могу и у ownerа чистить но вдруг он не один откликнулся? 
+
+
+
+    user.saveToServer();
+
+}
+
+async function goDone(taskid, container) {
+    console.log('done')
 
     const task = await DataManager.getServiceById(taskid);
     let usersId = await DataManager.getUsersWithActiveTaskIds(taskid);
@@ -226,13 +249,213 @@ async function goDone(taskid) {
     user1 = User.createUserFromObject(user1);
     user2 = User.createUserFromObject(user2);
 
+    console.log(user1)
+    console.log(user2)
+
+    let buffUs = User.load();
+
+    task.status = "inСonfirm";
+    DataManager.updateServiceById(task.id, task)
+    if (!buffUs.client) return
+    createAcceptRejectButtons(container, taskid)
+
+
+
+
+
+
+
+    let user = User.load();
+    user = await DataManager.getUserById(user.id)
+    user = User.createUserFromObject(user);
+
+
+    task.status = "ready";
+
+    DataManager.updateServiceById(task.id, task)
+
+
+
+}
+
+
+export function createAcceptRejectButtons(container, taskId) {
+
+
+    const acceptButton = document.createElement("button");
+    acceptButton.textContent = "Принять";
+    acceptButton.classList.add("accept-button");
+
+
+    const rejectButton = document.createElement("button");
+    rejectButton.textContent = "На доработку";
+    rejectButton.classList.add("reject-button");
+
+
+    acceptButton.addEventListener("click", () => {
+        confirmDone(taskId);
+        console.log("Задача принята");
+    });
+
+
+    rejectButton.addEventListener("click", async () => {
+        createRejectForm(container, taskId)
+        const task = await DataManager.getServiceById(taskId);
+        task.status = "inWork"
+        DataManager.updateServiceById(taskId, task)
+        console.log("Задача отправлена на доработку");
+    });
+    console.log(container)
+
+    container.appendChild(acceptButton);
+    container.appendChild(rejectButton);
+}
+
+
+function createRejectForm(container, taskId) {
+    const formContainer = document.createElement("div");
+    formContainer.classList.add("reject-form");
+
+
+    const textarea = document.createElement("textarea");
+    textarea.classList.add("reject-form__textarea");
+    textarea.placeholder = "Введите комментарий";
+
+    const submitButton = document.createElement("button");
+    submitButton.textContent = "Отправить";
+    submitButton.classList.add("reject-form__submit-button");
+
+    submitButton.addEventListener("click", () => {
+        const comment = textarea.value;
+        //todo await
+        confirmReject(comment, taskId);
+
+
+
+        textarea.value = "";
+    });
+
+
+    formContainer.appendChild(textarea);
+    formContainer.appendChild(submitButton);
+
+
+    container.appendChild(formContainer);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+async function confirmReject(txt, taskId) {
+    console.log('reject')
+
+    const task = await DataManager.getServiceById(taskId);
+    task.closeComment = task.closeComment || [];
+    task.closeComment.push(txt);
+
+    DataManager.updateServiceById(taskId, task);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+async function confirmDone(taskid) {
+    console.log('done')
+    console.log(taskid)
+
+    const task = await DataManager.getServiceById(taskid);
+    let usersId = await DataManager.getUsersWithActiveTaskIds(taskid);
+
+    console.log(taskid)
+    console.log(usersId)
+    let user1 = await DataManager.getUserById([usersId[0]]);
+    let user2 = await DataManager.getUserById([usersId[1]]);
+    const price = parseInt(task.price)
+
+
+
+    user1 = User.createUserFromObject(user1);
+    user2 = User.createUserFromObject(user2);
+
+    console.log(user1)
+    console.log(user2)
+
     try { await finalTranzaction(user1, price); } catch { console.log("ошибка транзакции") }
     try { await finalTranzaction(user2, price); } catch { console.log("ошибка транзакции") }
 
     let user = User.load();
     user = await DataManager.getUserById(user.id)
     user = User.createUserFromObject(user);
-    user.save();
+
 
     task.status = "ready";
 
@@ -254,13 +477,18 @@ async function finalTranzaction(user, count) {
         user.balance.activeBalance = parseInt(nowBalance) + parseInt(count);
         console.log(user)
 
-        await DataManager.updateUserById(user.id, user);
+
+        await user.saveToServer();
+        // await DataManager.updateUserById(user.id, user);
         return
     }
 
-    if (!user.balance.spendFrozen(count)) {
+    const isSpendFrozen = user.balance.spendFrozen(count)
+
+    if (!isSpendFrozen) {
         if (!user.balance.spend(count)) console.log("!как так, за это банить надо. Таск выполнен а платить нечем")
     }
+
 
     // DataManager.updateUserById(user.id, user)
     user.saveToServer();
@@ -438,7 +666,7 @@ export function renderPeopleCard(data, container) {
 
 export async function renderTaskCard(data, container) {
     let user = User.load();
-
+    user = await DataManager.getUserById(user.id)
     const { id, img, title, price, descr, timing, owner, ownerId, type, status } = data;
     let buffBtn;
     if (type == 'order') {
@@ -462,7 +690,8 @@ export async function renderTaskCard(data, container) {
                 renderPartners(pendingUsersId, container, ownerId, id, true)
                 break;
             case "inWork":
-                buffBtn = ''
+                if (user.implementer && user.activeTasks.includes(id))
+                    buffBtn = '<button class="buy-btn btn  ">Готово!</button>'
 
                 break;
             default:
@@ -481,6 +710,10 @@ export async function renderTaskCard(data, container) {
 
                 const pendingUsersId = await DataManager.getUsersWithPendingTaskIds(id);
                 renderPartners(pendingUsersId, container, ownerId, id)
+
+                if (user.pendingTasks && user.pendingTasks.includes(id)) {
+                    buffBtn = '<button class="buy-btn btn btn--coward ">струсить 🐓</button>'
+                }
                 break;
             case "inWork":
 
@@ -539,6 +772,11 @@ export async function renderTaskCard(data, container) {
     if (user.id == ownerId) {
         evBtn.addEventListener('click', () => goDeleteTask(container, id));
 
+    } else if (user.pendingTasks && user.pendingTasks.includes(id)) {
+        evBtn.addEventListener('click', async () => await goReject(id, user.id).then(
+            evBtn.remove()
+        ));
+
     } else
         if (type == 'order' && status != 'inWork') {
             evBtn.addEventListener('click', () => goDoing(container, id));
@@ -546,11 +784,62 @@ export async function renderTaskCard(data, container) {
         else if (type != 'order' && status != 'inWork') {
             evBtn.addEventListener('click', () => goBuy(container, price, id));
         }
-    if (user.id != ownerId && user.implementer && status == 'inWork' && user.activeTasks.includes(id)) {
-        evBtn.addEventListener('click', () => goDone(id).then(
+    if (user.implementer && status == 'inWork' && user.activeTasks.includes(id)) {
+        evBtn.addEventListener('click', () => goDone(id, container).then(
             evBtn.remove()
         ));
     }
+}
+
+
+
+export async function renderPrivateComment(container, cardId) {
+    console.log("renderCloseComments!")
+
+    let user = User.load();
+    user = await DataManager.getUserById(user.id);
+    user = User.createUserFromObject(user);
+
+    const card = await DataManager.getServiceById(cardId);
+    console.log(card)
+
+    if (!card.closeComment) return
+    const cardCom = card.closeComment;
+
+    let cardBlock = "";
+
+    // console.log((user.id == card.ownerId || user.activeTasks.includes(parseInt(cardId))))
+    if (!(user.id == card.ownerId || user.activeTasks.includes(parseInt(cardId)))) return
+
+
+
+    //Из логики что автор коммента на отказ всегда клиент 
+    let autor
+
+    if (user.id != card.ownerId) {
+        autor = await DataManager.getUserById(card.ownerId)
+    }
+    else {
+        autor = user
+    }
+    console.log(autor)
+    cardCom.forEach((com) => {
+        cardBlock += `<div class="card card--comment card--close-comment">
+    <img class="card__image" src="${autor.img}" alt="прекрасное лицо">
+    <div class="card__content card">
+        <h2 class="card__title title">${autor.bio}</h2>
+         <p class="card__text txt ">${com}</p>
+    </div>
+    </div>
+     `
+    })
+
+
+
+    container.innerHTML += cardBlock;
+    console.log(container)
+
+
 }
 
 function renderPartners(usersIds, container, ownerId, id, isCreator = false) {
@@ -604,7 +893,7 @@ function cardCreate(userData, container, relativeTaskId, isCreator = false) {
 
             console.log(`Отменено: ${userData.bio}`);
             //todo
-            goReject(userData.id);
+            // goReject(userData.id);
         });
 
 

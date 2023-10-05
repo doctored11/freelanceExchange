@@ -168,32 +168,39 @@ export class Balance {
     let history = []
 
 
-
-    if (parseInt(this.#activeBalance) + parseInt(this.#frozenBalance) != parseInt(prevBalanceData.activeBalance) + parseInt(prevBalanceData.frozenBalance)
-    ) {
+    if (parseInt(this.#frozenBalance) < parseInt(prevBalanceData.frozenBalance) && (parseInt(this.#activeBalance) == parseInt(prevBalanceData.activeBalance))) {
       balanceStep = {
         data: new Date(),
-        count: this.#activeBalance,
-        type: 'update'
+        count: parseInt(prevBalanceData.frozenBalance) - parseInt(this.#frozenBalance),
+        type: 'freezeSpend'
       };
       history = await Balance.addHistory(balanceStep, userId);
-    }
-    else if (parseInt(this.#activeBalance) > parseInt(prevBalanceData.activeBalance)) {
-      balanceStep = {
-        data: new Date(),
-        count: parseInt(this.#activeBalance) - parseInt(prevBalanceData.activeBalance),
-        type: 'unfreeze'
-      };
-      history = await Balance.addHistory(balanceStep, userId);
-    }
-    else if (parseInt(this.#frozenBalance) > parseInt(prevBalanceData.frozenBalance)) {
-      balanceStep = {
-        data: new Date(),
-        count: parseInt(this.#frozenBalance) - parseInt(prevBalanceData.frozenBalance),
-        type: 'freeze'
-      };
-      history = await Balance.addHistory(balanceStep, userId);
-    }
+    } else
+      if (parseInt(this.#activeBalance) + parseInt(this.#frozenBalance) != parseInt(prevBalanceData.activeBalance) + parseInt(prevBalanceData.frozenBalance)
+      ) {
+        balanceStep = {
+          data: new Date(),
+          count: this.#activeBalance,
+          type: 'update'
+        };
+        history = await Balance.addHistory(balanceStep, userId);
+      }
+      else if (parseInt(this.#activeBalance) > parseInt(prevBalanceData.activeBalance)) {
+        balanceStep = {
+          data: new Date(),
+          count: parseInt(this.#activeBalance) - parseInt(prevBalanceData.activeBalance),
+          type: 'unfreeze'
+        };
+        history = await Balance.addHistory(balanceStep, userId);
+      }
+      else if (parseInt(this.#frozenBalance) > parseInt(prevBalanceData.frozenBalance)) {
+        balanceStep = {
+          data: new Date(),
+          count: parseInt(this.#frozenBalance) - parseInt(prevBalanceData.frozenBalance),
+          type: 'freeze'
+        };
+        history = await Balance.addHistory(balanceStep, userId);
+      }
 
     localStorage.setItem('balance', JSON.stringify({
       activeBalance: this.#activeBalance,

@@ -1,21 +1,34 @@
 
+import { DataManager } from './DataManager.js';
+import { User } from './User.js';
 import {
     setLsbyKey,
     getLsbyKey
+} from './utils.js';
 
-} from './utils.js'
 
-export function updateMoneyNowText() {
+export async function updateMoneyNowText() {
     console.log("деньги")
     const moneyNowElement = document.querySelector('.moneyNow');
-    if(!moneyNowElement) return
-    const moneyValue = getLsbyKey('balance');
-    if (!moneyValue.activeBalance) return
-    moneyNowElement.textContent = `Текущий баланс: ${moneyValue.activeBalance}`;
+    if (!moneyNowElement) return
+
+    let user = User.load();
+
+    user = await DataManager.getUserById(user.id);
+    user = User.createUserFromObject(user)
+    console.log(user)
+
+    const moneyValue = user.balance.getActiveBalance();
+
+    if (!moneyValue) return
+    moneyNowElement.textContent = `Текущий баланс: ${moneyValue}`;
 }
 
 
-updateMoneyNowText();
+document.addEventListener('DOMContentLoaded', function () {
+
+    updateMoneyNowText();
+});
 
 
 // window.addEventListener('storage', () => {
