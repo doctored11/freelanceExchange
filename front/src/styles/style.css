@@ -1,50 +1,51 @@
 /* на 1920px ориенитируемся пока ( и под ноуты с zoom системы 125%) */
 
+
+
 :root {
-  --color-black: #121723;
+  --base-color-CornflowerBlue: 100, 149, 237;
+  --font-size: 16px;
+  --font-family: sans-serif;
+  --color-deep-grey: #696969;
   --color-test-yellow: #d1c705;
   --color-test-green: #095204;
   --color-test-white: #d2d5dd;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* test */
 .--test-static-background {
-  background: repeating-linear-gradient(
-    45deg,
-    var(--color-black),
-    var(--color-black) 10px,
-    var(--color-test-green) 10px,
-    var(--color-test-green) 20px
-  );
+  background: repeating-linear-gradient(45deg, var(--color-black), var(--color-black) 10px, var(--color-test-green) 10px, var(--color-test-green) 20px);
   border: solid 2px var(--color-test-green);
   background-size: 100%;
 }
 
 .--test-static-img {
-  background: repeating-linear-gradient(
-    45deg,
-    var(--color-black),
-    var(--color-black) 10px,
-    var(--color-test-white) 10px,
-    var(--color-test-white) 20px
-  );
+  background: repeating-linear-gradient(45deg, var(--color-black), var(--color-black) 10px, var(--color-test-white) 10px, var(--color-test-white) 20px);
   border: solid 2px var(--color-test-white);
 }
 
 .--test-get-img {
-  background: repeating-linear-gradient(
-    45deg,
-    var(--color-black),
-    var(--color-black) 10px,
-    var(--color-test-yellow) 10px,
-    var(--color-test-yellow) 20px
-  );
+  background: repeating-linear-gradient(45deg, var(--color-black), var(--color-black) 10px, var(--color-test-yellow) 10px, var(--color-test-yellow) 20px);
   border: solid 2px var(--color-test-yellow);
   background-size: 100%;
 }
 
-.moneyNow::after {
-  content: "🍃";
+body {
+  font-size: var(--font-size, 16px);
+  font-family: var(--font-family, sans-serif);
+  color: black;
+  background-color: white;
+  overflow-x: hidden;
+  /* background-color: antiquewhite; */
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 /*  */
@@ -57,54 +58,70 @@
   padding: 0 3%;
 }
 
-.section {
-  padding: 5rem 0;
-}
+
 
 /*  */
-.header__nav-block {
-  display: flex;
-  justify-content: space-between;
+.section {
+  padding: 1rem 0;
 }
 
-.header {
-  padding: 2rem 0;
+img {
+  background-repeat: no-repeat;
+  background-size: cover;
+  max-width: 100%;
+  object-fit: cover;
 }
 
 .logo {
   /* пока без контента ставим жесткие размеры */
-  min-width: 158px;
+  max-width: 5%;
 }
 
-.header__search-block {
+header {
+  position: sticky;
+  top: 0;
+  left: 0;
   display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem;
+  background-color: inherit;
+  z-index: 100;
+  box-shadow: 0 5px 16px 0 #ccc;
 }
 
-.header__interaction-block {
-  min-width: 35%;
-  display: flex;
-  justify-content: space-between;
+.header__link {
+  text-transform: uppercase;
+  height: 100%;
+  color: #9e9e9e;
+  position: relative;
+  margin: 10px 20px;
+  text-align: center;
+  align-items: center;
+  font-size: 1.1em;
+  transition: 0.3s;
 }
 
-.nav__link {
-  text-decoration: none;
-  list-style-type: none;
+.header__link__after {
+  width: 75%;
+  height: 1px;
+  background-color: #9e9e9e;
+  position: absolute;
+  bottom: -10px;
+  left: 12.5%;
+  transition: 0.3s;
 }
 
-.nav__hyper-txt {
-  text-decoration: none;
+.header__link .header__link__after {
+  background-color: transparent;
 }
 
-.header__nav {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
+.header__link:hover>.header__link__after {
+  background-color: rgb(var(--base-color-CornflowerBlue));
 }
 
-.hero__frame {
-  display: flex;
+.header__link:hover>a {
+  color: rgb(var(--base-color-CornflowerBlue));
 }
 
 .none {
@@ -112,25 +129,26 @@
 }
 
 .title {
-  margin: 0;
+  font-size: 2.5em;
+  color: var(--color-deep-grey);
+  text-align: center;
+  position: relative;
+  transition: 0.1s;
 }
 
-.main__hero {
-  overflow: hidden;
-}
-
-.hero__title {
-  margin-bottom: 2rem;
-  color: var(--color-test-white);
+.title::after {
+  content: '';
+  width: 3.6em;
+  position: absolute;
+  inset: 110% auto auto 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--color-deep-grey);
+  height: 1px;
 }
 
 .main__backgroud-content-block {
-  padding: 10% 0;
-  margin: -10% 0;
-}
-
-.main__backgroud-content-block {
-  width: 45%;
+  padding: 5% 0;
+  margin: -5% 0;
 }
 
 .txt {
@@ -138,42 +156,84 @@
 }
 
 .txt--lite {
-  color: var(--color-test-white);
+  /* color: var(--color-test-white); */
 }
 
 .title--lite {
   color: var(--color-test-white);
 }
 
-.hero__text {
-  margin-bottom: 1.5rem;
+.order__list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.hero__content {
-  margin-right: 2rem;
+.order__card {
+  width: 300px;
+  height: 350px;
+  text-align: center;
+  box-shadow: 0 4px 16px #ccc;
+  border-radius: 0.5rem;
 }
 
-.list {
+
+.card {
+  margin: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 16px #ccc;
+  border-radius: 0.5rem;
+  transition: 0.3s;
+}
+
+.card img {
+  border-radius: 0.5rem;
+}
+
+.card__content-block {
+  padding: 1rem;
+  text-align: start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card__title {
   margin: 0;
-  padding: 0;
-  text-decoration: none;
-  list-style-type: none;
+  height: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  /* color: rgb(var(--base-color-CornflowerBlue)); */
+  color: black;
+  margin-bottom: 10px;
 }
 
-.category__list {
+.card__txt {
+  height: 54px;
+  font-size: 1em;
+  overflow: hidden;
+  color: var(--color-deep-grey);
+  margin-bottom: 10px;
+}
+
+.card__info {
   display: flex;
   justify-content: space-between;
 }
 
-.category__card {
-  max-width: 22%;
-  padding: 5rem 0.5rem 0.5rem 0.5rem;
+.card__Author {
+  max-width: 60%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: black;
 }
 
-.about__frame {
-  display: flex;
-  flex-wrap: wrap;
+.card:hover {
+  transform: translate(-5px, -5px);
+  box-shadow: 0 9px 16px #ccc;
 }
+
 
 .about__reviews {
   width: 100%;
@@ -191,68 +251,67 @@
   margin-bottom: 1rem;
 }
 
-.reviws__list {
-  display: flex;
-
-  align-items: stretch;
-  justify-content: space-between;
-}
-
-.reviws__card {
-  max-width: 18%;
-  padding-bottom: 1rem;
-}
-
-.card__img {
-  height: 35%;
-  min-height: 105px;
-  display: block;
-}
 
 .card__description-block {
   padding: 0 0.5rem;
 }
 
 .footer__frame {
+  border-top: 1px solid #9e9e9e;
+  padding-top: 1rem;
   display: flex;
   width: 100%;
-}
-
-.footer__logos {
-  flex: 2;
-  margin-right: 20%;
-}
-
-.footer__nav {
-  flex: 7;
-  display: flex;
-  flex-wrap: wrap;
-
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-row-gap: 0.8rem;
-  grid-column-gap: 7rem;
-}
-
-.footer__nav-link {
-  position: relative;
-  width: 100%;
-  display: flex;
-  margin: 0;
-  flex: 5;
+  justify-content: space-between;
 }
 
 .cart-card {
   margin-bottom: 5rem;
   padding: 0.5rem;
 }
-.container--active::before {
-  content: "активные ⬇";
+
+/*---------- форма -----------*/
+.form__form-group {
+  position: relative;
+  margin: 32px 0 16px;
 }
 
-.info__active-tasks::before {
-  content: "те карточки которые сам создал пользователь ";
+.form__label {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  z-index: 2;
+  color: #9e9e9e;
+  transition: 0.3s;
 }
-.info__history::before{
-  content: "последнии изменения баланса ⚠"
+
+.form__input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #9e9e9e;
+  width: 100%;
+  outline: none;
+  transition: 0.3s;
+}
+
+.form__input:focus {
+  border-bottom: 1px solid #696969;
+}
+
+.form__input:focus~.form__label,
+.form__input:not(:placeholder-shown)~.form__label {
+  top: -16px;
+  font-size: 0.75em;
+  color: #e0e0e0;
+}
+
+.btn {
+  border: none;
+  text-decoration: none;
+  outline: none;
+  border-radius: 5px;
+  background-color: rgba(var(--base-color-CornflowerBlue), 0.3);
+  color: #9e9e9e;
+  padding: 1rem 1rem;
+  transition: 0.3s;
+  cursor: pointer;
 }
