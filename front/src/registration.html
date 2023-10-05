@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="./styles/style.css" />
   <link rel="stylesheet" href="styles/registration-form.css">
   <script src="./scripts/reg.js" type="module" defer></script>
+  <script src="./scripts/regValid.js" type="module" defer></script>
 </head>
 
 <body>
@@ -34,7 +35,7 @@
       <label for="lastname" class="form__label txt">Фамилия</label>
     </div>
     <div class="form__form-group reg-group">
-      <input type="name" id="lastname" name="phone" class="form__input" placeholder=" " required />
+      <input type="phone" id="phone" name="phone" class="form__input" placeholder=" " required />
       <label for="phone" class="form__label txt">Номер телефона</label>
     </div>
     <div class="form__form-group">
@@ -46,7 +47,9 @@
       <label for="password" class="form__label txt">Пароль</label>
     </div>
     <div class="form__submit">
-      <button class="registration-form__submit-button btn" disabled>Отправить</button>
+      <input type="button" onclick="location.href='./userPage.html';" value="Go to Google"
+        class="registration-form__submit-button btn" disabled />
+      <!-- <button class="registration-form__submit-button btn" disabled>Отправить</button> -->
       <a class="registration-form__cancel-button btn" href="index.html">Отменить</a>
     </div>
     <!-- Текст об ощибке(в самом конце reg.js) надо обработать -->
