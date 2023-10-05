@@ -19,7 +19,9 @@ export function createCards(container, serviceData) {
 
         const { id, img, title, price, descr, timing, owner, ownerId, type } = card;
         let user = await DataManager.getUserById(ownerId);
-        const rate = user.rate
+        console.log("😂");
+        console.log( user);
+        let rate = user.rate;
         let userName
         if (!rate) rate = 0;
         let rateTxt = "🔹"
@@ -38,13 +40,15 @@ export function createCards(container, serviceData) {
             userName = "Отличный мужчина"
         }
 
+
+        //./files/unStar.svg -?
         const cardItem =
             `
                 <div class=" card service-card card-${type}" data-product-id="${id}">
                 <button class="card__add card__star " data-id="${id}">
                 <img class=" img card__star card__star-${id}"
                 src="./files/unStar.svg"
-                alt="${title}"
+                alt="избранное"
                     />
                 </button>
                 <a href="/servicePage.html?id=serviceCase${id}" class="card__image service-card__image --test-get-img">
