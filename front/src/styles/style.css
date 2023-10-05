@@ -313,4 +313,5 @@ header {
   color: #9e9e9e;
   padding: 1rem 1rem;
   transition: 0.3s;
+  cursor: pointer;
 }
