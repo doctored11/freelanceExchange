@@ -1,6 +1,33 @@
+/* .header-profile__info {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    left: -100%;
+    top: 2em;
+    width: 300%;
+    z-index: 100;
+    background-color: white;
+    box-shadow: 0 4px 16px #ccc;
+    border-radius: 0.5rem;
+    transition: 0.5s;
+    color: var(--color-deep-grey)
+  }
+  
+  .header-profile:hover>.header-profile__info {
+    opacity: 1;
+    visibility: visible;
+  } */
+.header-profile {
+    max-width: 15%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .hero__frame {
     display: flex;
     color: white;
+    flex-wrap: wrap;
     width: 80%;
     margin: auto;
 }
@@ -32,16 +59,26 @@
 
 .main__backgroud-content-block {
     width: 45%;
-    transition: 3s;
-    background-image: url("../files/logo.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
+    position: relative;
+    display: block;
+    overflow: hidden;
 }
 
-.main__backgroud-content-block:hover {
-    background-image: url("../files/office.jpeg");
+.main__backgroud-content-block>img {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    max-height: 100%;
+    max-width: 100%;
+    transform: translate(-50%, -50%);
 }
+
+.hero__scroll {
+    opacity: 1;
+    transition: 5s;
+}
+
 
 .hero__text {
     font-size: 1.2em;
@@ -49,7 +86,12 @@
 }
 
 .hero__content {
-    margin-right: 2rem;
+    margin-right: 5rem;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 5rem;
     /* padding: 5rem 0; */
 }
 
