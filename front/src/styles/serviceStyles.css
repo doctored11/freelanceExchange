@@ -1,10 +1,14 @@
 .services__list {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 
   align-content: center;
   justify-content: space-between;
   align-items: stretch;
+}
+.services {
+  width: 100%;
 }
 .service-card {
   width: 30%;
@@ -41,8 +45,19 @@
   bottom: 0;
   right: 0;
 }
+.task-card {
+  margin-bottom: 2rem;
+}
+
+.container--partners::after {
+  content: "Желающие ⬇";
+}
+.case-container,
+.container--partners {
+  display: flex;
+  flex-direction: column-reverse;
+}
 .profile-card {
- 
   /* height: 10rem; */
 }
 .profile-container {
@@ -60,10 +75,10 @@
   flex-direction: row-reverse;
   justify-content: space-between;
 }
-.case-container{
+.case-container {
   margin-right: 2rem;
 }
-.order{
-  outline:  5px solid  #056208;
+.order {
+  outline: 5px solid #056208;
   outline-offset: 3px;
 }

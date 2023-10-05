@@ -7,17 +7,20 @@ import {
     forcePushToField, forceRemoveFromField
 
 } from './utils.js'
+import { DataManager } from './DataManager.js';
 import { updateMoneyNowText } from './balanceChecker.js'
 import { User } from './User.js';
 import { deleteFromCart, deleteCard, } from './cart.js'
 // карточки для секции всех тасков
-export function createCards(container, data, usersData) {
+export function createCards(container, serviceData) {
 
-    data.forEach(card => {
+    serviceData.forEach(async (card) => {
+        console.log(card)
+
         const { id, img, title, price, descr, timing, owner, ownerId, type } = card;
         let userName
-
-        const user = usersData.find(userData => userData.id === ownerId);
+        let user = await DataManager.getUserById(ownerId);
+        console.log(ownerId, user)
         console.log(card)
         if (user) {
             userName = user.bio;
@@ -75,16 +78,41 @@ function clickToCart(id) {
 
 }
 //todo пернести из dombuild
-function goBuy(container, price, id) {
+async function goBuy(container, price, id) {
     console.log("buy")
-    const user = User.load();
+    console.log('________________')
+    let user = User.load();
+    user = await DataManager.getUserById(user.id)
 
-    user.balance.freeze(price);
+    user = User.createUserFromObject(user);
+    console.log(user.balance)
+    user.save()
+    console.log(user)
+
+
+    user.pendingTasks.push(id)
+    if (!user.balance.freeze(price)) return;
 
     user.save();
     updateMoneyNowText();
-    forcePushToField("user", "pendingTasks", [id], true);
-    forcePushToField("users", "pendingTasks", [id], true, user.id); //вместо это отдавать эту информацию серверу. 
+
+    let task = await DataManager.getServiceById(id);
+
+    task.status = "pending";
+
+
+    DataManager.updateServiceById(id, task)
+
+
+    let owner = await DataManager.getUserById(task.ownerId);
+    owner = User.createUserFromObject(owner);
+    owner.pendingTasks.push(id);
+    DataManager.updateUserById(owner.id, owner);
+
+
+
+    // forcePushToField("user", "pendingTasks", [id], true);
+    //forcePushToField("users", "pendingTasks", [id], true, user.id); //вместо это отдавать эту информацию серверу. 
     //todo
     //отправить запрос на сервер о том что откликнулся на заказ, 
     //  и отправить другой стороне что с его карточкй происходит действие
@@ -103,8 +131,66 @@ function goBuy(container, price, id) {
     container.insertAdjacentHTML('beforeend', cardItem);
 
 }
-function goDoing(container, id) {
-    const user = User.load();
+
+async function goInWork(partnerId, taskId) {
+
+    console.log("goInWork")
+    let partner = await DataManager.getUserById(partnerId);
+    let user = User.load();
+    user = await DataManager.getUserById(user.id);
+    let task = await DataManager.getServiceById(taskId)
+
+
+    console.log(user)
+    partner.pendingTasks = partner.pendingTasks.filter(t => t != taskId);
+    user.pendingTasks = user.pendingTasks.filter(t => t != taskId);
+
+
+    //просто удаляем одинаковые   - хорошо бы вынести  и переиспользовать
+    partner.pendingTasks = [...new Set(partner.pendingTasks)];
+    user.pendingTasks = [...new Set(user.pendingTasks)];
+
+
+    console.log(user);
+    console.log(partner)
+
+    partner = User.createUserFromObject(partner)
+    user = User.createUserFromObject(user)
+
+    console.log(partner)
+    console.log(partner.activeTasks)
+
+
+    partner.activeTasks.push(taskId)
+    user.activeTasks.push(taskId)
+    task.status = "inWork";
+
+    console.log(partnerId)
+
+    console.log(user);
+    console.log(partner)
+
+    partner.saveToServer();
+    user.saveToServer();
+    // DataManager.updateUserById(partnerId, partner);
+    // DataManager.updateUserById(user.id, user);
+    DataManager.updateServiceById(taskId, task);
+
+    // user.save();
+
+}
+
+async function goDoing(container, id) {
+    console.log('doing')
+
+    let user = User.load();
+    console.log(user)
+    user = await DataManager.getUserById(user.id)
+    console.log(user)
+    user = User.createUserFromObject(user);
+    console.log(user)
+
+
     console.log("do")
     const cardItem =
         `
@@ -115,29 +201,397 @@ function goDoing(container, id) {
     </div>
     `
     container.insertAdjacentHTML('beforeend', cardItem);
-    forcePushToField("user", "pendingTasks", [id], true);
-    forcePushToField("users", "pendingTasks", [id], true, user.id);//вместо это отдавать эту информацию серверу. 
+    // forcePushToField("user", "pendingTasks", [id], true);
+
+
+    //todo
+    //да теперь не добавляем а перезаписываем, желательно оптимизировать
+    let pend = user.pendingTasks;
+    pend = [...pend, id]
+    user.pendingTasks = pend;
+
+    let task = await DataManager.getServiceById(id);
+
+    task.status = "pending";
+
+
+
+    DataManager.updateServiceById(id, task)
+    console.log(user)
+    user.saveToServer();
+
+    let owner = await DataManager.getUserById(task.ownerId);
+    owner = User.createUserFromObject(owner);
+    owner.pendingTasks.push(id);
+    console.log(owner)
+    owner.saveToServer()
+    // DataManager.updateUserById(owner.id, owner);
+
 }
-export function goDeleteTask(container, id) {
-    const user = User.load();
+
+async function goReject(taskId, userId) {
+    let user = await DataManager.getUserById(userId);
+    user = User.createUserFromObject(user);
+
+
+    user.pendingTasks = user.pendingTasks.filter(task => task != taskId);
+    console.log(user)
+
+    //могу и у ownerа чистить но вдруг он не один откликнулся? 
+
+
+
+    user.saveToServer();
+
+}
+
+async function goDone(taskid, container) {
+    console.log('done')
+
+    const task = await DataManager.getServiceById(taskid);
+    let usersId = await DataManager.getUsersWithActiveTaskIds(taskid);
+
+    console.log(taskid)
+    console.log(usersId)
+    let user1 = await DataManager.getUserById([usersId[0]]);
+    let user2 = await DataManager.getUserById([usersId[1]]);
+    const price = parseInt(task.price)
+
+
+
+    user1 = User.createUserFromObject(user1);
+    user2 = User.createUserFromObject(user2);
+
+    console.log(user1)
+    console.log(user2)
+
+    let buffUs = User.load();
+
+    task.status = "inСonfirm";
+    DataManager.updateServiceById(task.id, task)
+    if (!buffUs.client) return
+    createAcceptRejectButtons(container, taskid)
+
+    let user = User.load();
+    user = await DataManager.getUserById(user.id)
+    user = User.createUserFromObject(user);
+
+
+    task.status = "ready";
+
+    DataManager.updateServiceById(task.id, task)
+
+
+
+}
+
+
+export function createAcceptRejectButtons(container, taskId) {
+
+
+    const acceptButton = document.createElement("button");
+    acceptButton.textContent = "Принять";
+    acceptButton.classList.add("accept-button");
+
+
+    const rejectButton = document.createElement("button");
+    rejectButton.textContent = "На доработку";
+    rejectButton.classList.add("reject-button");
+
+
+    acceptButton.addEventListener("click", () => {
+        createConfirmForm(container, taskId)
+        // confirmDone(taskId);
+        console.log("Задача принята");
+    });
+
+
+    rejectButton.addEventListener("click", async () => {
+        createRejectForm(container, taskId)
+        const task = await DataManager.getServiceById(taskId);
+        task.status = "inWork"
+        DataManager.updateServiceById(taskId, task)
+        console.log("Задача отправлена на доработку");
+    });
+    console.log(container)
+
+    container.appendChild(acceptButton);
+    container.appendChild(rejectButton);
+}
+
+
+function createConfirmForm(container, taskId) {
+
+    const form = document.createElement('form');
+    form.classList.add('confirm-form', 'form');
+
+    const textarea = document.createElement('textarea');
+    textarea.setAttribute('placeholder', 'Введите комментарий...');
+    textarea.classList.add('confirm-form__textarea', 'form__textarea');
+
+    //todo - можно сделатб по другому - главное мне чтоб число от 1 до 5 было
+    const input = document.createElement('input');
+    input.setAttribute('type', 'number');
+    input.setAttribute('min', '1');
+    input.setAttribute('max', '5');
+    input.setAttribute('placeholder', 'Введите оценку (1-5)');
+    input.classList.add('confirm-form__input', 'form__input');
+
+
+    const submitButton = document.createElement('button');
+    submitButton.setAttribute('type', 'submit');
+    submitButton.textContent = 'Отправить';
+    submitButton.classList.add('confirm-form__submit-button', 'form__submit-button');
+
+    form.appendChild(textarea);
+    form.appendChild(input);
+    form.appendChild(submitButton);
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault()
+        const comment = textarea.value;
+        const rating = input.value; //вот тут от 1 до 5
+
+        console.log('Комментарий:', comment);
+        console.log('Оценка:', rating);
+
+        confirmDone(taskId, comment, rating);
+    });
+
+
+    container.appendChild(form);
+}
+
+
+
+
+function createRejectForm(container, taskId) {
+    const formContainer = document.createElement("div");
+    formContainer.classList.add("reject-form");
+
+
+    const textarea = document.createElement("textarea");
+    textarea.classList.add("reject-form__textarea");
+    textarea.placeholder = "Введите комментарий";
+
+    const submitButton = document.createElement("button");
+    submitButton.textContent = "Отправить";
+    submitButton.classList.add("reject-form__submit-button");
+
+    submitButton.addEventListener("click", () => {
+        const comment = textarea.value;
+        //todo await
+        confirmReject(comment, taskId);
+
+
+
+        textarea.value = "";
+    });
+
+
+    formContainer.appendChild(textarea);
+    formContainer.appendChild(submitButton);
+
+
+    container.appendChild(formContainer);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+async function confirmReject(txt, taskId) {
+    console.log('reject')
+
+    const task = await DataManager.getServiceById(taskId);
+    task.closeComment = task.closeComment || [];
+    task.closeComment.push(txt);
+
+    DataManager.updateServiceById(taskId, task);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+async function confirmDone(taskid, globalComment, rate) {
+    console.log('done')
+    console.log(taskid)
+
+    const task = await DataManager.getServiceById(taskid);
+    let usersId = await DataManager.getUsersWithActiveTaskIds(taskid);
+
+    console.log(taskid)
+    console.log(usersId)
+    let user1 = await DataManager.getUserById([usersId[0]]);
+    let user2 = await DataManager.getUserById([usersId[1]]);
+    const price = parseInt(task.price)
+
+
+    user1 = User.createUserFromObject(user1);
+    user2 = User.createUserFromObject(user2);
+
+    console.log(user1)
+    console.log(user2)
+
+    try { await finalTranzaction(user1, price, rate); } catch { console.log("ошибка транзакции") }
+    try { await finalTranzaction(user2, price, rate); } catch { console.log("ошибка транзакции") }
+
+    // let user = User.load();
+    // user = await DataManager.getUserById(user.id)
+    // user = User.createUserFromObject(user);
+
+
+    task.status = "ready";
+    task.rate = rate + "";
+    task.globalComment = globalComment;
+
+    DataManager.updateServiceById(task.id, task);
+}
+async function finalTranzaction(user, count, rate) {
+
+
+    console.log(user);
+    console.log(user.implementer)
+    console.log('count: ', count)
+    if (user.implementer) {
+        const nowBalance = user.balance.getActiveBalance()
+        console.log('countNow: ', nowBalance)
+        console.log('res: ', parseInt(nowBalance) + parseInt(count))
+        user.balance.activeBalance = parseInt(nowBalance) + parseInt(count);
+        console.log(user)
+
+        if (rate) {
+            if (user.rate && parseFloat(user.rate) > 0) {
+                console.log(user.rate)
+                user.rate = (parseFloat(user.rate) + parseFloat(rate)) / 2
+                console.log(user.rate)
+            } else {
+                console.log(user.rate)
+                user.rate = rate;
+                console.log(user.rate)
+            }
+        }
+
+
+        await user.saveToServer();
+        // await DataManager.updateUserById(user.id, user);
+        return
+    }
+
+    const isSpendFrozen = user.balance.spendFrozen(count)
+
+    if (!isSpendFrozen) {
+        if (!user.balance.spend(count)) console.log("!как так, за это банить надо. Таск выполнен а платить нечем")
+    }
+
+
+    // DataManager.updateUserById(user.id, user)
+    user.saveToServer();
+
+}
+export async function goDeleteTask(container, id) {
+    let user = User.load();
+    user = await DataManager.getUserById(user.id)
+    user = User.createUserFromObject(user);
+
     container.innerHTML = " ";
-    const tasksArray = getLsbyKey("services");
+    // const tasksArray = getLsbyKey("services");
     console.log("del")
 
-    const indexToRemove = tasksArray.findIndex(item => item.id == id);
+    // const indexToRemove = tasksArray.findIndex(item => item.id == id);
+    const task = await DataManager.getServiceById(id);
+    const indexToRemove = task.id;
+    if (task.status == "inWork" || task.status == "ready" || task.status == "inСonfirm") {
+        console.log("удаление не возможно")
+        return
+    }
+
     console.log(id)
 
-    if (indexToRemove !== -1) {
-        tasksArray.splice(indexToRemove, 1);
-    }
-    console.log(indexToRemove);
-    console.log(tasksArray);
 
-    // написал в бреду ( удаление из списка у user ) - вроде норм 
-    //todo -проверить со стороны логики ( этот и аналогичные методы)
-    setLsbyKey('services', tasksArray)
+    if (user.client) {
+        const isUnFreeze = await user.balance.unfreeze(task.price, user.id);
+        user.balanceHistory = isUnFreeze
+        if (!isUnFreeze) console.log('ну что то с деньгами не так, обратитесь в тех поддержку')
+    }
+
+
+    await DataManager.deleteService(indexToRemove);
+
+    console.log(indexToRemove);
+
     const field = user.client ? "listOfOrders" : "listOfServices";
     forceRemoveFromField("user", field, [id]);
+    // user = User.load();
+    user.save();
 
 
 }
@@ -176,7 +630,7 @@ export function createProfileCard(profileData, container) {
 export function createCartCards(container, data, key = "basket", modifier = "non") {
 
     console.log(data.id)
-    const { id, img, title, price, descr, timing, owner } = data;
+    const { id, img, title, price, descr, timing, owner, status } = data;
 
     const cardItem =
         `
@@ -205,6 +659,9 @@ export function createCartCards(container, data, key = "basket", modifier = "non
     container.insertAdjacentHTML('beforeend', cardItem);
 
     const btn = container.querySelector(`[data-id="${id}"]`);
+    if (status && (status == "inWork" || status == "inConfirm" || status == "ready")) {
+        btn.classList.add("none")
+    }
 
     if (key == null) return
     btn.addEventListener('click', () => {
@@ -277,10 +734,10 @@ export function renderPeopleCard(data, container) {
 
 }
 
-export function renderTaskCard(data, container) {
+export async function renderTaskCard(data, container) {
     let user = User.load();
-
-    const { id, img, title, price, descr, timing, owner, ownerId, type } = data;
+    user = await DataManager.getUserById(user.id)
+    const { id, img, title, price, descr, timing, owner, ownerId, type, status } = data;
     let buffBtn;
     if (type == 'order') {
         buffBtn = `
@@ -289,10 +746,71 @@ export function renderTaskCard(data, container) {
         buffBtn = `
         <button class="buy-btn btn --for-client-only">заказать</button>`
 
-    } if (user.id == ownerId) {
-        buffBtn = `
-        <button class="buy-btn btn  ">Удалить</button>`
     }
+    if (user.id == ownerId) {
+        buffBtn = ``
+        console.log(status)
+        if (user.id == ownerId && status != "inWork" && status != "ready" && status != "inСonfirm") {
+            buffBtn = `
+            <button class="buy-btn btn  ">Удалить</button>`
+        }
+
+        switch (status) {
+            case "ready":
+                buffBtn = ''
+
+                break;
+            case "pending":
+                const pendingUsersId = await DataManager.getUsersWithPendingTaskIds(id);
+                renderPartners(pendingUsersId, container, ownerId, id, true)
+                break;
+            case "inWork":
+                if (user.implementer && user.activeTasks.includes(id))
+                    buffBtn = '<button class="buy-btn btn  ">Готово!</button>'
+
+                break;
+            default:
+
+        }
+    }
+    else {
+
+        switch (status) {
+            case "ready":
+
+                buffBtn = ''
+
+                break;
+            case "pending":
+
+                const pendingUsersId = await DataManager.getUsersWithPendingTaskIds(id);
+                renderPartners(pendingUsersId, container, ownerId, id)
+
+                if (user.pendingTasks && user.pendingTasks.includes(id)) {
+                    buffBtn = '<button class="buy-btn btn btn--coward ">струсить 🐓</button>'
+                }
+                break;
+            case "inWork":
+
+                buffBtn = ''
+
+                if (!user.activeTasks.includes(id)) {
+                    const pendingUsersId = await DataManager.getUsersWithPendingTaskIds(id);
+                    renderPartners(pendingUsersId, container, ownerId, id)
+                } else {
+                    if (user.implementer) {
+                        buffBtn = `
+                    <button class="buy-btn btn  ">готово</button>`}
+                }
+                break;
+            default:
+
+        }
+    }
+
+
+
+
     const cardItem =
         `
                 <div class="card task-card" data-product-id="${id}">
@@ -326,14 +844,140 @@ export function renderTaskCard(data, container) {
 
 
     const evBtn = container.querySelector(`.buy-btn`);
-    if (user.id == ownerId) {
+    // if (task.status == "inWork" || task.status == "ready" || task.status == "inСonfirm")
+    if (user.id == ownerId && status != "inWork" && status != "ready" && status != "inСonfirm") {
         evBtn.addEventListener('click', () => goDeleteTask(container, id));
 
+    } else if (user.pendingTasks && user.pendingTasks.includes(id)) {
+        evBtn.addEventListener('click', async () => await goReject(id, user.id).then(
+            evBtn.remove()
+        ));
+
     } else
-        if (type == 'order') {
-            evBtn.addEventListener('click', () => goDoing(container));
+        if (type == 'order' && status != 'inWork') {
+            evBtn.addEventListener('click', () => goDoing(container, id));
         }
-        else if (type != 'order') {
+        else if (type != 'order' && status != 'inWork') {
             evBtn.addEventListener('click', () => goBuy(container, price, id));
         }
+    if (user.implementer && status == 'inWork' && user.activeTasks.includes(id)) {
+        evBtn.addEventListener('click', () => goDone(id, container).then(
+            evBtn.remove()
+        ));
+    }
+}
+
+
+
+export async function renderPrivateComment(container, cardId) {
+    console.log("renderCloseComments!")
+
+    let user = User.load();
+    user = await DataManager.getUserById(user.id);
+    user = User.createUserFromObject(user);
+
+    const card = await DataManager.getServiceById(cardId);
+    console.log(card)
+
+    if (!card.closeComment) return
+    const cardCom = card.closeComment;
+
+    let cardBlock = "";
+
+    // console.log((user.id == card.ownerId || user.activeTasks.includes(parseInt(cardId))))
+    if (!(user.id == card.ownerId || user.activeTasks.includes(parseInt(cardId)))) return
+
+
+
+    //Из логики что автор коммента на отказ всегда клиент 
+    let autor
+
+    if (user.id != card.ownerId) {
+        autor = await DataManager.getUserById(card.ownerId)
+    }
+    else {
+        autor = user
+    }
+    console.log(autor)
+    cardCom.forEach((com) => {
+        cardBlock += `<div class="card card--comment card--close-comment">
+    <img class="card__image" src="${autor.img}" alt="прекрасное лицо">
+    <div class="card__content card">
+        <h2 class="card__title title">${autor.bio}</h2>
+         <p class="card__text txt ">${com}</p>
+    </div>
+    </div>
+     `
+    })
+
+
+
+    container.innerHTML += cardBlock;
+    console.log(container)
+
+
+}
+
+function renderPartners(usersIds, container, ownerId, id, isCreator = false) {
+    const cont = document.createElement("div");
+    cont.classList.add('container', 'container--partners');
+
+    usersIds.forEach(async (userId) => {
+        if (userId == ownerId) return
+        let userData = await DataManager.getUserById(userId);
+        if (userData) {
+            console.log(userData)
+            cardCreate(userData, cont, id, isCreator);
+        }
+    });
+    container.appendChild(cont);
+}
+
+function cardCreate(userData, container, relativeTaskId, isCreator = false) {
+    const card = document.createElement("div");
+    card.classList.add("user-card");
+
+
+    const image = document.createElement("img");
+    image.src = `userPage.html?id=${userData.id}`;
+    image.alt = userData.bio;
+
+    const name = document.createElement("h2");
+    name.textContent = userData.bio;
+
+    const rating = document.createElement("p");
+    rating.textContent = `Рейтинг: ${userData.rate}`;
+
+    card.appendChild(image);
+    card.appendChild(name);
+    card.appendChild(rating);
+
+
+    if (isCreator) {
+        const approveButton = document.createElement("button");
+        approveButton.textContent = "Подтвердить";
+
+        const cancelButton = document.createElement("button");
+        cancelButton.textContent = "Отменить";
+
+        approveButton.addEventListener("click", () => {
+
+            console.log(`Подтверждено: ${userData.bio}`);
+            goInWork(userData.id, relativeTaskId);
+        });
+        cancelButton.addEventListener("click", () => {
+
+            console.log(`Отменено: ${userData.bio}`);
+            //todo
+            // goReject(userData.id);
+        });
+
+
+
+        card.appendChild(approveButton);
+        card.appendChild(cancelButton);
+    }
+
+    container.appendChild(card)
+
 }

@@ -1,7 +1,5 @@
 /* на 1920px ориенитируемся пока ( и под ноуты с zoom системы 125%) */
 
-
-
 :root {
   --color-black: #121723;
   --color-test-yellow: #d1c705;
@@ -11,24 +9,42 @@
 
 /* test */
 .--test-static-background {
-  background: repeating-linear-gradient(45deg, var(--color-black), var(--color-black) 10px, var(--color-test-green) 10px, var(--color-test-green) 20px);
+  background: repeating-linear-gradient(
+    45deg,
+    var(--color-black),
+    var(--color-black) 10px,
+    var(--color-test-green) 10px,
+    var(--color-test-green) 20px
+  );
   border: solid 2px var(--color-test-green);
   background-size: 100%;
 }
 
 .--test-static-img {
-  background: repeating-linear-gradient(45deg, var(--color-black), var(--color-black) 10px, var(--color-test-white) 10px, var(--color-test-white) 20px);
+  background: repeating-linear-gradient(
+    45deg,
+    var(--color-black),
+    var(--color-black) 10px,
+    var(--color-test-white) 10px,
+    var(--color-test-white) 20px
+  );
   border: solid 2px var(--color-test-white);
 }
 
 .--test-get-img {
-  background: repeating-linear-gradient(45deg, var(--color-black), var(--color-black) 10px, var(--color-test-yellow) 10px, var(--color-test-yellow) 20px);
+  background: repeating-linear-gradient(
+    45deg,
+    var(--color-black),
+    var(--color-black) 10px,
+    var(--color-test-yellow) 10px,
+    var(--color-test-yellow) 20px
+  );
   border: solid 2px var(--color-test-yellow);
   background-size: 100%;
 }
 
 .moneyNow::after {
-  content: '🍃';
+  content: "🍃";
 }
 
 /*  */
@@ -229,4 +245,14 @@
 .cart-card {
   margin-bottom: 5rem;
   padding: 0.5rem;
+}
+.container--active::before {
+  content: "активные ⬇";
+}
+
+.info__active-tasks::before {
+  content: "те карточки которые сам создал пользователь ";
+}
+.info__history::before{
+  content: "последнии изменения баланса ⚠"
 }

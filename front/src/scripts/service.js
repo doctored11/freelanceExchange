@@ -8,7 +8,9 @@ import { updateMoneyNowText } from './balanceChecker.js'
 import {
     createCards,
     renderPeopleCard,
-    renderTaskCard
+    renderTaskCard,
+    renderPrivateComment,
+    createAcceptRejectButtons
 } from './domBuider.js'
 
 import {
@@ -17,68 +19,117 @@ import {
 } from './requests.js'
 
 import { User } from './User.js';
+import { DataManager } from './DataManager.js'
 
 let user = User.load();
 const profileContainer = document.querySelector('.profile-container');
 const caseContainer = document.querySelector('.case-container');
+const commentContainer = document.querySelector('.text-container');
 
-let usersData = [];
-let productsData = [];
+// let usersData = [];
+// let productsData = [];
 const url = new URL(window.location.href);
 const idParameter = url.searchParams.get("id");
 
 //пока без бд
-usersData = getLsbyKey("users")
-productsData = getLsbyKey("services")
+// usersData = getLsbyKey("users")
+// productsData = getLsbyKey("services")
 
-getServices('../data/products.json', productsData)
-    .then(updatedProductsData => {
-        console.log(productsData);
+// getServices('../data/products.json', productsData)
+//     .then(updatedProductsData => {
+//         console.log(productsData);
 
-        console.log(productsData, updatedProductsData)
-        if (productsData.length < 1)
-            productsData = updatedProductsData;
-        const parts = idParameter.split("serviceCase");
-        const normalId = parts[1];
+//         console.log(productsData, updatedProductsData)
+//         if (productsData.length < 1)
+//             productsData = updatedProductsData;
+//         const parts = idParameter.split("serviceCase");
+//         const normalId = parts[1];
 
-        setLsbyKey('services', productsData)
+//         setLsbyKey('services', productsData)
 
-        const task = productsData.find(task => task.id == normalId);
-        renderTaskCard(task, caseContainer)
-        const ownerId = task.ownerId
+//         const task = productsData.find(task => task.id == normalId);
+//         renderTaskCard(task, caseContainer)
+//         const ownerId = task.ownerId
 
-        return Promise.all([getServices('../data/base.json'), ownerId]);
-    })
-    .then(([updatedUsersData, ownerId]) => {
+//         return Promise.all([getServices('../data/base.json'), ownerId]);
+//     })
+//     .then(([updatedUsersData, ownerId]) => {
 
-        if (usersData.length < 1)
-            usersData = updatedUsersData;
-        setLsbyKey('users', usersData)
-        console.log(ownerId)
-        const owner = usersData.find(user => user.id == ownerId);
-        try { renderPeopleCard(owner, profileContainer) } catch { console.error('пока без человека') }
-    })
-    .then(() => {
-        user = User.load();
+//         if (usersData.length < 1)
+//             usersData = updatedUsersData;
+//         setLsbyKey('users', usersData)
+//         console.log(ownerId)
+//         const owner = usersData.find(user => user.id == ownerId);
+//         try { renderPeopleCard(owner, profileContainer) } catch { console.error('пока без человека') }
+//     })
+//     .then(() => {
+//         user = User.load();
 
-        const elements = document.querySelectorAll('.--for-client-only');
-        const isClient = user.client;
-        console.log(isClient)
-        if (!isClient) {
-            elements.forEach(element => {
-                element.classList.add('none');
-            });
-        }
+//         const elements = document.querySelectorAll('.--for-client-only');
+//         const isClient = user.client;
+//         console.log(isClient)
+//         if (!isClient) {
+//             elements.forEach(element => {
+//                 element.classList.add('none');
+//             });
+//         }
 
-        const implementerElements = document.querySelectorAll('.--for-implementer-only');
-        const isImplementer = user.implementer;
-        console.log(isImplementer)
-        if (!isImplementer) {
-            implementerElements.forEach(element => {
-                element.classList.add('none');
-            });
-        }
+//         const implementerElements = document.querySelectorAll('.--for-implementer-only');
+//         const isImplementer = user.implementer;
+//         console.log(isImplementer)
+//         if (!isImplementer) {
+//             implementerElements.forEach(element => {
+//                 element.classList.add('none');
+//             });
+//         }
 
+//     });
+
+
+
+const parts = idParameter.split("serviceCase");
+const normalId = parts[1];
+
+user = User.load();
+if (!user) {
+    window.location.href = '../registration.html';
+
+}
+
+const task = await DataManager.getServiceById(normalId)
+console.log(task)
+renderTaskCard(task, caseContainer);
+
+renderPrivateComment(commentContainer, normalId);
+updateMoneyNowText()
+
+if (user.client && task.status && task.status == "inСonfirm")
+    createAcceptRejectButtons(caseContainer, normalId) //из логики что клиент всегда имеет последнее слово 
+
+
+let owner = await DataManager.getUserById(task.ownerId)
+try { renderPeopleCard(owner, profileContainer) } catch { console.error('пока без человека') }
+
+
+
+
+
+const elements = document.querySelectorAll('.--for-client-only');
+const isClient = user.client;
+console.log(isClient)
+if (!isClient) {
+    elements.forEach(element => {
+        element.classList.add('none');
     });
+}
+
+const implementerElements = document.querySelectorAll('.--for-implementer-only');
+const isImplementer = user.implementer;
+console.log(isImplementer)
+if (!isImplementer) {
+    implementerElements.forEach(element => {
+        element.classList.add('none');
+    });
+}
 
 
