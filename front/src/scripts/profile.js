@@ -114,8 +114,11 @@ function renderBalanceHistory(container) {
 
 async function choicePageRender() {
     const queryParams = getQueryParameters();
+    
     const id = queryParams.id;
     user = User.load();
+
+  
     if (id == 0 || id == user.id) {
         // страница активного юзера
 
