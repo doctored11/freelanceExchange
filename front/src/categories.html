@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="./styles/style.css" />
   <link rel="stylesheet" href="./styles/serviceStyles.css" />
   <script src="./scripts/headerName.js " type=module defer></script>
+  <script src="./scripts/favourite.js " type=module defer></script>
 </head>
 
 <body>
@@ -19,17 +20,13 @@
       <!-- логотип ( наверное svg) -->
     </a>
     <div class="header__link">
-      <a href="././categories.html">Каталог</a>
+      <a href="./categories.html">Каталог</a>
       <div class="header__link__after"></div>
     </div>
     <div class="header__link">
       <a href="./cart.html">Избранное</a>
       <div class="header__link__after"></div>
     </div>
-    <!-- <div class="header__link">
-        <a href="./payment.html">Пополнение</a>
-        <div class="header__link__after"></div>
-      </div> -->
     <div class="header__link">
       <a href="./registration.html">Авторизация</a>
       <div class="header__link__after"></div>
@@ -45,7 +42,27 @@
         <!-- блок фильтров для сортировок -->
       </div>
       <div class="services">
-        <div class="services__list"></div>
+        <div class="services__list order-list list">
+          <a class="order-card card">
+            <button class="card__star"><img src="./files/unStar.svg"></button>
+            <img src="./files/logo.png" alt="" class="" height="200px">
+            <div class="card__content-block">
+              <h3 class="card__title">Здесь протсо название задания</h3>
+              <p class="card__txt txt">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, in eos ducimus mollitia, maiores
+                aperiam, earum sequi cum excepturi praesentium quibusdam. Corrupti quos alias harum at velit illum
+                voluptas iste!
+              </p>
+              <div class="card__info">
+                <div class="card__Author">Имя Автора</div>
+                <div>
+                  <span class="card__price">50000000</span>
+                  <span>Р</span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
         <button class="services__btb btn show-cards">Показать еще</button>
       </div>
     </div>

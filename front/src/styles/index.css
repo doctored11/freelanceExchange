@@ -1,22 +1,3 @@
-/* .header-profile__info {
-    position: absolute;
-    visibility: hidden;
-    opacity: 0;
-    left: -100%;
-    top: 2em;
-    width: 300%;
-    z-index: 100;
-    background-color: white;
-    box-shadow: 0 4px 16px #ccc;
-    border-radius: 0.5rem;
-    transition: 0.5s;
-    color: var(--color-deep-grey)
-  }
-  
-  .header-profile:hover>.header-profile__info {
-    opacity: 1;
-    visibility: visible;
-  } */
 .header-profile {
     max-width: 15%;
     overflow: hidden;
