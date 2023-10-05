@@ -1,6 +1,6 @@
 import { Balance } from './Balance.js';
 export class User {
-    constructor(id, bio, date, balance, frozen, img, descr, client, implementer, listOfOrders, listOfServices,pendingTasks,activeTasks) {
+    constructor(id, bio, date, balance, frozen, img, descr, client, implementer, listOfOrders, listOfServices, pendingTasks, activeTasks) {
         this.id = id;
         this.bio = bio;
         this.date = date;
@@ -29,15 +29,15 @@ export class User {
         const userData = localStorage.getItem(`user`);
         if (userData) {
             const user = JSON.parse(userData);
-            
+
             const money = Balance.load();
 
             user.balance = money;
 
 
             // console.log(user)
-            const { id, bio, date, balance, img, descr, client, implementer, listOfOrders, listOfServices,pendingTasks,activeTasks} = user;
-            return new User(id, bio, date, balance.activeBalance, balance.frozenBalance, img, descr, client, implementer, listOfOrders, listOfServices,pendingTasks,activeTasks); // Создаем и возвращаем экземпляр User
+            const { id, bio, date, balance, img, descr, client, implementer, listOfOrders, listOfServices, pendingTasks, activeTasks } = user;
+            return new User(id, bio, date, balance.activeBalance, balance.frozenBalance, img, descr, client, implementer, listOfOrders, listOfServices, pendingTasks, activeTasks); // Создаем и возвращаем экземпляр User
         }
         return null;
     }
