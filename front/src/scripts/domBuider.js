@@ -133,6 +133,8 @@ async function goBuy(container, price, id) {
 }
 
 async function goInWork(partnerId, taskId) {
+
+    console.log("goInWork")
     let partner = await DataManager.getUserById(partnerId);
     let user = User.load();
     user = await DataManager.getUserById(user.id);
@@ -148,6 +150,10 @@ async function goInWork(partnerId, taskId) {
     partner.pendingTasks = [...new Set(partner.pendingTasks)];
     user.pendingTasks = [...new Set(user.pendingTasks)];
 
+
+    console.log(user);
+    console.log(partner)
+
     partner = User.createUserFromObject(partner)
     user = User.createUserFromObject(user)
 
@@ -161,6 +167,8 @@ async function goInWork(partnerId, taskId) {
 
     console.log(partnerId)
 
+    console.log(user);
+    console.log(partner)
 
     partner.saveToServer();
     user.saveToServer();
@@ -168,15 +176,20 @@ async function goInWork(partnerId, taskId) {
     // DataManager.updateUserById(user.id, user);
     DataManager.updateServiceById(taskId, task);
 
-    user.save();
+    // user.save();
 
 }
 
 async function goDoing(container, id) {
-    let user = User.load();
-    user = await DataManager.getUserById(user.id)
-    user = User.createUserFromObject(user);
     console.log('doing')
+
+    let user = User.load();
+    console.log(user)
+    user = await DataManager.getUserById(user.id)
+    console.log(user)
+    user = User.createUserFromObject(user);
+    console.log(user)
+
 
     console.log("do")
     const cardItem =
@@ -259,12 +272,6 @@ async function goDone(taskid, container) {
     if (!buffUs.client) return
     createAcceptRejectButtons(container, taskid)
 
-
-
-
-
-
-
     let user = User.load();
     user = await DataManager.getUserById(user.id)
     user = User.createUserFromObject(user);
@@ -293,7 +300,8 @@ export function createAcceptRejectButtons(container, taskId) {
 
 
     acceptButton.addEventListener("click", () => {
-        confirmDone(taskId);
+        createConfirmForm(container, taskId)
+        // confirmDone(taskId);
         console.log("Задача принята");
     });
 
@@ -310,6 +318,51 @@ export function createAcceptRejectButtons(container, taskId) {
     container.appendChild(acceptButton);
     container.appendChild(rejectButton);
 }
+
+
+function createConfirmForm(container, taskId) {
+
+    const form = document.createElement('form');
+    form.classList.add('confirm-form', 'form');
+
+    const textarea = document.createElement('textarea');
+    textarea.setAttribute('placeholder', 'Введите комментарий...');
+    textarea.classList.add('confirm-form__textarea', 'form__textarea');
+
+    //todo - можно сделатб по другому - главное мне чтоб число от 1 до 5 было
+    const input = document.createElement('input');
+    input.setAttribute('type', 'number');
+    input.setAttribute('min', '1');
+    input.setAttribute('max', '5');
+    input.setAttribute('placeholder', 'Введите оценку (1-5)');
+    input.classList.add('confirm-form__input', 'form__input');
+
+
+    const submitButton = document.createElement('button');
+    submitButton.setAttribute('type', 'submit');
+    submitButton.textContent = 'Отправить';
+    submitButton.classList.add('confirm-form__submit-button', 'form__submit-button');
+
+    form.appendChild(textarea);
+    form.appendChild(input);
+    form.appendChild(submitButton);
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault()
+        const comment = textarea.value;
+        const rating = input.value; //вот тут от 1 до 5
+
+        console.log('Комментарий:', comment);
+        console.log('Оценка:', rating);
+
+        confirmDone(taskId, comment, rating);
+    });
+
+
+    container.appendChild(form);
+}
+
+
 
 
 function createRejectForm(container, taskId) {
@@ -428,7 +481,7 @@ async function confirmReject(txt, taskId) {
 
 
 
-async function confirmDone(taskid) {
+async function confirmDone(taskid, globalComment, rate) {
     console.log('done')
     console.log(taskid)
 
@@ -442,29 +495,27 @@ async function confirmDone(taskid) {
     const price = parseInt(task.price)
 
 
-
     user1 = User.createUserFromObject(user1);
     user2 = User.createUserFromObject(user2);
 
     console.log(user1)
     console.log(user2)
 
-    try { await finalTranzaction(user1, price); } catch { console.log("ошибка транзакции") }
-    try { await finalTranzaction(user2, price); } catch { console.log("ошибка транзакции") }
+    try { await finalTranzaction(user1, price, rate); } catch { console.log("ошибка транзакции") }
+    try { await finalTranzaction(user2, price, rate); } catch { console.log("ошибка транзакции") }
 
-    let user = User.load();
-    user = await DataManager.getUserById(user.id)
-    user = User.createUserFromObject(user);
+    // let user = User.load();
+    // user = await DataManager.getUserById(user.id)
+    // user = User.createUserFromObject(user);
 
 
     task.status = "ready";
+    task.rate = rate + "";
+    task.globalComment = globalComment;
 
-    DataManager.updateServiceById(task.id, task)
-
-
-
+    DataManager.updateServiceById(task.id, task);
 }
-async function finalTranzaction(user, count) {
+async function finalTranzaction(user, count, rate) {
 
 
     console.log(user);
@@ -476,6 +527,18 @@ async function finalTranzaction(user, count) {
         console.log('res: ', parseInt(nowBalance) + parseInt(count))
         user.balance.activeBalance = parseInt(nowBalance) + parseInt(count);
         console.log(user)
+
+        if (rate) {
+            if (user.rate && parseFloat(user.rate) > 0) {
+                console.log(user.rate)
+                user.rate = (parseFloat(user.rate) + parseFloat(rate)) / 2
+                console.log(user.rate)
+            } else {
+                console.log(user.rate)
+                user.rate = rate;
+                console.log(user.rate)
+            }
+        }
 
 
         await user.saveToServer();
@@ -506,6 +569,10 @@ export async function goDeleteTask(container, id) {
     // const indexToRemove = tasksArray.findIndex(item => item.id == id);
     const task = await DataManager.getServiceById(id);
     const indexToRemove = task.id;
+    if (task.status == "inWork" || task.status == "ready" || task.status == "inСonfirm") {
+        console.log("удаление не возможно")
+        return
+    }
 
     console.log(id)
 
@@ -563,7 +630,7 @@ export function createProfileCard(profileData, container) {
 export function createCartCards(container, data, key = "basket", modifier = "non") {
 
     console.log(data.id)
-    const { id, img, title, price, descr, timing, owner } = data;
+    const { id, img, title, price, descr, timing, owner, status } = data;
 
     const cardItem =
         `
@@ -592,6 +659,9 @@ export function createCartCards(container, data, key = "basket", modifier = "non
     container.insertAdjacentHTML('beforeend', cardItem);
 
     const btn = container.querySelector(`[data-id="${id}"]`);
+    if (status && (status == "inWork" || status == "inConfirm" || status == "ready")) {
+        btn.classList.add("none")
+    }
 
     if (key == null) return
     btn.addEventListener('click', () => {
@@ -678,8 +748,13 @@ export async function renderTaskCard(data, container) {
 
     }
     if (user.id == ownerId) {
-        buffBtn = `
-        <button class="buy-btn btn  ">Удалить</button>`
+        buffBtn = ``
+        console.log(status)
+        if (user.id == ownerId && status != "inWork" && status != "ready" && status != "inСonfirm") {
+            buffBtn = `
+            <button class="buy-btn btn  ">Удалить</button>`
+        }
+
         switch (status) {
             case "ready":
                 buffBtn = ''
@@ -769,7 +844,8 @@ export async function renderTaskCard(data, container) {
 
 
     const evBtn = container.querySelector(`.buy-btn`);
-    if (user.id == ownerId) {
+    // if (task.status == "inWork" || task.status == "ready" || task.status == "inСonfirm")
+    if (user.id == ownerId && status != "inWork" && status != "ready" && status != "inСonfirm") {
         evBtn.addEventListener('click', () => goDeleteTask(container, id));
 
     } else if (user.pendingTasks && user.pendingTasks.includes(id)) {

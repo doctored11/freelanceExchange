@@ -103,7 +103,7 @@ renderTaskCard(task, caseContainer);
 renderPrivateComment(commentContainer, normalId);
 updateMoneyNowText()
 
-if (user.client, task.status == "inСonfirm")
+if (user.client && task.status && task.status == "inСonfirm")
     createAcceptRejectButtons(caseContainer, normalId) //из логики что клиент всегда имеет последнее слово 
 
 

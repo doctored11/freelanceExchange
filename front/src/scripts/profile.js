@@ -57,7 +57,14 @@ const userCount = DataManager.getUsersCount();
 
 //--- с расчетом на бек уже
 
- choicePageRender()
+choicePageRender().then(
+    () => {
+
+        //нет времени разбираться с кнопками - тем более фиксить
+        const remBtns = document.querySelectorAll('.card__add');
+        remBtns.forEach(btn => btn.classList.add('none'))
+    }
+)
 //--
 
 personImg.src = user.img;
@@ -105,19 +112,23 @@ function renderBalanceHistory(container) {
 }
 
 
-function choicePageRender() {
+async function choicePageRender() {
     const queryParams = getQueryParameters();
     const id = queryParams.id;
     user = User.load();
     if (id == 0 || id == user.id) {
         // страница активного юзера
-        tasksListRender(tasksContainer, user) //нужен список активных тасков
+
+
+        await tasksListRender(tasksContainer, user) //нужен список активных тасков
         renderBalanceHistory(historyBalanceContainer);
         createPersonalProfileCard(user, userContainer);
 
         document.querySelector('.info-text').innerHTML += "<p class ='txt txt--profile'>не подтвержденные карточки ⬇</p>" //костылек
-        renderPendingCards(pendingContainer, user);
-        renderActiveCards(activeContainer, user);
+        await renderPendingCards(pendingContainer, user);
+        await renderActiveCards(activeContainer, user);
+
+
 
 
         return
@@ -134,6 +145,8 @@ function choicePageRender() {
     // todo
     //в taskList номера ативных карточек - надо их запросить с сервера и потом отрисовать в контейнере tasksContainer
     createPersonalProfileCard(target, userContainer)
+
+
 
 }
 
@@ -158,7 +171,7 @@ async function renderPendingCards(container, user) {
     let mod = "pendingTasks"
     list = user.pendingTasks;
     container.innerHTML = ' '
-    
+
     const selectPositions = await DataManager.getListOfServicesByids(list);
     selectPositions.forEach(pos => { createCartCards(container, pos, "user", mod) });
 }
@@ -171,7 +184,7 @@ async function renderActiveCards(container, user) {
     container.innerHTML = ' '
 
     list = [...new Set(list)];
-    
+
     const selectPositions = await DataManager.getListOfServicesByids(list);
     selectPositions.forEach(pos => { createCartCards(container, pos, "user", mod) });
 }

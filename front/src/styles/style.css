@@ -249,3 +249,10 @@
 .container--active::before {
   content: "активные ⬇";
 }
+
+.info__active-tasks::before {
+  content: "те карточки которые сам создал пользователь ";
+}
+.info__history::before{
+  content: "последнии изменения баланса ⚠"
+}

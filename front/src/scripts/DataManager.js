@@ -146,9 +146,11 @@ export class DataManager {
                 let servicesArray = Array.isArray(data) ? data : Object.values(data);
                 servicesArray = servicesArray.filter(service => service !== null);
 
-                if (!isDone)
-                    servicesArray = servicesArray.filter(service => service.status != "inWork");
+                servicesArray = servicesArray.filter(service => service.status !== "inWork" && service.status !== "inСonfirm");
 
+
+                if (!isDone)
+                    servicesArray = servicesArray.filter(service => service.status != "ready");
 
                 if (min < 0) min = 0;
                 if (max >= servicesArray.length) max = servicesArray.length - 1;
@@ -198,22 +200,66 @@ export class DataManager {
         }
     }
 
-    static async getTasksCount() {
+    // static async getTasksCount( isFree) {
+    //     //возможно нужно выводить число не выполненных и не в работе ( опционально)
+    //     //если isFree то нужно считать те у кого статус не inWork, ready,inСonfirm
+    //     try {
+    //         const response = await fetch(`${src}services.json`);
+    //         const servicesData = await response.json();
+
+    //         if (servicesData) {
+    //             const count = Object.keys(servicesData).length;
+    //             return count;
+    //         } else {
+    //             return 0;
+    //         }
+    //     } catch (error) {
+    //         console.error('оибка при получении числа задач', error);
+    //         return 0;
+    //     }
+    // }
+
+    static async getTasksCount(isFree = false) {
         try {
             const response = await fetch(`${src}services.json`);
             const servicesData = await response.json();
 
             if (servicesData) {
-                const count = Object.keys(servicesData).length;
+                let count = 0;
+
+                for (const key in servicesData) {
+                    if (servicesData.hasOwnProperty(key)) {
+                        const service = servicesData[key];
+
+
+                        if (service !== null) {
+
+
+                            if (isFree) {
+                                if (service.status !== "inWork" && service.status !== "ready" && service.status !== "inСonfirm") {
+                                    count++;
+
+                                }
+                            } else {
+                                count++;
+
+                            }
+                        }
+                    }
+                }
+                console.log(count, " count")
                 return count;
             } else {
                 return 0;
             }
         } catch (error) {
-            console.error('оибка при получении числа задач', error);
+            console.error('оибка при получении числа задач');
             return 0;
         }
     }
+
+
+
     static async getMaxServiceId() {
         try {
             const response = await fetch(`${src}services.json`);

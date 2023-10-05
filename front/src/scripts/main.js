@@ -15,7 +15,7 @@ import {
 import {
     createCards
 } from './domBuider.js'
-import{updateMoneyNowText} from './balanceChecker.js'
+import { updateMoneyNowText } from './balanceChecker.js'
 import {
     getServices
 
@@ -51,9 +51,9 @@ let usersData = [];
 //         // -------------
 //         renderStartPage(productsData, usersData);
 //     });
-productsData= await DataManager.getServicesInRange(0,2); //подумать тут)
+productsData = await DataManager.getServicesInRange(0, shownCards - 1); //подумать тут)
 console.log(productsData)
-renderStartPage( productsData);
+renderStartPage(productsData);
 updateMoneyNowText()
 
 btnShowCards.addEventListener('click', sliceArrCards);
@@ -62,30 +62,63 @@ btnShowCards.addEventListener('click', sliceArrCards);
 
 
 
-function renderStartPage( serviceData) {
+function renderStartPage(serviceData) {
     if (!serviceData || !serviceData.length) {
         console.log('пусто ')
         return
     };
 
-   
-   
+
+
     createCards(container, serviceData);
 
 }
 
-function sliceArrCards() {
-    if (shownCards >= productsData.length) return;
+// function sliceArrCards() {
+//    // if (shownCards >= productsData.length) return;// надо проверять на колво карт в бд
+
+//     countClickBtnShowCards++;
+//     const countShowCards = COUNT_SHOW_CARDS_CLICK * countClickBtnShowCards;
+
+//     const arrCards = productsData.slice(shownCards, countShowCards);
+//     createCards(container, arrCards, usersData);
+//     shownCards = container.children.length;
+//     console.log(productsData.length)
+//     if (countShowCards >= productsData.length) {
+//         btnShowCards.classList.add('none');
+//     }
+// }
+
+async function sliceArrCards() {
+
+    const totalCardsCount = await DataManager.getTasksCount(true);
+    console.log(shownCards, totalCardsCount, shownCards >= totalCardsCount)
+
+    if (shownCards >= totalCardsCount) {
+        btnShowCards.classList.add('none');
+        return
+    };
+
 
     countClickBtnShowCards++;
-    const countShowCards = COUNT_SHOW_CARDS_CLICK * countClickBtnShowCards;
 
-    const arrCards = productsData.slice(shownCards, countShowCards);
-    createCards(container, arrCards, usersData);
-    shownCards = container.children.length;
-    console.log(productsData.length)
-    if (countShowCards >= productsData.length) {
+
+    const startIndex = shownCards;
+    const endIndex = Math.min(totalCardsCount, startIndex + COUNT_SHOW_CARDS_CLICK);
+
+
+    const newCards = await DataManager.getServicesInRange(startIndex, endIndex - 1);
+    console.log(totalCardsCount);
+    console.log(startIndex, endIndex)
+    console.log(newCards)
+
+    shownCards = endIndex;
+
+
+    createCards(container, newCards, usersData);
+
+
+    if (shownCards >= totalCardsCount) {
         btnShowCards.classList.add('none');
     }
 }
-

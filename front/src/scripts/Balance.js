@@ -160,8 +160,11 @@ export class Balance {
   get activeBalance() {
     return this.#activeBalance;
   }
-  async save(userId) {
-    const prevBalanceData = getLsbyKey("balance") || { activeBalance: 0, frozenBalance: 0 };
+  async save(userId, prevBalanceData) {
+
+    console.log(!prevBalanceData)
+    if (!prevBalanceData)
+      prevBalanceData = getLsbyKey("balance") || { activeBalance: 0, frozenBalance: 0 };
 
 
     let balanceStep = {}
@@ -202,12 +205,16 @@ export class Balance {
         history = await Balance.addHistory(balanceStep, userId);
       }
 
-    localStorage.setItem('balance', JSON.stringify({
-      activeBalance: this.#activeBalance,
-      frozenBalance: this.#frozenBalance,
-    }));
+    let user = User.load();
+    console.log(user.id, userId)
 
+    if (user.id == userId) {
+      localStorage.setItem('balance', JSON.stringify({
+        activeBalance: this.#activeBalance,
+        frozenBalance: this.#frozenBalance,
+      }));
 
+    }
 
     return history
     //
@@ -236,7 +243,7 @@ export class Balance {
     let user = await DataManager.getUserById(userId);
 
     // user = User.createUserFromObject(user);
-    console.log(user.balanceHistory)
+
 
 
 
