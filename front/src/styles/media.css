@@ -24,8 +24,7 @@
 }
 
 @media (max-width: 560px) {
-   body, main{
-        width: 100vw;
-    }
+   /* надо header адаптировать */
+   /* профиль */
 
 }
