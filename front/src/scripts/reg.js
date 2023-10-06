@@ -212,6 +212,7 @@ function checkBtn() {
     if ((flagLog && pass.length > 0 && email.length > 0) || (!flagLog && pass.length > 0 && lastName.length > 0 && personName.length > 0 && email.length > 0 && phone.length > 0)) {
         sendBtn.disabled = false;
         sendBtn.classList.add('active');
+
         // Находим кнопку и назначаем обработчик события на отправку формы
         document.querySelector('.registration-form__submit-button').addEventListener('click', handleFormSubmit);
     }

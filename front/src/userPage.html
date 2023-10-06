@@ -9,15 +9,13 @@
   <link rel="stylesheet" href="./styles/style.css" />
   <link rel="stylesheet" href="./styles/profile.css" />
   <link rel="stylesheet" href="./styles/media.css" />
-
-  
-  <script src="./scripts/headerName.js " type=module defer></script>
+  <script src="./scripts/headerName.js " type="module" defer></script>
 </head>
 
 <body>
   <header class="header">
     <a href="./index.html" class="header__logo logo">
-      <img src="./files/logo.png" alt="">
+      <img src="./files/logo.png" alt="" />
       <!-- логотип ( наверное svg) -->
     </a>
     <div class="header__link">
@@ -25,19 +23,19 @@
       <div class="header__link__after"></div>
     </div>
     <div class="header__link">
+      <a href="./taskEditor.html">Создать заказ</a>
+      <div class="header__link__after"></div>
+    </div>
+    <div class="header__link">
       <a href="./cart.html">Избранное</a>
       <div class="header__link__after"></div>
     </div>
-    <!-- <div class="header__link">
-        <a href="./payment.html">Пополнение</a>
-        <div class="header__link__after"></div>
-      </div> -->
     <div class="header__link">
-      <a href="./registration.html">Авторизация</a>
+      <a href="./registration.html" class="moneyNow">Авторизация</a>
       <div class="header__link__after"></div>
     </div>
-    <div class="header__link header-profile">
-      <a href="userPage.html?id=0" id="nav__name">Войти</a>
+    <div class="header__link">
+      <a href="./registration.html">Авторизация</a>
       <div class="header__link__after"></div>
     </div>
   </header>
@@ -46,7 +44,7 @@
       <div class="frame frame--person">
         <div class="personal-block">
           <div class="personal-block__img">
-            <div  class=" person-img  person-ico" ></div>
+            <div class=" person-img  person-ico"></div>
           </div>
           <a href="./taskEditor.html">🟪TaskEditor🟪</a>
           <a href="./payment.html">🟪касса🟪</a>

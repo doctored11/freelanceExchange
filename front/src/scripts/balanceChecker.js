@@ -9,7 +9,6 @@ import {
 
 export async function updateMoneyNowText() {
     console.log("деньги")
-    const moneyNowElement = document.querySelector('.moneyNow');
     if (!moneyNowElement) return
 
     let user = User.load();
@@ -20,17 +19,19 @@ export async function updateMoneyNowText() {
 
     const moneyValue = user.balance.getActiveBalance();
 
-    if (!moneyValue) return
-    moneyNowElement.textContent = `Текущий баланс: ${moneyValue}`;
+    moneyNowElement.innerText = `${moneyValue} Р`;
+
 }
 
 
 document.addEventListener('DOMContentLoaded', function () {
-
     updateMoneyNowText();
 });
 
-
+const moneyNowElement = document.querySelector('.moneyNow');
+if (moneyNowElement != 'undefined') {
+    moneyNowElement.removeAttribute('href');
+}
 // window.addEventListener('storage', () => {
 //     // console.log(even)
 //     updateMoneyNowText();

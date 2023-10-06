@@ -2,8 +2,7 @@
   --base-color-CornflowerBlue: 100, 149, 237;
   --font-size: 16px;
   --font-family: sans-serif;
-  --color-deep-gray: #696969;
-  --color-lite-gray: #557d7c;
+  --color-deep-grey: #696969;
   --color-test-yellow: #d1c705;
   --color-test-green: #095204;
   --color-test-white: #d2d5dd;
@@ -13,6 +12,7 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
 
 body {
   margin: 0;
@@ -134,8 +134,8 @@ header {
   margin: 0;
 }
 
-.txt--lite {
-  /* color: var(--color-test-white); */
+.moneyNow {
+  color: #095204;
 }
 
 .title--lite {
@@ -329,4 +329,9 @@ header {
   padding: 1rem 1rem;
   transition: 0.3s;
   cursor: pointer;
+}
+
+.active {
+  background-color: rgb(var(--base-color-CornflowerBlue));
+  color: white;
 }
