@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="./styles/style.css" />
   <link rel="stylesheet" href="./styles/taskEditor.css" />
   <script src="./scripts/headerName.js " type=module defer></script>
+  <script src="./scripts/taskEditorValid.js " type=module defer></script>
 </head>
 
 <body>
@@ -60,13 +61,14 @@
           </div>
 
           <!-- tut -->
-          <div class="form__form-group_lowSpacing">
-            <label for="theme" class="form__label">Тема:</label>
-            <select id="theme" name="theme" class="form__select">
+          <div class="form__form-group_lowSpacing" style="margin-top:2rem;">
+            <select id="theme" name="theme" class="form__select form__input">
               <option value="Тема 1">It</option>
               <option value="Тема 2">Дизайн</option>
               <option value="Тема 3">Тема 3</option>
             </select>
+            <label for="theme" class="form__label">Тема:</label>
+
           </div>
           <!-- tut -->
           <div class="form__form-group">

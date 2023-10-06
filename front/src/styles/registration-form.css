@@ -88,11 +88,6 @@ body {
     cursor: pointer;
 }
 
-.active {
-    background-color: rgba(var(--base-color-CornflowerBlue), 1);
-    color: white;
-}
-
 #registration-form__error {
     margin: 0;
     padding: 20px 0 0 0;
