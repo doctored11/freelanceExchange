@@ -59,7 +59,7 @@ export function createCards(container, serviceData) {
           class="card__image service-card__image "
           style = "background-color: ${user.color}"
         >
-        <h3 class = "card__content-txt"> ${type + " "}<h3>
+        <h3 class = "card__content-txt"> ${type + " "}</h3>
          
         </a>
         <div class=" card__content-block">

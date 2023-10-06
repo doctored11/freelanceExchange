@@ -61,7 +61,7 @@ let cart = getBasketLocalStorage();
 const submitButton = document.querySelector('.btn--submit');
 
 console.log("-_-")
-console.log(submitButton )
+console.log(submitButton)
 submitButton.addEventListener('click', function (event) {
 
     console.log('Клик по кнопке btn--submit');
@@ -120,6 +120,8 @@ taskForm.addEventListener("submit", async function (e) {
 
         if (!isFreeze) {
             console.log('клиент не может создать заказ без активного баланса');
+            alert('Недостаточно средств');
+
             return
         }
 
