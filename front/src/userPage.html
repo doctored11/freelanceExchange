@@ -1,0 +1,88 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="./styles/normalize.css" />
+  <link rel="stylesheet" href="./styles/additional.css" />
+  <link rel="stylesheet" href="./styles/style.css" />
+  <link rel="stylesheet" href="./styles/profile.css" />
+  <link rel="stylesheet" href="./styles/media.css" />
+  <script src="./scripts/headerName.js " type="module" defer></script>
+</head>
+
+<body>
+  <header class="header">
+    <a href="./index.html" class="header__logo logo">
+      <img src="./files/logo.png" alt="" />
+      <!-- логотип ( наверное svg) -->
+    </a>
+    <div class="header__link">
+      <a href="./categories.html">Каталог</a>
+      <div class="header__link__after"></div>
+    </div>
+    <div class="header__link">
+      <a href="./taskEditor.html">Создать заказ</a>
+      <div class="header__link__after"></div>
+    </div>
+    <div class="header__link">
+      <a href="./cart.html">Избранное</a>
+      <div class="header__link__after"></div>
+    </div>
+    <div class="header__link">
+      <a href="./registration.html" class="moneyNow">Авторизация</a>
+      <div class="header__link__after"></div>
+    </div>
+    <div class="header__link">
+      <a href="./registration.html">Авторизация</a>
+      <div class="header__link__after"></div>
+    </div>
+  </header>
+  <main class="main">
+    <section class="section">
+      <div class="frame frame--person">
+        <div class="personal-block">
+          <div class="personal-block__img">
+            <div class=" person-img  person-ico"></div>
+          </div>
+          <a href="./taskEditor.html">🟪TaskEditor🟪</a>
+          <a href="./payment.html">🟪касса🟪</a>
+          <div class="personal-block__container container container--person">
+            <!-- карточка человека из js -->
+          </div>
+        </div>
+        <div class="info">
+          <div class="info__active-tasks container--tasks">
+            <!-- карточки заказов -->
+          </div>
+          <div class="info__history history">
+            <div class="history__balance container container--balanceHistory">
+              <!-- истории js -->
+            </div>
+            <div class="history__tasks container container--tasksHistory">
+              <!-- истории js -->
+            </div>
+          </div>
+          <div class="info-text"></div>
+          <div class="container container--pending"></div>
+          <div class="container container--active"></div>
+        </div>
+
+
+
+    </section>
+
+    <!--  -->
+  </main>
+  <footer class="footer section">
+    <div class="frame footer__frame">
+      <div>Команда IT-19 &lt;3</div>
+      <div>*This проект for хакатон IT трек Opportunity Cup 2023</div>
+    </div>
+  </footer>
+  <script src="./scripts/profile.js" type="module"></script>
+</body>
+
+
+</html>
