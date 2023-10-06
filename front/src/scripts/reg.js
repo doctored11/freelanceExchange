@@ -51,10 +51,10 @@ async function handleFormSubmit(event) {
     const currentURL = window.location.href;
 
 
-const lastIndex = currentURL.lastIndexOf("/");
+    const lastIndex = currentURL.lastIndexOf("/");
 
 
-const resultString = currentURL.substring(0, lastIndex);
+    const resultString = currentURL.substring(0, lastIndex);
 
 
     //todo
@@ -66,7 +66,7 @@ const resultString = currentURL.substring(0, lastIndex);
 
         user = User.createUserFromObject(user)
         user.save();
-        
+
         window.location.href = `${resultString}/userPage.html?id=0`;
 
 
@@ -87,20 +87,20 @@ const resultString = currentURL.substring(0, lastIndex);
 
 
         const user = new User(id, personName, formattedDate, 0, 0, null, '🤡', client, implementer, [], [], [], [], [], [], 0, phone, email, smiley, color)
-       
+
         localStorage.clear();
 
         //сохранение
         DataManager.addUser(user);
-       
+
         user.save();
         window.location.href = `${resultString}/userPage.html?id=0`;
         user = User.load();
-       
-         
-        
-        
-       
+
+
+
+
+
 
 
     }
@@ -160,6 +160,7 @@ const inputEmail = document.querySelector('#email');
 const inputPhone = document.querySelector('#phone');
 const inputPass = document.querySelector('#password');
 const sendBtn = document.querySelector('.registration-form__submit-button');
+console.log(inputName, inputEmail)
 let pass = '';
 let personName = '';
 let lastName = '';
@@ -228,5 +229,3 @@ inputLastName.addEventListener('input', checkBtn);
 inputPass.addEventListener('input', checkBtn);
 inputPhone.addEventListener('input', checkBtn);
 inputEmail.addEventListener('input', checkBtn);
-
-
