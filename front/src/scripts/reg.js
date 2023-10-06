@@ -17,18 +17,6 @@ let productsData = [];
 let usersData = [];
 
 
-// getServices('../data/base.json', usersData)
-//     .then(updatedUsersData => {
-//         usersData = updatedUsersData;
-//         return getServices('../data/products.json');
-//     })
-//     .then(updatedProductsData => {
-//         productsData = updatedProductsData;
-//         console.log(productsData);
-//         console.log(usersData);
-
-//     });
-
 
 
 // желательно кнопку блокировать пока usersData не получен todo
@@ -83,7 +71,10 @@ async function handleFormSubmit(event) {
         const formattedDate = `${day}.${month}.${year}`;
 
 
-        const user = new User(id, personName, formattedDate, 0, 0, null, '🤡', client, implementer, [], [])
+        const { smiley, color } = getRandomSmileyAndColor();
+       
+
+        const user = new User(id, personName, formattedDate, 0, 0, null, '🤡', client, implementer, [], [], [], [], [], [], 0, phone, email,smiley,color)
 
         localStorage.clear();
 
@@ -106,6 +97,26 @@ async function handleFormSubmit(event) {
 
 
 }
+
+function getRandomSmiley() {
+    const smileyArray = ['🤟', '🤑', '🤠', '👽', '👾', '😂', '😜', '😊', '👻', '😎'];
+    const randomSmiley = smileyArray[Math.floor(Math.random() * smileyArray.length)];
+    return randomSmiley;
+}
+
+function getRandomPastelColor() {
+    const pastelColors = ['#FFC3A0', '#FF677D', '#d2d04b', '#a6e55e', '#FFD3E0', '#D9DDDC', '#D3CCE3', '#7FABD3', '#FFE0E0', '#F0C6D2'];
+    const randomColor = pastelColors[Math.floor(Math.random() * pastelColors.length)];
+    return randomColor;
+}
+
+function getRandomSmileyAndColor() {
+    const randomSmiley = getRandomSmiley();
+    const randomColor = getRandomPastelColor();
+    return { smiley: randomSmiley, color: randomColor };
+}
+
+
 
 
 

@@ -1,0 +1,56 @@
+.absolute-notice {
+  position: fixed;
+  right: 3%;
+  bottom: 4%;
+}
+.pending--active {
+  min-width: 5rem;
+  min-height: 1.5rem;
+
+  padding: 0.3rem 0.5rem;
+  background-color: #c68d11;
+}
+.pending {
+  color: white;
+}
+
+.person-ico {
+  font-size: 72px;
+  display: flex;
+
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+.service-card__image {
+  display: block;
+  min-height: 45%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  top: 0;
+}
+.card__content-txt {
+  margin: 0;
+  padding: 0;
+  font-size: 48px;
+  color: white;
+  font-weight: bold;
+}
+.service-card {
+  position: relative;
+ 
+}
+
+.task-card__image{
+  display: block;
+  min-height: 40%;
+  width: 100%;
+  display: flex;
+}
+.card__top{
+  position: relative;
+}

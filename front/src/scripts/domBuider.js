@@ -19,15 +19,17 @@ export function createCards(container, serviceData) {
 
         const { id, img, title, price, descr, timing, owner, ownerId, type } = card;
         let user = await DataManager.getUserById(ownerId);
+        user = User.createUserFromObject(user)
         console.log("😂");
         console.log(user);
         let rate = user.rate;
         let userName
         if (!rate) rate = 0;
-        let rateTxt = "🔹"
-        if (rate > 4.7) rateTxt = "🔥"
-        if (rate > 3.6) rateTxt = "💥"
-        if (rate > 2) rateTxt = "✨"
+        let rateTxt = "🔥"
+        if (rate < 2) rateTxt = "🔸"
+        if (rate > 2 && rate < 3.6) rateTxt = "✨"
+        if (rate > 3.6 && rate < 4.7) rateTxt = "💥"
+
 
         console.log(ownerId, user)
         console.log(card)
@@ -55,8 +57,10 @@ export function createCards(container, serviceData) {
         <a
           href="/servicePage.html?id=serviceCase${id}"
           class="card__image service-card__image "
+          style = "background-color: ${user.color}"
         >
-          <img class="img" src="${img}" alt="${title}" />
+        <h3 class = "card__content-txt"> ${type + " "}<h3>
+         
         </a>
         <div class=" card__content-block">
           <a
@@ -262,6 +266,10 @@ async function goDoing(container, id) {
     owner.saveToServer()
     // DataManager.updateUserById(owner.id, owner);
 
+    setTimeout(function () {
+        location.reload();
+    }, 480);
+
 }
 
 async function goReject(taskId, userId) {
@@ -277,6 +285,9 @@ async function goReject(taskId, userId) {
 
 
     user.saveToServer();
+    setTimeout(function () {
+        location.reload();
+    }, 380);
 
 }
 
@@ -300,7 +311,7 @@ async function goDone(taskId, container) {
     submitButton.addEventListener("click", () => {
         const comment = textarea.value;
         //todo await
-        sendDone(container, taskId, comment);
+        sendDone(container, taskId, comment).then(submitButton.remove());
 
         textarea.value = "";
     });
@@ -361,6 +372,8 @@ async function sendDone(container, taskid, comment) {
 
 
 
+
+
 }
 
 
@@ -377,9 +390,13 @@ export function createAcceptRejectButtons(container, taskId) {
     rejectButton.classList.add("reject-button");
 
 
-    acceptButton.addEventListener("click", () => {
+    acceptButton.addEventListener("click", async () => {
         createConfirmForm(container, taskId)
         // confirmDone(taskId);
+
+
+
+
         console.log("Задача принята");
     });
 
@@ -433,11 +450,12 @@ function createConfirmForm(container, taskId) {
         console.log('Комментарий:', comment);
         console.log('Оценка:', rating);
 
-        confirmDone(taskId, comment, rating);
+        confirmDone(taskId, comment, rating).then(form.remove());
     });
 
 
     container.appendChild(form);
+
 }
 
 
@@ -722,7 +740,7 @@ export function createCartCards(container, data, key = "basket", modifier = "non
                                 alt="${title}"
                             />
                         </a>
-                        <div class="card__label cart-card__label">-${timing}</div>
+                        <div class="card__label cart-card__label">${timing}</div>
                     </div>
                     <div class="card__bottom cart-card__bottom">
                         <div class="card__info ">
@@ -756,6 +774,10 @@ export function createCartCards(container, data, key = "basket", modifier = "non
         }
         setLsbyKey("services", tasksArray)
 
+        setTimeout(function () {
+            location.reload();
+        }, 380);
+
     });
 
 }
@@ -786,7 +808,7 @@ export function createPersonalProfileCard(user, container) {
 
 export function renderPeopleCard(data, container) {
     console.log(data)
-    const { id, img, date, bio, descr, listOfServices } = data;
+    const { id, img, date, bio, descr, listOfServices, type } = data;
 
     const cardItem =
         // ссылку поменял! - мб логический баг
@@ -896,12 +918,14 @@ export async function renderTaskCard(data, container) {
         `
                 <div class="card task-card" data-product-id="${id}">
                     <div class="card__top task-card_top">
-                        <a href="/servicePage.html?id=serviceCase${id}" class="card__image task-card__image --test-get-img">
-                            <img class=" img"
-                                src="${img}"
-                                alt="${title}"
-                            />
-                        </a>
+                    <a
+                    href="/servicePage.html?id=serviceCase${id}"
+                    class="card__image service-card__image "
+                    style = "background-color: ${user.color}"
+                  >
+                  <h3 class = "card__content-txt"> ${type + " "}<h3>
+                   
+                  </a>
                         <div class="card__label task-card__label">-${timing}%</div>
                     </div>
                     <div class="card__bottom task-card__bottom">
@@ -1114,10 +1138,22 @@ function cardCreate(userData, container, relativeTaskId, isCreator = false) {
         const cancelButton = document.createElement("button");
         cancelButton.textContent = "Отменить";
 
-        approveButton.addEventListener("click", () => {
+        approveButton.addEventListener("click", async () => {
 
             console.log(`Подтверждено: ${userData.bio}`);
             goInWork(userData.id, relativeTaskId);
+            let pendingUsers = await DataManager.getUsersWithPendingTaskIds(relativeTaskId);
+            console.log(pendingUsers);
+
+            pendingUsers.forEach(async (pUsId) => {
+                let user = await DataManager.getUserById(pUsId);
+                user = User.createUserFromObject(user);
+
+                user.pendingTasks = user.pendingTasks.filter(task => parseInt(task) != parseInt(relativeTaskId));
+                user.saveToServer();
+            });
+
+
         });
         cancelButton.addEventListener("click", async () => {
 

@@ -57,6 +57,7 @@ const userCount = DataManager.getUsersCount();
 
 //--- с расчетом на бек уже
 
+
 choicePageRender().then(
     () => {
 
@@ -67,7 +68,8 @@ choicePageRender().then(
 )
 //--
 
-personImg.src = user.img;
+personImg.textContent = user.smiley;
+personImg.style.backgroundColor = user.color;
 
 
 
@@ -114,11 +116,11 @@ function renderBalanceHistory(container) {
 
 async function choicePageRender() {
     const queryParams = getQueryParameters();
-    
+
     const id = queryParams.id;
     user = User.load();
 
-  
+
     if (id == 0 || id == user.id) {
         // страница активного юзера
 
@@ -180,9 +182,10 @@ async function renderPendingCards(container, user) {
 }
 
 async function renderActiveCards(container, user) {
-
+    console.log("renderActive")
     let list;
     let mod = "activeTasks"
+    console.log(user)
     list = user.activeTasks;
     container.innerHTML = ' '
 
