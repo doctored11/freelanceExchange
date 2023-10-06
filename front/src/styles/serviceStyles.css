@@ -4,47 +4,24 @@
   width: 100%;
 
   align-content: center;
-  justify-content: space-between;
+  justify-content: center;
   align-items: stretch;
 }
+
 .services {
   width: 100%;
 }
-.service-card {
-  width: 30%;
-}
-.card {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-}
-.card__top {
-  width: 100%;
-}
-.card__img {
-  min-height: 160px;
-  height: 100%;
-}
-.img {
-  width: 100%;
-  height: 100%;
-}
-.service-card_top {
-  width: 100%;
-  position: relative;
-}
-.service-card__image {
-  display: block;
-  width: 100%;
-  height: 100%;
 
-  min-height: 160px;
+
+
+
+
+*/ .service-card_top {
+  width: 100%;
+  position: relative;
 }
-.service-card__label {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-}
+
+
 .task-card {
   margin-bottom: 2rem;
 }
@@ -52,32 +29,39 @@
 .container--partners::after {
   content: "Желающие ⬇";
 }
+
 .case-container,
 .container--partners {
   display: flex;
   flex-direction: column-reverse;
 }
+
 .profile-card {
   /* height: 10rem; */
 }
+
 .profile-container {
   margin-bottom: 2rem;
   display: flex;
   justify-content: flex-end;
 }
+
 .profile-card__label {
   position: absolute;
   right: 0;
   top: 0;
 }
+
 .main__frame {
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
 }
+
 .case-container {
   margin-right: 2rem;
 }
+
 .order {
   outline: 5px solid #056208;
   outline-offset: 3px;

@@ -1,0 +1,108 @@
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--padding, 20px);
+    padding: 3rem;
+    width: 60%;
+    margin: 3rem auto;
+}
+
+.left-section {
+    min-width: 60%;
+    flex: 67.777;
+    max-width: 65%;
+}
+
+.right-section {
+    min-width: 30%;
+}
+
+.task {
+    /* border: 2px solid green; */
+    box-shadow: 0 5px 16px 0 #ccc;
+    width: 100%;
+    text-align: center;
+}
+
+.task_details {
+    padding: var(--padding, 20px);
+    border: 2px solid blue;
+    margin-bottom: var(--padding, 10px);
+}
+
+.seller {
+    padding: var(--padding, 20px);
+    border: 2px solid yellow;
+    text-align: start;
+}
+
+.about {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.discription {
+    text-align: start;
+    margin: 10px 20px;
+}
+
+#price {
+    font-size: 1.4em;
+    color: #32CD32;
+}
+
+.list-details {
+    background-color: gray;
+}
+
+.buy {
+    display: flex;
+    color: white;
+    text-align: center;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buy div {
+    min-width: 65%;
+
+    background-color: #32CD32;
+}
+
+.buy span {
+    min-width: 0;
+    background-color: #32CD32;
+}
+
+.personal-info {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.avatar {
+    background-image: url();
+    background-repeat: no-repeat;
+    background-color: aqua;
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+}
+
+.name {
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.reputation,
+.tasks-done,
+.feedbacks-done {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid gray;
+}
