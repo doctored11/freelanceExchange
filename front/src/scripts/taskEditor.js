@@ -26,7 +26,8 @@ let usersData = [];
 
 const container = document.querySelector('.card__container')
 const taskForm = document.getElementById("task-form");
-taskForm.classList.add("none")
+// taskForm.classList.add("none")
+console.log(taskForm)
 
 
 //пока без бд
@@ -57,10 +58,19 @@ taskForm.classList.remove("none")
 
 let cart = getBasketLocalStorage();
 
+const submitButton = document.querySelector('.btn--submit');
+
+console.log("-_-")
+console.log(submitButton )
+submitButton.addEventListener('click', function (event) {
+
+    console.log('Клик по кнопке btn--submit');
+});
 
 
 taskForm.addEventListener("submit", async function (e) {
     e.preventDefault();
+    console.log("Пошел")
 
     user = User.load();
     console.log(user)

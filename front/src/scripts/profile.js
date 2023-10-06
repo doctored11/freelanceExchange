@@ -130,6 +130,9 @@ async function choicePageRender() {
         createPersonalProfileCard(user, userContainer);
 
         document.querySelector('.info-text').innerHTML += "<p class ='txt txt--profile'>не подтвержденные карточки ⬇</p>" //костылек
+
+        user = await DataManager.getUserById(user.id);
+        user = User.createUserFromObject(user)
         await renderPendingCards(pendingContainer, user);
         await renderActiveCards(activeContainer, user);
 
@@ -171,13 +174,17 @@ function getQueryParameters() {
 }
 
 async function renderPendingCards(container, user) {
+    console.log("pending")
 
     let list;
+    console.log(user)
     let mod = "pendingTasks"
     list = user.pendingTasks;
     container.innerHTML = ' '
 
     const selectPositions = await DataManager.getListOfServicesByids(list);
+    console.log(list)
+    console.log(selectPositions)
     selectPositions.forEach(pos => { createCartCards(container, pos, "user", mod) });
 }
 

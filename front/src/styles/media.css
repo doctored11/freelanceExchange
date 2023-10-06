@@ -1,0 +1,31 @@
+@media (max-width: 1220px) {
+
+    .frame--person{
+        flex-direction: column;
+        width: 100%;
+    }
+    .frame--person .personal-block{
+        margin-right: 0;
+    }
+    .container, .container--tasks{
+        flex-wrap: wrap;
+    }
+    .cart-card{
+        width: 28%;
+    }
+    .cart-card{
+        margin: 0.7rem;
+        margin-bottom: 1.3rem;
+    }
+    .hero__scroll{
+        display: none !important;
+    }
+   
+}
+
+@media (max-width: 560px) {
+   body, main{
+        width: 100vw;
+    }
+
+}

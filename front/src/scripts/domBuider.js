@@ -696,16 +696,13 @@ export async function goDeleteTask(container, id) {
 //
 export function createProfileCard(profileData, container) {
 
-    const { id, img, bio, date, descr, listOfServices } = profileData;
+    const { id, img, bio, date, descr, listOfServices, smiley } = profileData;
     const cardItem =
         `
         <div class="card profile-card" data-profile-id="${id}">
             <div class="card__top profile-card_top">
                 <a href="/servicePage.html?id=serviceCase${id}" class="card__image profile-card__image --test-get-img">
-                    <img class=" img"
-                        src="${img}"
-                        alt="${bio}"
-                    />
+                   <h3 class = "person--logo">${smiley} </h3>
                 </a>
                
             </div>
@@ -725,20 +722,19 @@ export function createProfileCard(profileData, container) {
 }
 // 
 
-export function createCartCards(container, data, key = "basket", modifier = "non") {
+export async function createCartCards(container, data, key = "basket", modifier = "non") {
 
     console.log(data.id)
-    const { id, img, title, price, descr, timing, owner, status } = data;
+    const { id, img, title, price, descr, timing, owner, status, ownerId } = data;
+    let ownerUs = await DataManager.getUserById(ownerId)
+    ownerUs = User.createUserFromObject(ownerUs)
 
     const cardItem =
         `
                 <div class="card cart-card" data-product-id="${id}">
                     <div class="card__top cart-card_top">
-                        <a href="/servicePage.html?id=serviceCase${id}" class="card__image cart-card__image --test-get-img">
-                            <img class=" img"
-                                src="${img}"
-                                alt="${title}"
-                            />
+                        <a href="/servicePage.html?id=serviceCase${id}" class="card__image cart-card__image "style = "background-color: ${ownerUs.color}">
+                            
                         </a>
                         <div class="card__label cart-card__label">${timing}</div>
                     </div>
@@ -808,7 +804,7 @@ export function createPersonalProfileCard(user, container) {
 
 export function renderPeopleCard(data, container) {
     console.log(data)
-    const { id, img, date, bio, descr, listOfServices, type } = data;
+    const { id, img, date, bio, descr, listOfServices, type, smiley } = data;
 
     const cardItem =
         // ссылку поменял! - мб логический баг
@@ -816,12 +812,9 @@ export function renderPeopleCard(data, container) {
                 <div class="card profile-card" data-product-id="${id}">
                     <div class="card__top profile-card_top">
                         <a href="/userPage.html?id=${id}" class="card__image profile-card__image "> 
-                            <img class=" img card__img --test-get-img"
-                                src="${img}"
-                                alt="${bio}"
-                            />
+                        <h3 class="person--logo">${smiley} </h3>
                         </a>
-                        <div class="card__label profile-card__label">-${date}%</div>
+                       
                     </div>
                     <div class="card__bottom profile-card__bottom">
                         <div class="card__info ">
