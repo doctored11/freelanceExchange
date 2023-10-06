@@ -19,15 +19,17 @@ export function createCards(container, serviceData) {
 
         const { id, img, title, price, descr, timing, owner, ownerId, type } = card;
         let user = await DataManager.getUserById(ownerId);
+        user = User.createUserFromObject(user)
         console.log("😂");
         console.log(user);
         let rate = user.rate;
         let userName
         if (!rate) rate = 0;
-        let rateTxt = "🔹"
-        if (rate > 4.7) rateTxt = "🔥"
-        if (rate > 3.6) rateTxt = "💥"
-        if (rate > 2) rateTxt = "✨"
+        let rateTxt = "🔥"
+        if (rate < 2) rateTxt = "🔸"
+        if (rate > 2 && rate < 3.6) rateTxt = "✨"
+        if (rate > 3.6 && rate < 4.7) rateTxt = "💥"
+
 
         console.log(ownerId, user)
         console.log(card)
@@ -55,8 +57,10 @@ export function createCards(container, serviceData) {
         <a
           href="/servicePage.html?id=serviceCase${id}"
           class="card__image service-card__image "
+          style = "background-color: ${user.color}"
         >
-          <img class="img" src="${img}" alt="${title}" />
+        <h3 class = "card__content-txt"> ${type + " "}<h3>
+         
         </a>
         <div class=" card__content-block">
           <a
@@ -262,6 +266,10 @@ async function goDoing(container, id) {
     owner.saveToServer()
     // DataManager.updateUserById(owner.id, owner);
 
+    setTimeout(function () {
+        location.reload();
+    }, 480);
+
 }
 
 async function goReject(taskId, userId) {
@@ -277,6 +285,9 @@ async function goReject(taskId, userId) {
 
 
     user.saveToServer();
+    setTimeout(function () {
+        location.reload();
+    }, 380);
 
 }
 
@@ -300,7 +311,7 @@ async function goDone(taskId, container) {
     submitButton.addEventListener("click", () => {
         const comment = textarea.value;
         //todo await
-        sendDone(container, taskId, comment);
+        sendDone(container, taskId, comment).then(submitButton.remove());
 
         textarea.value = "";
     });
@@ -361,6 +372,8 @@ async function sendDone(container, taskid, comment) {
 
 
 
+
+
 }
 
 
@@ -377,9 +390,13 @@ export function createAcceptRejectButtons(container, taskId) {
     rejectButton.classList.add("reject-button");
 
 
-    acceptButton.addEventListener("click", () => {
+    acceptButton.addEventListener("click", async () => {
         createConfirmForm(container, taskId)
         // confirmDone(taskId);
+
+
+
+
         console.log("Задача принята");
     });
 
@@ -433,11 +450,12 @@ function createConfirmForm(container, taskId) {
         console.log('Комментарий:', comment);
         console.log('Оценка:', rating);
 
-        confirmDone(taskId, comment, rating);
+        confirmDone(taskId, comment, rating).then(form.remove());
     });
 
 
     container.appendChild(form);
+
 }
 
 
@@ -678,16 +696,13 @@ export async function goDeleteTask(container, id) {
 //
 export function createProfileCard(profileData, container) {
 
-    const { id, img, bio, date, descr, listOfServices } = profileData;
+    const { id, img, bio, date, descr, listOfServices, smiley } = profileData;
     const cardItem =
         `
         <div class="card profile-card" data-profile-id="${id}">
             <div class="card__top profile-card_top">
                 <a href="/servicePage.html?id=serviceCase${id}" class="card__image profile-card__image --test-get-img">
-                    <img class=" img"
-                        src="${img}"
-                        alt="${bio}"
-                    />
+                   <h3 class = "person--logo">${smiley} </h3>
                 </a>
                
             </div>
@@ -707,22 +722,21 @@ export function createProfileCard(profileData, container) {
 }
 // 
 
-export function createCartCards(container, data, key = "basket", modifier = "non") {
+export async function createCartCards(container, data, key = "basket", modifier = "non") {
 
     console.log(data.id)
-    const { id, img, title, price, descr, timing, owner, status } = data;
+    const { id, img, title, price, descr, timing, owner, status, ownerId } = data;
+    let ownerUs = await DataManager.getUserById(ownerId)
+    ownerUs = User.createUserFromObject(ownerUs)
 
     const cardItem =
         `
                 <div class="card cart-card" data-product-id="${id}">
                     <div class="card__top cart-card_top">
-                        <a href="/servicePage.html?id=serviceCase${id}" class="card__image cart-card__image --test-get-img">
-                            <img class=" img"
-                                src="${img}"
-                                alt="${title}"
-                            />
+                        <a href="/servicePage.html?id=serviceCase${id}" class="card__image cart-card__image "style = "background-color: ${ownerUs.color}">
+                            
                         </a>
-                        <div class="card__label cart-card__label">-${timing}</div>
+                        <div class="card__label cart-card__label">${timing}</div>
                     </div>
                     <div class="card__bottom cart-card__bottom">
                         <div class="card__info ">
@@ -756,6 +770,10 @@ export function createCartCards(container, data, key = "basket", modifier = "non
         }
         setLsbyKey("services", tasksArray)
 
+        setTimeout(function () {
+            location.reload();
+        }, 380);
+
     });
 
 }
@@ -786,7 +804,7 @@ export function createPersonalProfileCard(user, container) {
 
 export function renderPeopleCard(data, container) {
     console.log(data)
-    const { id, img, date, bio, descr, listOfServices } = data;
+    const { id, img, date, bio, descr, listOfServices, type, smiley } = data;
 
     const cardItem =
         // ссылку поменял! - мб логический баг
@@ -794,12 +812,9 @@ export function renderPeopleCard(data, container) {
                 <div class="card profile-card" data-product-id="${id}">
                     <div class="card__top profile-card_top">
                         <a href="/userPage.html?id=${id}" class="card__image profile-card__image "> 
-                            <img class=" img card__img --test-get-img"
-                                src="${img}"
-                                alt="${bio}"
-                            />
+                        <h3 class="person--logo">${smiley} </h3>
                         </a>
-                        <div class="card__label profile-card__label">-${date}%</div>
+                       
                     </div>
                     <div class="card__bottom profile-card__bottom">
                         <div class="card__info ">
@@ -896,12 +911,14 @@ export async function renderTaskCard(data, container) {
         `
                 <div class="card task-card" data-product-id="${id}">
                     <div class="card__top task-card_top">
-                        <a href="/servicePage.html?id=serviceCase${id}" class="card__image task-card__image --test-get-img">
-                            <img class=" img"
-                                src="${img}"
-                                alt="${title}"
-                            />
-                        </a>
+                    <a
+                    href="/servicePage.html?id=serviceCase${id}"
+                    class="card__image service-card__image "
+                    style = "background-color: ${user.color}"
+                  >
+                  <h3 class = "card__content-txt"> ${type + " "}<h3>
+                   
+                  </a>
                         <div class="card__label task-card__label">-${timing}%</div>
                     </div>
                     <div class="card__bottom task-card__bottom">
@@ -980,12 +997,25 @@ export async function renderPrivateComment(container, cardId) {
     console.log(autor)
 
     const cardBlocks = await Promise.all(cardCom.map(async (com, index) => {
-        const isEven = (index + 1) % 2 === 0; // Четный - клиент, нечетный исполнитель
+        const isEven = (index + 1) % 2 == 0; // Четный - клиент, нечетный исполнитель
         console.log(isEven);
 
-        if (isEven) {
-            if (!user.client) {
-                autor = await DataManager.getUserById(card.ownerId);
+        if (!isEven) {
+            if (user.client) {
+
+                // autor = await DataManager.getUserById(card.ownerId);
+
+                let autors = await DataManager.getUsersWithActiveTaskIds(card.id);
+                console.log(autors)
+                autors = autors.filter((autor) => {
+                    return autor != user.id;
+                });
+                let autorId = autors[0]
+
+
+                autor = await DataManager.getUserById(autorId)
+
+
             } else {
                 autor = user;
             }
@@ -997,7 +1027,7 @@ export async function renderPrivateComment(container, cardId) {
             </div>
           </div>`;
         } else { //от клиента
-            if (!user.client) {
+            if (user.client) {
                 autor = user;
             } else {
                 // static async getUsersWithActiveTaskIds(taskId) {
@@ -1101,10 +1131,22 @@ function cardCreate(userData, container, relativeTaskId, isCreator = false) {
         const cancelButton = document.createElement("button");
         cancelButton.textContent = "Отменить";
 
-        approveButton.addEventListener("click", () => {
+        approveButton.addEventListener("click", async () => {
 
             console.log(`Подтверждено: ${userData.bio}`);
             goInWork(userData.id, relativeTaskId);
+            let pendingUsers = await DataManager.getUsersWithPendingTaskIds(relativeTaskId);
+            console.log(pendingUsers);
+
+            pendingUsers.forEach(async (pUsId) => {
+                let user = await DataManager.getUserById(pUsId);
+                user = User.createUserFromObject(user);
+
+                user.pendingTasks = user.pendingTasks.filter(task => parseInt(task) != parseInt(relativeTaskId));
+                user.saveToServer();
+            });
+
+
         });
         cancelButton.addEventListener("click", async () => {
 
