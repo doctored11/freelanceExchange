@@ -50,7 +50,7 @@ renderTaskCard(task, caseContainer);
 await renderPrivateComment(commentContainer, normalId).then(
     renderGlobalComment(commentContainer, normalId)
 )
-renderFormToRateClient(normalId,commentContainer)
+renderFormToRateClient(normalId, commentContainer)
 
 updateMoneyNowText()
 
@@ -89,17 +89,60 @@ async function renderFormToRateClient(normalId, container) {
     let user = User.load();
     user = await DataManager.getUserById(user.id);
 
+
     if (!user.implementer) return
     console.log("Rate_2")
+    user = User.createUserFromObject(user);
     const task = await DataManager.getServiceById(normalId);
     if (task.status != "ready") return
+    if (!user.activeTasks) return
     console.log("Rate_3")
-    if (user.activeTasks.includes(normalId)) {
-        user.activeTasks = user.activeTasks.filter(task => task !== normalId);
-        createRatingForm(container, task.ownerId);
-        console.log("Rate_4")
+
+
+    // 
+
+    const normalIdInt = parseInt(normalId, 10);
+
+    if (isNaN(normalIdInt)) {
+        console.error('normalId не целое');
+    } else {
+
+        const activeTasksInt = user.activeTasks.map(task => parseInt(task, 10));
+        console.log(activeTasksInt)
+        console.log(normalIdInt)
+
+
+        if (activeTasksInt.includes(normalIdInt)) {
+
+
+            let autors = await DataManager.getUsersWithActiveTaskIds(task.id);
+            console.log(autors)
+            autors = autors.filter((autor) => {
+                return autor != user.id;
+            });
+            let autorId = autors[0];
+
+
+
+
+            createRatingForm(container, autorId);
+
+
+
+
+            console.log(user.activeTasks)
+            user.activeTasks = user.activeTasks.filter(task => task != normalId);
+
+
+            console.log(user.activeTasks)
+            console.log(normalId)
+            user.saveToServer()
+
+            console.log("Rate_4")
+        }
+        console.log("Rate_5")
     }
-    console.log("Rate_5")
+
 }
 
 function createRatingForm(container, targetId) {
@@ -117,11 +160,14 @@ function createRatingForm(container, targetId) {
     button.textContent = 'Отправить';
 
 
-    button.addEventListener('click', function () {
+    button.addEventListener('click', async function () {
         // 
+
+
+
         const inputValue = input.value;
         console.log('Оценка клиента: ' + inputValue);
-        addRateToClient(targetId, rate).then(button.remove(), input.remove(), heading.remove())
+        addRateToClient(targetId, inputValue).then(button.remove(), input.remove(), heading.remove())
     });
 
 
@@ -147,7 +193,7 @@ async function addRateToClient(targetId, rate) {
             console.log(user.rate)
         }
     }
-    console.log(`💥 исполнителю ${user.id} присвоен рейтинг: `, user.rate);
+    console.log(`💥 клиенту ${user.id} присвоен рейтинг: `, user.rate);
     await user.saveToServer();
     message.textContent = 'Спасибо, оценка будет учтена';
 }

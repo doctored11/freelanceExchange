@@ -51,7 +51,7 @@ let usersData = [];
 //         // -------------
 //         renderStartPage(productsData, usersData);
 //     });
-productsData = await DataManager.getServicesInRange(0, shownCards - 1); //подумать тут)
+productsData = await DataManager.getServicesInRange(0, shownCards ); //подумать тут)
 console.log(productsData)
 renderStartPage(productsData);
 updateMoneyNowText()
@@ -107,7 +107,7 @@ async function sliceArrCards() {
     const endIndex = Math.min(totalCardsCount, startIndex + COUNT_SHOW_CARDS_CLICK);
 
 
-    const newCards = await DataManager.getServicesInRange(startIndex, endIndex - 1);
+    const newCards = await DataManager.getServicesInRange(startIndex, endIndex -1);
     console.log(totalCardsCount);
     console.log(startIndex, endIndex)
     console.log(newCards)

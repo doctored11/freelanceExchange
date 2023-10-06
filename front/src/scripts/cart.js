@@ -54,6 +54,7 @@ cardRender(container, cart);
 
 async function cardRender(container, data) {
     console.log('cardRender')
+    if(!container) return
     container.innerHTML = ' '
     console.log(data);
     if(data.length<1) return

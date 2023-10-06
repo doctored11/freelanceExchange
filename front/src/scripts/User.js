@@ -1,7 +1,7 @@
 import { Balance } from './Balance.js';
 import { DataManager } from './DataManager.js';
 export class User {
-    constructor(id, bio, date, balance = 0, frozen = 0, img = null, descr = "Стандартный чебурек", client = true, implementer = false, listOfOrders, listOfServices, pendingTasks, activeTasks, finishtasks, balanceHistory, rate = 0) {
+    constructor(id, bio, date, balance = 0, frozen = 0, img = null, descr = "Стандартный чебурек", client = true, implementer = false, listOfOrders, listOfServices, pendingTasks, activeTasks, finishtasks, balanceHistory, rate = 0, phone, email,smiley,color) {
         this.id = id;
         this.bio = bio;
         this.date = date;
@@ -10,12 +10,17 @@ export class User {
         this.client = client;
         this.implementer = implementer;
 
+        this.phone = phone || 0;
+        this.email = email || 0;
+
         this.listOfOrders = listOfOrders || [];
         this.listOfServices = listOfServices || [];
         this.pendingTasks = pendingTasks || [];
         this.activeTasks = activeTasks || [];
         this.finishtasks = finishtasks || [];
         this.balanceHistory = balanceHistory || [];
+        this.smiley = smiley || "🙃"
+        this.color = color || "#eabcf6"
 
         this.rate = rate
 
@@ -60,8 +65,8 @@ export class User {
 
 
             console.log(user)
-            const { id, bio, date, balance, img, descr, client, implementer, listOfOrders, listOfServices, pendingTasks, activeTasks, finishtasks } = user;
-            return new User(id, bio, date, balance.activeBalance, balance.frozenBalance, img, descr, client, implementer, listOfOrders, listOfServices, pendingTasks, activeTasks, finishtasks);
+            const { id, bio, date, balance, img, descr, client, implementer, listOfOrders, listOfServices, pendingTasks, activeTasks, finishtasks,balanceHistory,rate,phone,email,smiley,color } = user;
+            return new User(id, bio, date, balance.activeBalance, balance.frozenBalance, img, descr, client, implementer, listOfOrders, listOfServices, pendingTasks, activeTasks, finishtasks,balanceHistory,rate,phone,email,smiley,color);
         }
         return null;
     }
@@ -72,7 +77,7 @@ export class User {
         console.log(userData)
 
         let active, frozen = 0
-        let { id, bio, date, balance, img, descr, client, implementer, listOfOrders, listOfServices, pendingTasks, activeTasks, finishtasks, balanceHistory, rate } = userData;
+        let { id, bio, date, balance, img, descr, client, implementer, listOfOrders, listOfServices, pendingTasks, activeTasks, finishtasks, balanceHistory, rate, phone, email,smiley,color } = userData;
         if (balance) {
             active = balance.activeBalance
             frozen = balance.frozenBalance
@@ -91,7 +96,7 @@ export class User {
         }
 
 
-        return new User(id, bio, date, active, frozen, img, descr, client, implementer, listOfOrders, listOfServices, pendingTasks, activeTasks, finishtasks, balanceHistory, rate);
+        return new User(id, bio, date, active, frozen,  img, descr, client, implementer, listOfOrders, listOfServices, pendingTasks, activeTasks, finishtasks, balanceHistory, rate,phone, email,smiley,color);
     }
 
 
