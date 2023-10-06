@@ -33,11 +33,6 @@
   position: relative;
 }
 
-.service-card__image {
-  display: block;
-  height: 200px;
-}
-
 .service-card__label {
   text-align: start;
   margin: 1rem;

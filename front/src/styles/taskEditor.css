@@ -6,7 +6,6 @@ main {
     padding: 3rem;
     width: 60%;
     margin: 3rem auto;
-    box-shadow: 0 5px 16px 0 #ccc;
 }
 
 .left-section {
@@ -21,6 +20,8 @@ main {
 
 .task {
     /* border: 2px solid green; */
+    box-shadow: 0 5px 16px 0 #ccc;
+    width: 100%;
     text-align: center;
 }
 
