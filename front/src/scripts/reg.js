@@ -48,16 +48,28 @@ async function handleFormSubmit(event) {
     //логика входа
     //в разработке
 
+    const currentURL = window.location.href;
+
+
+const lastIndex = currentURL.lastIndexOf("/");
+
+
+const resultString = currentURL.substring(0, lastIndex);
+
 
     //todo
-    // -----!Пока для входа нужно просто ввести id в строку имени
+    // -----!Пока для входа нужно просто ввести id в строку email
     if (flagLog) {
         localStorage.clear();
 
-        let user = await DataManager.getUserById(personName)
+        let user = await DataManager.getUserById(email)
 
         user = User.createUserFromObject(user)
         user.save();
+        
+        window.location.href = `${resultString}/userPage.html?id=0`;
+
+
 
     } else {
 
@@ -72,16 +84,24 @@ async function handleFormSubmit(event) {
 
 
         const { smiley, color } = getRandomSmileyAndColor();
+
+
+        const user = new User(id, personName, formattedDate, 0, 0, null, '🤡', client, implementer, [], [], [], [], [], [], 0, phone, email, smiley, color)
        
-
-        const user = new User(id, personName, formattedDate, 0, 0, null, '🤡', client, implementer, [], [], [], [], [], [], 0, phone, email,smiley,color)
-
         localStorage.clear();
 
         //сохранение
         DataManager.addUser(user);
+       
         user.save();
+        window.location.href = `${resultString}/userPage.html?id=0`;
         user = User.load();
+       
+         
+        
+        
+       
+
 
     }
 
