@@ -1,11 +1,18 @@
+:root {
+    --base-color-CornflowerBlue: 100, 149, 237;
+    --color-test-green: #095204;
+}
+
 main {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     gap: var(--padding, 20px);
-    padding: 3rem;
+    padding: 1rem 3rem;
     width: 60%;
-    margin: 3rem auto;
+    margin: 1rem auto;
+}
+
+.form__form-group_lowSpacing {
+    margin: 20px 0 16px;
+    position: relative;
 }
 
 .left-section {
@@ -18,11 +25,48 @@ main {
     min-width: 30%;
 }
 
+input,
+textarea,
+select {
+    font-size: 1.2em;
+    width: 100%;
+}
+
 .task {
     /* border: 2px solid green; */
     box-shadow: 0 5px 16px 0 #ccc;
     width: 100%;
     text-align: center;
+    border-radius: 0.5em;
+    padding: 1rem;
+}
+
+.form__label_large,
+.form__input_large {
+    font-size: 2em;
+    font-weight: 600;
+}
+
+.form__input:focus,
+.form__input:not(:placeholder-shown) {
+    border-bottom: 1px solid green;
+}
+
+#descr {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #9e9e9e;
+    font-size: 1.1em;
+}
+
+textarea::-webkit-scrollbar {
+    display: none;
+}
+
+#descr:active,
+#descr:not(:placeholder-shown) {
+    border: none;
+    border-bottom: 1px solid green;
 }
 
 .task_details {
