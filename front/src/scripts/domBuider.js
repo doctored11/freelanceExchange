@@ -44,45 +44,49 @@ export function createCards(container, serviceData) {
         //./files/unStar.svg -?
         const cardItem =
             `
-            <div class=" card service-card ${type}-card" data-product-id="${id}">
-                <button class="card__add card__star " data-id="${id}">
-                <img class=" img card__star card__star-${id}"
-                src="./files/unStar.svg"
-                alt="избранное"
-                    />
-                </button>
-                <a href="/servicePage.html?id=serviceCase${id}" class="card__image service-card__image --test-get-img">
-                <img class=" img"
-                    src="${img}"
-                    alt="${title}"
-                />
-             </a>
-                    <div class="card__bottom service-card__bottom card__content-block">
-                    <a href="/servicePage.html?id=serviceCase${id}" class="card__title service-card__title card__title">${title}</a>
-                    <p class ="card__txt txt">${descr}</p>  
-                    
-                    <div class="card__info">
-                            <div class="card__people heading service-card__heading card__Author">${userName}</div>
-                            <div class="rate-block">
-                            <span class = "authorRating txt card__rating" >${rate}</span>
-                            <span>${rateTxt}</span>
-                            <div>
-                            
-                        </div>
-                    </div>
-                    <div class="card__info">
-                    <h3 class= "card__price txt price">Цена</h3>
-                    <div>
-                    <div class="card__price card__price--common">${price}</div>
-                    <span class="card__span">Р</span>
-                    </div>
-                        
-                            
-                        
-                    </div>
+            <div class="card service-card ${type}-card" data-product-id="${id}">
+        <button class="card__add card__star" data-id="${id}">
+          <img
+            class=" card__star-${id}"
+            src="./files/unStar.svg"
+            alt="избранное"
+          />
+        </button>
+        <a
+          href="/servicePage.html?id=serviceCase${id}"
+          class="card__image service-card__image "
+        >
+          <img class="img" src="${img}" alt="${title}" />
+        </a>
+        <div class=" card__content-block">
+          <a
+            href="/servicePage.html?id=serviceCase${id}"
+            class="card__title"
+            >${title}</a
+          >
+          <p class="card__txt txt">${descr}</p>
 
-                    
-                </div>
+          <div class="card__info">
+            <div
+              class="card__people heading service-card__heading card__Author"
+            >
+              ${userName}
+            </div>
+            <div class="rate-block">
+              <span class="authorRating txt card__rating">${rate}</span>
+              <span>${rateTxt}</span>
+              <div></div>
+            </div>
+          </div>
+          <div class="card__info">
+            <div class="card__price-logo">Цена</div>
+            <div>
+              <div class="card__price card__price--common">${price}</div>
+              <span class="card__span">Р</span>
+            </div>
+          </div>
+        </div>
+      </div>
             `
 
 
