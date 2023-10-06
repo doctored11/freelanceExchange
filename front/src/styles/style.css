@@ -145,7 +145,8 @@ header {
   flex-wrap: wrap;
 }
 
-.order-card {
+.order-card,
+.service-card {
   width: 300px;
   height: 380px;
   text-align: center;
@@ -157,6 +158,19 @@ header {
 .card__price,
 .card__price~span {
   color: #32CD32;
+}
+
+.card__price::after {
+  content: ' Р';
+}
+
+.card__rating::after {
+  content: ' ✨';
+}
+
+.card__span,
+.card__rating~span {
+  display: none;
 }
 
 .card {
@@ -180,27 +194,29 @@ header {
   margin: 0;
 }
 
-
-/* .card__img {
+.service-card__image>img {
+  display: block;
   border-radius: 0.5rem;
-  background-image: url(./files/logo.png);
-} */
+  height: 200px;
+  margin: auto;
+}
 
 .card__content-block {
   padding: 1rem;
   text-align: start;
   overflow: hidden;
   text-overflow: ellipsis;
+
 }
 
 .card__title {
-  margin: 0;
+  font-size: 1.4em;
+  font-weight: 600;
   height: 1.2em;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   color: black;
-  margin-bottom: 10px;
 }
 
 .card__txt {
@@ -208,12 +224,13 @@ header {
   font-size: 1em;
   overflow: hidden;
   color: var(--color-deep-grey);
-  margin-bottom: 10px;
+  margin: 1rem 0;
 }
 
 .card__info {
   display: flex;
   justify-content: space-between;
+  margin: 0.5rem 1rem;
 }
 
 .card__Author {

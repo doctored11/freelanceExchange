@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
-  <link rel="stylesheet" href="./styles/normalize.css" />
+  <!-- <link rel="stylesheet" href="./styles/normalize.css" /> -->
   <link rel="stylesheet" href="./styles/style.css" />
   <link rel="stylesheet" href="./styles/taskEditor.css" />
   <script src="./scripts/headerName.js " type=module defer></script>
@@ -48,31 +48,35 @@
       </div>
     </div>
 
-    <form id="task-form">
-      <div class="form-group">
-        <label for="title">Название:</label>
-        <input type="text" id="title" name="title" required />
+    <form id="task-form" class="task">
+      <div style="width: 50%; margin: auto;">
+        <div class="form__form-group">
+          <label for="title" class="form__label_large ">Название</label>
+          <input type="text" id="title" name="title" class="form__input" placeholder=" " />
+        </div>
+        <div class="form__form-group">
+          <label for="timing" class="form__label">Время</label>
+          <input type="text" id="timing" name="timing" placeholder=' ' class="form__input" />
+        </div>
       </div>
-      <div class="form-group">
-        <label for="descr">Содержание:</label>
-        <textarea id="descr" name="descr" rows="4" required></textarea>
+      <div class="form__form-group">
+        <textarea id="descr" name="descr" rows="4" placeholder="Содержание"></textarea>
       </div>
-      <div class="form-group">
-        <label for="theme">Тема:</label>
-        <select id="theme" name="theme">
+      <!-- tut -->
+      <div class="form__form-group">
+        <label for="theme" class="form__label">Тема:</label>
+        <select id="theme" name="theme" class="form__select">
           <option value="Тема 1">It</option>
           <option value="Тема 2">Дизайн</option>
           <option value="Тема 3">Тема 3</option>
         </select>
       </div>
-      <div class="form-group">
-        <label for="price">Цена:</label>
-        <input type="number" id="price" name="price" min="0" />
+      <!-- tut -->
+      <div class="form__form-group">
+        <label for="price">Цена</label>
+        <input type="number" id="price" name="price" min="0" class="form__number" />
       </div>
-      <div class="form-group">
-        <label for="timing">Время:</label>
-        <input type="text" id="timing" name="timing" />
-      </div>
+
       <button type="submit">Заказать</button>
     </form>
   </main>
