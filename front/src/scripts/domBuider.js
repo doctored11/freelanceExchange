@@ -980,12 +980,25 @@ export async function renderPrivateComment(container, cardId) {
     console.log(autor)
 
     const cardBlocks = await Promise.all(cardCom.map(async (com, index) => {
-        const isEven = (index + 1) % 2 === 0; // Четный - клиент, нечетный исполнитель
+        const isEven = (index + 1) % 2 == 0; // Четный - клиент, нечетный исполнитель
         console.log(isEven);
 
-        if (isEven) {
-            if (!user.client) {
-                autor = await DataManager.getUserById(card.ownerId);
+        if (!isEven) {
+            if (user.client) {
+
+                // autor = await DataManager.getUserById(card.ownerId);
+
+                let autors = await DataManager.getUsersWithActiveTaskIds(card.id);
+                console.log(autors)
+                autors = autors.filter((autor) => {
+                    return autor != user.id;
+                });
+                let autorId = autors[0]
+
+
+                autor = await DataManager.getUserById(autorId)
+
+
             } else {
                 autor = user;
             }
@@ -997,7 +1010,7 @@ export async function renderPrivateComment(container, cardId) {
             </div>
           </div>`;
         } else { //от клиента
-            if (!user.client) {
+            if (user.client) {
                 autor = user;
             } else {
                 // static async getUsersWithActiveTaskIds(taskId) {
