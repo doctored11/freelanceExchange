@@ -779,9 +779,10 @@ export async function createCartCards(container, data, key = "basket", modifier 
 }
 // 
 
-export function createPersonalProfileCard(user, container) {
+export async function createPersonalProfileCard(user, container) {
 
-    const { id, bio, date, descr, } = user;
+    console.log(user)
+    const { id, bio, date, descr } = user;
     const cardItem =
         `
         <div class="card profile-card" data-profile-id="${id}">
