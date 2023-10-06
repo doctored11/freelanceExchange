@@ -50,6 +50,7 @@ renderTaskCard(task, caseContainer);
 await renderPrivateComment(commentContainer, normalId).then(
     renderGlobalComment(commentContainer, normalId)
 )
+renderFormToRateClient(normalId,commentContainer)
 
 updateMoneyNowText()
 
@@ -81,4 +82,74 @@ if (!isImplementer) {
         element.classList.add('none');
     });
 }
+
+
+async function renderFormToRateClient(normalId, container) {
+    console.log("Rate_1")
+    let user = User.load();
+    user = await DataManager.getUserById(user.id);
+
+    if (!user.implementer) return
+    console.log("Rate_2")
+    const task = await DataManager.getServiceById(normalId);
+    if (task.status != "ready") return
+    console.log("Rate_3")
+    if (user.activeTasks.includes(normalId)) {
+        user.activeTasks = user.activeTasks.filter(task => task !== normalId);
+        createRatingForm(container, task.ownerId);
+        console.log("Rate_4")
+    }
+    console.log("Rate_5")
+}
+
+function createRatingForm(container, targetId) {
+    console.log("Rate_FormCreate")
+
+    const heading = document.createElement('h2');
+    heading.textContent = 'Оцените клиента';
+
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.min = '1';
+    input.max = '5';
+
+    const button = document.createElement('button');
+    button.textContent = 'Отправить';
+
+
+    button.addEventListener('click', function () {
+        // 
+        const inputValue = input.value;
+        console.log('Оценка клиента: ' + inputValue);
+        addRateToClient(targetId, rate).then(button.remove(), input.remove(), heading.remove())
+    });
+
+
+    container.appendChild(heading);
+    container.appendChild(input);
+    container.appendChild(button);
+}
+
+async function addRateToClient(targetId, rate) {
+    console.log("_AddRateTarget")
+
+    let user = await DataManager.getUserById(targetId);
+    user = User.createUserFromObject(user);
+
+    if (rate) {
+        if (user.rate && parseFloat(user.rate) > 0) {
+            console.log(user.rate)
+            user.rate = (parseFloat(user.rate) + parseFloat(rate)) / 2
+            console.log(user.rate)
+        } else {
+            console.log(user.rate)
+            user.rate = rate;
+            console.log(user.rate)
+        }
+    }
+    console.log(`💥 исполнителю ${user.id} присвоен рейтинг: `, user.rate);
+    await user.saveToServer();
+    message.textContent = 'Спасибо, оценка будет учтена';
+}
+
 
