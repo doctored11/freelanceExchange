@@ -48,6 +48,7 @@ async function handleFormSubmit(event) {
     lastName = inputLastName.value;
     pass = inputPass.value;
     email = inputEmail.value;
+    phone = inputPhone.value;
     const client = flagClient;
     const implementer = !flagClient;
 
@@ -64,7 +65,7 @@ async function handleFormSubmit(event) {
     // -----!Пока для входа нужно просто ввести id в строку имени
     if (flagLog) {
         localStorage.clear();
-        
+
         let user = await DataManager.getUserById(personName)
 
         user = User.createUserFromObject(user)
@@ -125,27 +126,35 @@ let flagClient = true;
 const inputName = document.querySelector('#name');
 const inputLastName = document.querySelector('#lastname');
 const inputEmail = document.querySelector('#email');
+const inputPhone = document.querySelector('#phone');
 const inputPass = document.querySelector('#password');
 const sendBtn = document.querySelector('.registration-form__submit-button');
 let pass = '';
 let personName = '';
 let lastName = '';
+let phone = '';
 
 //кнопка что ты регистрируешься
 signUnBtn.addEventListener("click", f => {
     if (flagLog) {
         signUnBtn.classList.add('active');
         signInBtn.classList.remove('active');
+        let regLabels = document.querySelectorAll('.reg-group')
+        regLabels.forEach((element) => element.style.display = 'block');
         flagLog = false;
     }
+    checkBtn();
 })
 //кнопка что ты входишь в систему
 signInBtn.addEventListener("click", f => {
     if (!flagLog) {
         signUnBtn.classList.remove('active');
         signInBtn.classList.add('active');
+        let regLabels = document.querySelectorAll('.reg-group')
+        regLabels.forEach((element) => element.style.display = 'none');
         flagLog = true;
     }
+    checkBtn();
 })
 //кнопка что ты разработчик
 coderBtn.addEventListener("click", f => {
@@ -168,7 +177,8 @@ function checkBtn() {
     lastName = inputLastName.value;
     pass = inputPass.value;
     email = inputEmail.value;
-    if (pass.length > 0 && lastName.length > 0 && personName.length > 0 && email.length > 0) {
+    phone = inputPhone.value;
+    if ((flagLog && pass.length > 0 && email.length > 0) || (!flagLog && pass.length > 0 && lastName.length > 0 && personName.length > 0 && email.length > 0 && phone.length > 0)) {
         sendBtn.disabled = false;
         sendBtn.classList.add('active');
         // Находим кнопку и назначаем обработчик события на отправку формы
@@ -178,13 +188,13 @@ function checkBtn() {
         sendBtn.disabled = true;
         sendBtn.classList.remove('active')
         // Находим кнопку и назначаем обработчик события на отправку формы
-        document.querySelector('.registration-form__submit-button').removeEventListener('click');
     }
 }
 document.querySelector('#registration-form__error').innerText = 'fatal error'; //Текст об ошибке
 inputName.addEventListener('input', checkBtn);
 inputLastName.addEventListener('input', checkBtn);
 inputPass.addEventListener('input', checkBtn);
-
+inputPhone.addEventListener('input', checkBtn);
+inputEmail.addEventListener('input', checkBtn);
 
 

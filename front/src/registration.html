@@ -14,7 +14,7 @@
 <body>
 
   <form id="registration-form" class="registration-form__form">
-    <p class="form__label">Авторизация</p>
+    <p class="registration-form__label">Авторизация</p>
 
     <div class="form__switch">
       <div class="form-switch__btn signin-btn active">Вход</div>
@@ -25,41 +25,28 @@
       <div class="form-switch__btn coder-btn">Фрилансер</div>
     </div>
 
-    <div class="registration-form__form-group">
-      <label for="name" class="registration-form__label txt">Имя</label>
-      <input type="text" id="name" name="name" class="registration-form__input" placeholder=" " required />
+    <div class="form__form-group reg-group">
+      <input type="text" id="name" name="name" class="form__input" placeholder=" " required />
+      <label for="name" class="form__label txt">Имя</label>
     </div>
-    <div class="registration-form__form-group">
-      <label for="lastname" class="registration-form__label txt">Фамилия</label>
-      <input type="name" id="lastname" name="lastname" class="registration-form__input" placeholder=" " required />
+    <div class="form__form-group reg-group">
+      <input type="name" id="lastname" name="lastname" class="form__input" placeholder=" " required />
+      <label for="lastname" class="form__label txt">Фамилия</label>
     </div>
-    <div class="registration-form__form-group">
-      <label for="email" class="registration-form__label txt">Email</label>
-      <input type="email" id="email" name="email" class="registration-form__input" placeholder=" " required />
+    <div class="form__form-group reg-group">
+      <input type="phone" id="phone" name="phone" class="form__input" placeholder=" " required />
+      <label for="phone" class="form__label txt">Номер телефона</label>
     </div>
-    <div class="registration-form__form-group">
-      <label for="password" class="registration-form__label txt">Пароль</label>
-      <input type="password" id="password" name="password" class="registration-form__input" placeholder=" " required />
+    <div class="form__form-group">
+      <input type="email" id="email" name="email" class="form__input" placeholder=" " required />
+      <label for="email" class="form__label txt">Email</label>
     </div>
-
-
-    <!-- <div class="registration-form__form-group">
-      <label class="registration-form__label">Выберите роль:</label>
-      <div class="registration-form__role-checkboxes">
-        <label class="registration-form__role-label txt">
-          <input type="checkbox" name="role" value="client" class="registration-form__role-checkbox" />
-          Заказчик
-        </label>
-        <label class="registration-form__role-label txt">
-          <input type="checkbox" name="role" value="implementer" class="registration-form__role-checkbox" />
-          Исполнитель
-        </label>
-      </div>
-    </div> -->
-
-
+    <div class="form__form-group">
+      <input type="password" id="password" name="password" class="form__input" placeholder=" " required />
+      <label for="password" class="form__label txt">Пароль</label>
+    </div>
     <div class="form__submit">
-      <button class="registration-form__submit-button btn" disabled>Отправить</button>
+      <input type="button" value="Отправить" class="registration-form__submit-button btn" disabled />
       <a class="registration-form__cancel-button btn" href="index.html">Отменить</a>
     </div>
     <!-- Текст об ощибке(в самом конце reg.js) надо обработать -->
