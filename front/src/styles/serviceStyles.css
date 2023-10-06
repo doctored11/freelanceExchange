@@ -4,7 +4,7 @@
   width: 100%;
 
   align-content: center;
-  justify-content: space-between;
+  justify-content: center;
   align-items: stretch;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .card__info {
-  padding: 1rem;
+  padding: 0.3rem 1rem;
   display: flex;
   justify-content: space-between;
 }
