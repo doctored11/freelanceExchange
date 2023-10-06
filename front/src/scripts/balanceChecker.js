@@ -8,19 +8,17 @@ import {
 
 
 export async function updateMoneyNowText() {
-    console.log("деньги")
     if (!moneyNowElement) return
 
     let user = User.load();
 
     user = await DataManager.getUserById(user.id);
     user = User.createUserFromObject(user)
-    console.log(user)
 
     const moneyValue = user.balance.getActiveBalance();
 
     moneyNowElement.innerText = `${moneyValue} Р`;
-
+    console.log(moneyNowElement)
 }
 
 
@@ -29,13 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 const moneyNowElement = document.querySelector('.moneyNow');
-if (moneyNowElement != 'undefined') {
+console.log(moneyNowElement)
+if (moneyNowElement != null) {
     moneyNowElement.removeAttribute('href');
 }
-// window.addEventListener('storage', () => {
-//     // console.log(even)
-//     updateMoneyNowText();
-//     // if (event.key == 'balance') {
-//     //     updateMoneyNowText();
-//     // }
-// });
