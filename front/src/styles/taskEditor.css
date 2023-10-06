@@ -1,32 +1,11 @@
-:root {
-    --margin: 10px;
-    --padding: 20px;
-}
-
-img {
-    object-fit: covet;
-    max-width: 100%;
-}
-
-body {
-    font-family: monospace;
-    font-size: 16px;
-    border: 2px solid red;
-    margin: 0;
-    padding: 0;
-
-}
-
 main {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     gap: var(--padding, 20px);
-    padding: var(--padding, 20px);
-    width: 80%;
-    margin: auto;
-    /* height: 80vh; задать размер исходя из экрана - футер - хэдер*/
+    padding: 3rem;
+    width: 60%;
+    margin: 3rem auto;
 }
 
 .left-section {
@@ -40,7 +19,9 @@ main {
 }
 
 .task {
-    border: 2px solid green;
+    /* border: 2px solid green; */
+    box-shadow: 0 5px 16px 0 #ccc;
+    width: 100%;
     text-align: center;
 }
 
@@ -124,16 +105,4 @@ main {
     align-items: center;
     padding: 10px 0;
     border-top: 1px solid gray;
-}
-
-footer,
-header {
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
-    text-align: center;
-    align-items: center;
-    font-size: 2em;
-    font-weight: bold;
-    text-transform: uppercase;
-    height: 10vh;
 }
