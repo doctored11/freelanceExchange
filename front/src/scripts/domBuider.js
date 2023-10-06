@@ -20,7 +20,7 @@ export function createCards(container, serviceData) {
         const { id, img, title, price, descr, timing, owner, ownerId, type } = card;
         let user = await DataManager.getUserById(ownerId);
         console.log("😂");
-        console.log( user);
+        console.log(user);
         let rate = user.rate;
         let userName
         if (!rate) rate = 0;
@@ -44,7 +44,7 @@ export function createCards(container, serviceData) {
         //./files/unStar.svg -?
         const cardItem =
             `
-                <div class=" card service-card card-${type}" data-product-id="${id}">
+            <div class=" card service-card ${type}-card" data-product-id="${id}">
                 <button class="card__add card__star " data-id="${id}">
                 <img class=" img card__star card__star-${id}"
                 src="./files/unStar.svg"
@@ -57,21 +57,31 @@ export function createCards(container, serviceData) {
                     alt="${title}"
                 />
              </a>
-             <div class="card__label service-card__label">-${timing}</div>
-
-                  
-                    <div class="card__bottom service-card__bottom">
-                        <div class="card__info ">
+                    <div class="card__bottom service-card__bottom card__content-block">
+                    <a href="/servicePage.html?id=serviceCase${id}" class="card__title service-card__title card__title">${title}</a>
+                    <p class ="card__txt txt">${descr}</p>  
+                    
+                    <div class="card__info">
                             <div class="card__people heading service-card__heading card__Author">${userName}</div>
                             <div class="rate-block">
-                            <span class = "authorRating txt" >${rate}</span>
+                            <span class = "authorRating txt card__rating" >${rate}</span>
                             <span>${rateTxt}</span>
                             <div>
-                            <div class="card__price card__price--common">${price}</div>
+                            
                         </div>
-                        <a href="/servicePage.html?id=serviceCase${id}" class="card__title service-card__title">${title}</a>
+                    </div>
+                    <div class="card__info">
+                    <h3 class= "card__price txt price">Цена</h3>
+                    <div>
+                    <div class="card__price card__price--common">${price}</div>
+                    <span class="card__span">Р</span>
+                    </div>
+                        
+                            
                         
                     </div>
+
+                    
                 </div>
             `
 
@@ -970,7 +980,7 @@ export async function renderPrivateComment(container, cardId) {
         console.log(isEven);
 
         if (isEven) {
-            if (user.client) {
+            if (!user.client) {
                 autor = await DataManager.getUserById(card.ownerId);
             } else {
                 autor = user;
@@ -982,7 +992,7 @@ export async function renderPrivateComment(container, cardId) {
               <p class="card__text txt">${com}</p>
             </div>
           </div>`;
-        } else {
+        } else { //от клиента
             if (!user.client) {
                 autor = user;
             } else {
