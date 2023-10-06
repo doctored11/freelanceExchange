@@ -39,47 +39,52 @@
     </div>
   </header>
   <main class="main">
-    <div class="task">
-      <h1>Название задания</h1>
-      <img src="files/1.jpeg" alt="Здесь могла быть ваша картинка(нужен путь)" class="img">
-      <div class="about">Об этом задании</div>
-      <div class="discription">
-        Оставьте текст о своем задании
-      </div>
-    </div>
-
     <form id="task-form" class="task">
       <div style="width: 50%; margin: auto;">
         <div class="form__form-group">
-          <label for="title" class="form__label_large ">Название</label>
-          <input type="text" id="title" name="title" class="form__input" placeholder=" " />
+          <input type="text" id="title" name="title" class="form__input form__input_large" placeholder=" " />
+          <label for="title" class="form__label form__label_large ">Название</label>
         </div>
+      </div>
+      <div style="width: 70%;margin:auto; padding: 1rem 0.5rem;">
         <div class="form__form-group">
-          <label for="timing" class="form__label">Время</label>
-          <input type="text" id="timing" name="timing" placeholder=' ' class="form__input" />
+          <textarea id="descr" name="descr" rows="8" placeholder=" " class="form__input"></textarea>
+          <label for="" class="form__label">Содержание</label>
         </div>
-      </div>
-      <div class="form__form-group">
-        <textarea id="descr" name="descr" rows="4" placeholder="Содержание"></textarea>
-      </div>
-      <!-- tut -->
-      <div class="form__form-group">
-        <label for="theme" class="form__label">Тема:</label>
-        <select id="theme" name="theme" class="form__select">
-          <option value="Тема 1">It</option>
-          <option value="Тема 2">Дизайн</option>
-          <option value="Тема 3">Тема 3</option>
-        </select>
-      </div>
-      <!-- tut -->
-      <div class="form__form-group">
-        <label for="price">Цена</label>
-        <input type="number" id="price" name="price" min="0" class="form__number" />
+
+        <div style="width: 50%;">
+          <div class="form__form-group_lowSpacing">
+            <input type="text" id="timing" name="timing" placeholder=' ' class="form__input" />
+
+            <label for="timing" class="form__label">Сроки</label>
+          </div>
+
+          <!-- tut -->
+          <div class="form__form-group_lowSpacing">
+            <label for="theme" class="form__label">Тема:</label>
+            <select id="theme" name="theme" class="form__select">
+              <option value="Тема 1">It</option>
+              <option value="Тема 2">Дизайн</option>
+              <option value="Тема 3">Тема 3</option>
+            </select>
+          </div>
+          <!-- tut -->
+          <div class="form__form-group">
+            <input type="number" id="price" name="price" min="0" class="form__input" placeholder=" " />
+            <label for="price" class="form__label">Цена</label>
+          </div>
+        </div>
       </div>
 
-      <button type="submit">Заказать</button>
+      <button type="submit" class="btn" disabled>Заказать</button>
     </form>
   </main>
+  <footer class="footer section">
+    <div class="frame footer__frame">
+      <div>Команда IT-19 &lt;3</div>
+      <div>*This проект for хакатон IT трек Opportunity Cup 2023</div>
+    </div>
+  </footer>
   <script src="./scripts/taskEditor.js" type="module"></script>
   <script src="./scripts/balanceChecker.js" type="module"></script>
 
