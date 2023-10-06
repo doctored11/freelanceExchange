@@ -2,8 +2,7 @@
   --base-color-CornflowerBlue: 100, 149, 237;
   --font-size: 16px;
   --font-family: sans-serif;
-  --color-deep-gray: #696969;
-  --color-lite-gray: #557d7c;
+  --color-deep-grey: #696969;
   --color-test-yellow: #d1c705;
   --color-test-green: #095204;
   --color-test-white: #d2d5dd;
@@ -135,6 +134,9 @@ header {
   margin: 0;
 }
 
+.moneyNow {
+  color: #095204;
+}
 
 .title--lite {
   color: var(--color-test-white);
