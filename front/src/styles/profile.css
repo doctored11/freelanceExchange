@@ -1,0 +1,60 @@
+.frame--person {
+  display: flex;
+  min-height: 80vh;
+}
+
+.personal-block {
+  display: flex;
+  flex: 3;
+  flex-direction: column;
+}
+
+.info {
+  display: flex;
+  flex: 7;
+  flex-direction: column;
+}
+
+.personal-block__img {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.person-img {
+  min-height: 30vh;
+  width: 100%;
+}
+
+.info__active-tasks {
+  min-height: 20vh;
+}
+
+.info__history {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+}
+
+.info__history>* {
+  min-width: 20%;
+  min-height: 5rem;
+
+}
+
+.info__history>:first-child {
+  margin-right: 2rem;
+}
+
+.history-block {
+  padding: 0.3rem 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.history-el--balance::after {
+  content: "  Руб.";
+}
+
+.history-date {
+  font-size: 9px;
+}

@@ -1,0 +1,475 @@
+.absolute-notice {
+  position: fixed;
+  right: 3%;
+  bottom: 4%;
+}
+
+.pending--active {
+  min-width: 5rem;
+  min-height: 1.5rem;
+
+  padding: 0.3rem 0.5rem;
+  background-color: #c68d11;
+}
+
+.pending {
+  color: white;
+}
+
+.card-zone {
+  width: 40%;
+  margin: auto;
+  height: 80vh;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-zone>form {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.form__form-group_payment>label,
+.form__form-group_payment>input {
+  font-size: 1.3em;
+}
+
+
+.person-ico {
+  font-size: 72px;
+  display: flex;
+
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.service-card__image {
+  display: block;
+  min-height: 45%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  top: 0;
+}
+
+.card__content-txt {
+  margin: 0;
+  padding: 0;
+  font-size: 48px;
+  color: white;
+  font-weight: bold;
+}
+
+.service-card {
+  position: relative;
+}
+
+.task-card__image {
+  display: block;
+  min-height: 40%;
+  width: 100%;
+  display: flex;
+}
+
+.card__top {
+  position: relative;
+}
+
+.service-card h3 {
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.card__add {
+  border-radius: 8px;
+  background-color: rgba(var(--base-color-CornflowerBlue), 0.3);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-color: rgba(var(--base-color-CornflowerBlue), 0.8);
+}
+
+.card__container {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cart-card {
+  display: flex;
+  width: 31%;
+
+
+  min-width: 255px;
+  height: 255px;
+  padding: 0;
+  padding-bottom: 0.6rem;
+
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cart-card_top {
+  position: relative;
+  min-height: 20%;
+}
+
+.cart-card__image {
+  display: block;
+  min-height: 100%;
+  width: 100%;
+}
+
+.cart-card__bottom {
+  padding: 0.3rem 0.3rem;
+}
+
+.card__info {
+  display: flex;
+  flex-direction: row;
+}
+
+.card__bottom .card__info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.card__info>*:not(:last-child) {
+  margin-bottom: 0.8rem;
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.cart-card__label::after {
+  content: "⏱";
+}
+
+.cart-card__label {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.card__info .cart-card__descr {
+  max-height: 1rem;
+  overflow: hidden;
+}
+
+.profile-card .card__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-card .card__info .title,
+.profile-card .card__info .txt {
+  text-align: left;
+}
+
+.personal-block {
+  margin-right: 3rem;
+}
+
+/* todo - ну так лучше не далать */
+.frame--person {
+  padding-top: 3rem !important;
+}
+
+/* 
+ */
+
+.history-block {
+  border-radius: 0.5rem;
+  border: var(--color-deep-gray) 2px solid;
+  padding: 1rem 1.8rem;
+}
+
+.update::before {
+  content: "♻";
+}
+
+.freeze::before {
+  content: "❄";
+}
+
+.freezeSpend::before,
+.expense::before {
+  content: "☄";
+}
+
+.container--tasks {
+  display: flex;
+}
+
+.container--active::before {
+  content: "В работе  ⬇";
+}
+
+.profile-card .card__info {
+  padding: 0.3rem;
+  width: 100%;
+  margin: 0;
+}
+
+/* сорян */
+.profile-card {
+  margin: 0 !important;
+}
+
+.personal-block a {
+  margin-bottom: 0.8rem;
+}
+
+.profile-container {
+  min-width: 20vw;
+}
+
+.profile-container .profile-card {
+  width: 100%;
+}
+
+.person--logo {
+  font-size: 48px;
+}
+
+.case-container .task-card {
+  min-width: 15vw;
+}
+
+.absolute-notice {
+  position: fixed;
+  right: 3%;
+  bottom: 4%;
+}
+
+.pending--active {
+  min-width: 5rem;
+  min-height: 1.5rem;
+
+  padding: 0.3rem 0.5rem;
+  background-color: #c68d11;
+}
+
+.pending {
+  color: white;
+}
+
+.person-ico {
+  font-size: 72px;
+  display: flex;
+
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.service-card__image {
+  display: block;
+  min-height: 45%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  top: 0;
+}
+
+.card__content-txt {
+  margin: 0;
+  padding: 0;
+  font-size: 48px;
+  color: white;
+  font-weight: bold;
+}
+
+.service-card {
+  position: relative;
+}
+
+.task-card__image {
+  display: block;
+  min-height: 40%;
+  width: 100%;
+  display: flex;
+}
+
+.card__top {
+  position: relative;
+}
+
+.service-card h3 {
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.card__add {
+  border-radius: 8px;
+  background-color: rgba(var(--base-color-CornflowerBlue), 0.3);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-color: rgba(var(--base-color-CornflowerBlue), 0.8);
+}
+
+.card__container {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cart-card {
+  display: flex;
+  width: 31%;
+
+
+  min-width: 255px;
+  height: 255px;
+  padding: 0;
+  padding-bottom: 0.6rem;
+
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cart-card_top {
+  position: relative;
+  min-height: 20%;
+}
+
+.cart-card__image {
+  display: block;
+  min-height: 100%;
+  width: 100%;
+}
+
+.cart-card__bottom {
+  padding: 0.3rem 0.3rem;
+}
+
+.card__info {
+  display: flex;
+  flex-direction: row;
+}
+
+.card__bottom .card__info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.card__info>*:not(:last-child) {
+  margin-bottom: 0.8rem;
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.cart-card__label::after {
+  content: "⏱";
+}
+
+.cart-card__label {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.card__info .cart-card__descr {
+  max-height: 1rem;
+  overflow: hidden;
+}
+
+.profile-card .card__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-card .card__info .title,
+.profile-card .card__info .txt {
+  text-align: left;
+}
+
+.personal-block {
+  margin-right: 3rem;
+}
+
+/* todo - ну так лучше не далать */
+.frame--person {
+  padding-top: 3rem !important;
+}
+
+/* 
+ */
+
+.history-block {
+  border-radius: 0.5rem;
+  border: var(--color-deep-gray) 2px solid;
+  padding: 1rem 1.8rem;
+}
+
+.update::before {
+  content: "♻";
+}
+
+.freeze::before {
+  content: "❄";
+}
+
+.freezeSpend::before,
+.expense::before {
+  content: "☄";
+}
+
+.container--tasks {
+  display: flex;
+}
+
+.container--active::before {
+  content: "В работе  ⬇";
+}
+
+.profile-card .card__info {
+  padding: 0.3rem;
+  width: 100%;
+  margin: 0;
+}
+
+/* сорян */
+.profile-card {
+  margin: 0 !important;
+}
+
+.personal-block a {
+  margin-bottom: 0.8rem;
+}
+
+.profile-container {
+  min-width: 20vw;
+}
+
+.profile-container .profile-card {
+  width: 100%;
+}
+
+.person--logo {
+  font-size: 48px;
+}
+
+.case-container .task-card {
+  min-width: 15vw;
+}

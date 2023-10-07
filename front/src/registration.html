@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="./styles/normalize.css" />
+  <link rel="stylesheet" href="./styles/additional.css" />
+  <link rel="stylesheet" href="./styles/style.css" />
+  <link rel="stylesheet" href="styles/registration-form.css">
+  <link rel="stylesheet" href="./styles/media.css" />
+  <script src="./scripts/reg.js" type="module" defer></script>
+</head>
+
+<body>
+
+  <form id="registration-form" class="registration-form__form">
+    <p class="registration-form__label">Авторизация</p>
+
+    <div class="form__switch">
+      <div class="form-switch__btn signin-btn active">Вход</div>
+      <div class="form-switch__btn signup-btn">Регистрация</div>
+    </div>
+    <div class="form__switch">
+      <div class="form-switch__btn seller-btn active">Заказчик</div>
+      <div class="form-switch__btn coder-btn">Фрилансер</div>
+    </div>
+
+    <div class="form__form-group reg-group">
+      <input type="text" id="name" name="name" class="form__input" placeholder=" " required />
+      <label for="name" class="form__label txt">Имя</label>
+    </div>
+    <div class="form__form-group reg-group">
+      <input type="name" id="lastname" name="lastname" class="form__input" placeholder=" " required />
+      <label for="lastname" class="form__label txt">Фамилия</label>
+    </div>
+    <div class="form__form-group reg-group">
+      <input type="phone" id="phone" name="phone" class="form__input" placeholder=" " required />
+      <label for="phone" class="form__label txt">Номер телефона</label>
+    </div>
+    <div class="form__form-group">
+      <input type="email" id="email" name="email" class="form__input" placeholder=" " required />
+      <label for="email" class="form__label txt">Email</label>
+    </div>
+    <div class="form__form-group">
+      <input type="password" id="password" name="password" class="form__input" placeholder=" " required />
+      <label for="password" class="form__label txt">Пароль</label>
+    </div>
+    <div class="form__submit">
+      <input type="button" value="Отправить" class="registration-form__submit-button btn" disabled />
+      <a class="registration-form__cancel-button btn" href="index.html">Отменить</a>
+    </div>
+    <!-- Текст об ощибке(в самом конце reg.js) надо обработать -->
+    <p id="registration-form__error"></p>
+  </form>
+
+</body>
+
+</html>
